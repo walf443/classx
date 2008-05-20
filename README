@@ -1,0 +1,24 @@
+
+= classx
+
+== Synopsis
+
+== Description
+
+== Installation
+
+=== Archive Installation
+
+	rake install
+
+=== Gem Installation
+
+	gem install classx
+
+== Features/Problems
+
+== Copyright
+
+Author::    Keiji, Yoshimi <walf443 at gmail.com>
+Copyright:: Copyright (c) 2008 Keiji, Yoshimi
+License:: you can redistribute it and/or modify it under the same terms as Ruby itself.
