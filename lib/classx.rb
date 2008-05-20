@@ -50,11 +50,13 @@ class ClassX
     end
 
     def register_attr_default_value name, value
-      self.class_eval <<-END_OF_METH
+      self.class_eval do
         define_method "set_attr_default_value_of[#{name.to_s}]" do
-          self.#{name.to_s}= #{value}
+          self.__send__ "#{name.to_s}=", value
         end
-      END_OF_METH
+
+        private "set_attr_default_value_of[#{name.to_s}]"
+      end
     end
 
     def register_attr_default_value_proc name, &block
@@ -62,6 +64,8 @@ class ClassX
         define_method "set_attr_default_value_of[#{name.to_s}]" do
           self.__send__ "#{name.to_s}=", block.call
         end
+
+        private "set_attr_default_value_of[#{name.to_s}]"
       end
     end
 
@@ -74,7 +78,7 @@ class ClassX
   def initialize hash={}
     before_init
     @@attr_required.keys.each do |req|
-      raise AttrRequiredError unless hash.include?(req)
+      raise AttrRequiredError unless hash.keys.include?(req)
     end
     hash.each do |key,val|
       __send__ "#{key.to_s}=", val
@@ -101,6 +105,4 @@ if $0 == __FILE__
     has :y, :required => true
     has :hoge, :default => proc { "Hoge" }
   end
-
-  Point.new
 end
