@@ -62,7 +62,7 @@ class ClassX
     def register_attr_default_value_proc name, &block
       self.class_eval do
         define_method "set_attr_default_value_of[#{name.to_s}]" do
-          self.__send__ "#{name.to_s}=", block.call
+          self.__send__ "#{name.to_s}=", block.call(self)
         end
 
         private "set_attr_default_value_of[#{name.to_s}]"
@@ -77,13 +77,14 @@ class ClassX
 
   def initialize hash={}
     before_init
+    @@attr_required ||= {}
     @@attr_required.keys.each do |req|
       raise AttrRequiredError unless hash.keys.include?(req)
     end
     hash.each do |key,val|
       __send__ "#{key.to_s}=", val
     end
-    methods.select do |meth|
+    private_methods.select do |meth|
       meth.to_s =~ /^set_attr_default_value_of\[(.*?)\]$/ 
     end.each do |meth|
       __send__ meth
