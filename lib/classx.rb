@@ -5,6 +5,7 @@ class ClassX
   class LazyOptionShouldHaveDefault < Exception; end
   class <<self
     def has name, attrs={ :is => :ro, :required => false }
+      name = name.to_s
       __send__ :attr_accessor, name
 
       setter_definition = ''
@@ -35,36 +36,36 @@ class ClassX
       end
 
       self.class_eval <<-END_OF_ACCESSOR
-        attr_reader "#{name.to_s}"
+        attr_reader "#{name}"
 
-        def #{name.to_s}= val
+        def #{name}= val
           #{setter_definition}
-          @#{name.to_s} = val
+          @#{name} = val
         end
       END_OF_ACCESSOR
 
       if attrs[:is] == :ro
-        __send__ :private,"#{name.to_s}="
+        __send__ :private,"#{name}="
       end
     end
 
     def register_attr_default_value name, value
       self.class_eval do
-        define_method "set_attr_default_value_of[#{name.to_s}]" do
-          self.__send__ "#{name.to_s}=", value
+        define_method "set_attr_default_value_of[#{name}]" do
+          self.__send__ "#{name}=", value
         end
 
-        private "set_attr_default_value_of[#{name.to_s}]"
+        private "set_attr_default_value_of[#{name}]"
       end
     end
 
     def register_attr_default_value_proc name, &block
       self.class_eval do
-        define_method "set_attr_default_value_of[#{name.to_s}]" do
-          self.__send__ "#{name.to_s}=", block.call(self)
+        define_method "set_attr_default_value_of[#{name}]" do
+          self.__send__ "#{name}=", block.call(self)
         end
 
-        private "set_attr_default_value_of[#{name.to_s}]"
+        private "set_attr_default_value_of[#{name}]"
       end
     end
 
@@ -78,13 +79,16 @@ class ClassX
     unless hash && hash.kind_of?(Hash)
       raise ArgumentError
     end
+
+    hash = hash.inject({}) {|h,item| h[item.first.to_s] = item.last; h } # allow String or Symbol for key 
+    p hash
     before_init
     @@attr_required ||= {}
     @@attr_required.keys.each do |req|
       raise AttrRequiredError, "param :#{req} is required to initialize #{self.class}" unless hash.keys.include?(req)
     end
     hash.each do |key,val|
-      __send__ "#{key.to_s}=", val
+      __send__ "#{key}=", val
     end
     private_methods.select do |meth|
       meth.to_s =~ /^set_attr_default_value_of\[(.*?)\]$/ 

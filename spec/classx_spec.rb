@@ -119,6 +119,10 @@ describe ClassX do
       it "should not raise AttrRequiredError with value" do
         lambda { @class.new(:x => Object.new) }.should_not raise_error(ClassX::AttrRequiredError)
       end
+
+      it 'should not raise AttrRequiredError with key as String' do
+        lambda { @class.new('x' => Object.new) }.should_not raise_error(ClassX::AttrRequiredError)
+      end
     end
   end
 end
