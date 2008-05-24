@@ -70,8 +70,10 @@ class ClassX
     end
 
     def register_attr_required name
-      @@attr_required ||= {}
-      @@attr_required[name] = true
+      define_method "attr_required[#{name}]" do
+      end
+
+      private "attr_required[#{name}]"
     end
   end
 
@@ -82,15 +84,17 @@ class ClassX
 
     hash = hash.inject({}) {|h,item| h[item.first.to_s] = item.last; h } # allow String or Symbol for key 
     before_init
-    @@attr_required ||= {}
-    @@attr_required.keys.each do |req|
-      raise AttrRequiredError, "param :#{req} is required to initialize #{self.class}" unless hash.keys.include?(req)
+    attr_required_keys = hash.keys.map {|key| "attr_required[#{key}]" }
+    private_methods.select do |meth|
+      meth.to_s =~ /^attr_required\[(.*?)\]$/
+    end.each do |req|
+      raise AttrRequiredError, "param :#{req} is required to initialize #{self.class}" unless attr_required_keys.include?(req)
     end
     hash.each do |key,val|
       __send__ "#{key}=", val
     end
     private_methods.select do |meth|
-      meth.to_s =~ /^set_attr_default_value_of\[(.*?)\]$/ 
+      meth.to_s =~ /^set_attr_default_value_of\[(.*?)\]$/
     end.each do |meth|
       __send__ meth
     end
