@@ -77,7 +77,7 @@ class ClassX
 
   def initialize hash={}
     unless hash && hash.kind_of?(Hash)
-      raise ArgumentError
+      raise ArgumentError, "#{hash.inspect} was wrong as arguments of #{self.class}#initialize. please specify kind of Hash instance"
     end
 
     hash = hash.inject({}) {|h,item| h[item.first.to_s] = item.last; h } # allow String or Symbol for key 
@@ -102,13 +102,5 @@ class ClassX
   end
 
   def after_init
-  end
-end
-
-if $0 == __FILE__
-  class Point < ClassX
-    has :x, :is => :ro, :kind_of => Fixnum, :default => 10
-    has :y, :required => true
-    has :hoge, :default => proc { "Hoge" }
   end
 end
