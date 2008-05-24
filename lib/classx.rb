@@ -84,11 +84,8 @@ class ClassX
 
     hash = hash.inject({}) {|h,item| h[item.first.to_s] = item.last; h } # allow String or Symbol for key 
     before_init
-    attr_required_keys = hash.keys.map {|key| "attr_required[#{key}]" }
-    private_methods.select do |meth|
-      meth.to_s =~ /^attr_required\[(.*?)\]$/
-    end.each do |req|
-      raise AttrRequiredError, "param :#{req} is required to initialize #{self.class}" unless attr_required_keys.include?(req)
+    required_attributes.each do |name|
+      raise AttrRequiredError, "param :#{name} is required to initialize #{self.class}" unless hash.keys.include?(name)
     end
     hash.each do |key,val|
       __send__ "#{key}=", val
@@ -106,5 +103,16 @@ class ClassX
   end
 
   def after_init
+  end
+
+  private
+
+  ATTR_REQUIRED_REGEX = /^attr_required\[(.*?)\]/
+  def required_attributes
+    private_methods.select {|meth|
+      meth.to_s =~ ATTR_REQUIRED_REGEX
+    }.map {|item|
+      item.sub(ATTR_REQUIRED_REGEX) { $1 }
+    }
   end
 end
