@@ -2,7 +2,6 @@
 class ClassX
   class AttrRequiredError < Exception; end
   class InvalidSetterArgument < Exception; end
-  class InvalidAccessorType < Exception; end
   class LazyOptionShouldHaveDefault < Exception; end
   class <<self
     def has name, attrs={ :is => :ro, :required => false }
@@ -11,12 +10,12 @@ class ClassX
       setter_definition = ''
       if !attrs[:respond_to].nil?
         setter_definition += <<-END_OF_RESPOND_TO
-          raise InvalidAccessorType unless val.respond_to? #{attrs[:respond_to]}
+          raise InvalidSetterArgument, "param :#{name}'s value \#{val.inspect} should respond_to #{attrs[:respond_to]}}"  unless val.respond_to? #{attrs[:respond_to]}
         END_OF_RESPOND_TO
       end
       if !attrs[:kind_of].nil?
         setter_definition += <<-END_OF_KIND_OF
-          raise InvalidAccessorType unless val.kind_of? #{attrs[:kind_of]}
+          raise InvalidSetterArgument, "param :#{name}'s value \#{val.inspect} should kind_of #{attrs[:kind_of]}" unless val.kind_of? #{attrs[:kind_of]}
         END_OF_KIND_OF
       end
 
@@ -28,7 +27,7 @@ class ClassX
           register_attr_default_value name, attrs[:default]
         end
       else
-        raise LazyOptionShouldHaveDefault if attrs[:lazy]
+        raise LazyOptionShouldHaveDefault, "in :#{name}: :lazy option need specifying :default" if attrs[:lazy]
       end
 
       if attrs[:required] 
@@ -79,7 +78,7 @@ class ClassX
     before_init
     @@attr_required ||= {}
     @@attr_required.keys.each do |req|
-      raise AttrRequiredError unless hash.keys.include?(req)
+      raise AttrRequiredError, "param :#{req} is required to initialize #{self.class}" unless hash.keys.include?(req)
     end
     hash.each do |key,val|
       __send__ "#{key.to_s}=", val
