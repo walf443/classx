@@ -75,6 +75,9 @@ class ClassX
   end
 
   def initialize hash={}
+    unless hash && hash.kind_of?(Hash)
+      raise ArgumentError
+    end
     before_init
     @@attr_required ||= {}
     @@attr_required.keys.each do |req|
