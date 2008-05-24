@@ -6,7 +6,6 @@ class ClassX
   class <<self
     def has name, attrs={ :is => :ro, :required => false }
       name = name.to_s
-      __send__ :attr_accessor, name
 
       setter_definition = ''
       if !attrs[:respond_to].nil?
@@ -18,6 +17,19 @@ class ClassX
         setter_definition += <<-END_OF_KIND_OF
           raise InvalidSetterArgument, "param :#{name}'s value \#{val.inspect} should kind_of #{attrs[:kind_of]}" unless val.kind_of? #{attrs[:kind_of]}
         END_OF_KIND_OF
+      end
+
+      self.class_eval <<-END_OF_ACCESSOR
+        attr_reader "#{name}"
+
+        def #{name}= val
+          #{setter_definition}
+          @#{name} = val
+        end
+      END_OF_ACCESSOR
+
+      if attrs[:is] == :ro
+        __send__ :private,"#{name}="
       end
 
       if !attrs[:default].nil?
@@ -35,18 +47,6 @@ class ClassX
         register_attr_required name
       end
 
-      self.class_eval <<-END_OF_ACCESSOR
-        attr_reader "#{name}"
-
-        def #{name}= val
-          #{setter_definition}
-          @#{name} = val
-        end
-      END_OF_ACCESSOR
-
-      if attrs[:is] == :ro
-        __send__ :private,"#{name}="
-      end
     end
 
     def register_attr_default_value name, value
