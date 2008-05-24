@@ -81,7 +81,6 @@ class ClassX
     end
 
     hash = hash.inject({}) {|h,item| h[item.first.to_s] = item.last; h } # allow String or Symbol for key 
-    p hash
     before_init
     @@attr_required ||= {}
     @@attr_required.keys.each do |req|
