@@ -21,6 +21,10 @@ describe ClassX do
       it 'should raise ArgumentError when recieved not kind of Hash instance as initialize argument' do
         lambda { @class.new([]) }.should raise_error(ArgumentError)
       end
+
+      it 'should have empty attributes' do
+        @class.attributes.should be_empty
+      end
     end
 
     describe 'with :is option' do
@@ -39,6 +43,10 @@ describe ClassX do
         it 'should define #x= private method to class' do
           @class.private_instance_methods.map {|meth| meth.to_s }.should be_include("x=")
         end
+
+        it 'should have attributes [:x]' do
+          @class.attributes.should == ['x']
+        end
       end
 
       describe 'when you specify :rw for attribute' do 
@@ -55,6 +63,10 @@ describe ClassX do
 
         it 'should define #x= public method to class' do
           @class.public_instance_methods.map {|meth| meth.to_s }.should be_include("x=")
+        end
+
+        it 'should have attributes [:x]' do
+          @class.attributes.should == ['x']
         end
       end
     end

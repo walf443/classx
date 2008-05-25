@@ -76,6 +76,15 @@ class ClassX
       private "attr_required[#{name}]"
     end
 
+    ATTR_REGEX = /^([^=]*?)=$/
+    def attributes
+      ( public_instance_methods + private_instance_methods ).select {|meth|
+        meth.to_s =~ ATTR_REGEX
+      }.map {|item|
+        item.to_s.sub(ATTR_REGEX) { $1 }
+      }
+    end
+    
     ATTR_REQUIRED_REGEX = /^attr_required\[(.*?)\]/
     def required_attributes
       private_instance_methods.select {|meth|
