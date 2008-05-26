@@ -11,8 +11,8 @@ describe ClassX::Validate do
 
       def run params
         validate params do
-          has :x, :required => true
-          has :y, :required => true, :kind_of => Integer
+          has :x
+          has :y, :kind_of => Integer
         end
       end
     end

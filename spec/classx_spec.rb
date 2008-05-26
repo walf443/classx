@@ -133,11 +133,11 @@ describe ClassX do
       end
     end
 
-    describe 'with :required option' do
+    describe 'with :optional is false' do
       before do
         @class = Class.new(ClassX)
         @class.class_eval do
-          has :x, :required => true
+          has :x, :optional => false
         end
       end
 
@@ -154,18 +154,18 @@ describe ClassX do
       end
     end
 
-    describe 'with :required and :default option' do
+    describe ':optional is false and with :default option' do
       it 'should raise ClassX::RequiredAttrShouldNotHaveDefault' do
         lambda {
           klass = Class.new(ClassX)
           klass.class_eval do
-            has :x, :required => true, :default => 1
+            has :x, :optional => false, :default => 1
           end
         }.should raise_error(ClassX::RequiredAttrShouldNotHaveDefault)
       end
     end
 
-    describe 'declare attribute without :required and :default option' do
+    describe 'declare attribute without :optional and :default option' do
       before do
         @class = Class.new(ClassX)
         @class.class_eval do
@@ -178,11 +178,11 @@ describe ClassX do
       end
     end
 
-    describe ':required is false and without :default option' do
+    describe ':optional is true and without :default option' do
       before do
         @class = Class.new(ClassX)
         @class.class_eval do
-          has :x, :required => false, :kind_of => Integer
+          has :x, :optional => true, :kind_of => Integer
         end
       end
 
@@ -195,7 +195,7 @@ describe ClassX do
       before do
         @class1 = Class.new(ClassX)
         @class1.class_eval do
-          has :x, :required => true
+          has :x
         end
         @class2 = Class.new(ClassX)
         @class2.class_eval do

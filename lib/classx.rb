@@ -5,7 +5,7 @@ class ClassX
   class LazyOptionShouldHaveDefault < Exception; end
   class RequiredAttrShouldNotHaveDefault < Exception; end
   class <<self
-    def has name, attrs={ :is => :ro, :required => true }
+    def has name, attrs={}
       name = name.to_s
 
       setter_definition = ''
@@ -33,19 +33,23 @@ class ClassX
         __send__ :private,"#{name}="
       end
 
-      if !attrs[:default].nil?
-        raise RequiredAttrShouldNotHaveDefault, "in :#{name}: required attribute should not have :default option" if attrs[:required]
+      if attrs[:default].nil?
+        raise LazyOptionShouldHaveDefault, "in :#{name}: :lazy option need specifying :default" if attrs[:lazy]
+      else
+        # when you specify :optional to false explicitly, raise Error.
+        if attrs[:optional].nil?
+          attrs[:optional] = true
+        end
+        raise RequiredAttrShouldNotHaveDefault, "in :#{name}: required attribute should not have :default option" unless attrs[:optional]
         case attrs[:default]
         when Proc
           register_attr_default_value_proc name, &attrs[:default]
         else
           register_attr_default_value name, attrs[:default]
         end
-      else
-        raise LazyOptionShouldHaveDefault, "in :#{name}: :lazy option need specifying :default" if attrs[:lazy]
       end
 
-      if ( attrs[:required] != false  && attrs[:default].nil? )
+      unless attrs[:optional]
         register_attr_required name
       end
 

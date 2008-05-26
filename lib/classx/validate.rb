@@ -10,7 +10,7 @@ module ClassX::Validate
   #
   #     def run params
   #       validate params do
-  #         has :x, :requried => true
+  #         has :x
   #         has :y, :default => "hoge", :kind_of => Hash
   #       end
   #
