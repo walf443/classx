@@ -98,12 +98,13 @@ class ClassX
   end
 
   def initialize hash={}
+    before_init hash
+
     unless hash && hash.kind_of?(Hash)
       raise ArgumentError, "#{hash.inspect} was wrong as arguments of #{self.class}#initialize. please specify kind of Hash instance"
     end
 
     hash = hash.inject({}) {|h,item| h[item.first.to_s] = item.last; h } # allow String or Symbol for key 
-    before_init
     self.class.required_attributes.each do |name|
       raise AttrRequiredError, "param :#{name} is required to initialize #{self.class}" unless hash.keys.include?(name)
     end
@@ -119,7 +120,7 @@ class ClassX
   end
 
   # just extend point
-  def before_init
+  def before_init hash
   end
 
   def after_init
