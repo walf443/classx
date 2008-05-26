@@ -45,7 +45,7 @@ class ClassX
         raise LazyOptionShouldHaveDefault, "in :#{name}: :lazy option need specifying :default" if attrs[:lazy]
       end
 
-      if attrs[:required] 
+      if ( attrs[:required] != false  && attrs[:default].nil? )
         register_attr_required name
       end
 

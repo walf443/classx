@@ -165,6 +165,32 @@ describe ClassX do
       end
     end
 
+    describe 'declare attribute without :required and :default option' do
+      before do
+        @class = Class.new(ClassX)
+        @class.class_eval do
+          has :x, :kind_of => Integer
+        end
+      end
+
+      it 'should be required attribute' do
+        lambda { @class.new }.should raise_error(ClassX::AttrRequiredError)
+      end
+    end
+
+    describe ':required is false and without :default option' do
+      before do
+        @class = Class.new(ClassX)
+        @class.class_eval do
+          has :x, :required => false, :kind_of => Integer
+        end
+      end
+
+      it 'should be required attribute' do
+        lambda { @class.new }.should_not raise_error(ClassX::AttrRequiredError)
+      end
+    end
+
     describe 'with multiple class' do
       before do
         @class1 = Class.new(ClassX)
