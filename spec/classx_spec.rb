@@ -137,6 +137,17 @@ describe ClassX do
       end
     end
 
+    describe 'with :required and :default option' do
+      it 'should raise ClassX::RequiredAttrShouldNotHaveDefault' do
+        lambda {
+          klass = Class.new(ClassX)
+          klass.class_eval do
+            has :x, :required => true, :default => 1
+          end
+        }.should raise_error(ClassX::RequiredAttrShouldNotHaveDefault)
+      end
+    end
+
     describe 'with multiple class' do
       before do
         @class1 = Class.new(ClassX)

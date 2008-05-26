@@ -3,8 +3,9 @@ class ClassX
   class AttrRequiredError < Exception; end
   class InvalidSetterArgument < Exception; end
   class LazyOptionShouldHaveDefault < Exception; end
+  class RequiredAttrShouldNotHaveDefault < Exception; end
   class <<self
-    def has name, attrs={ :is => :ro, :required => false }
+    def has name, attrs={ :is => :ro, :required => true }
       name = name.to_s
 
       setter_definition = ''
@@ -33,6 +34,7 @@ class ClassX
       end
 
       if !attrs[:default].nil?
+        raise RequiredAttrShouldNotHaveDefault, "in :#{name}: required attribute should not have :default option" if attrs[:required]
         case attrs[:default]
         when Proc
           register_attr_default_value_proc name, &attrs[:default]
