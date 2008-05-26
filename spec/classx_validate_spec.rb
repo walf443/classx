@@ -33,4 +33,8 @@ describe ClassX::Validate do
   it 'should not raise Exception' do
     lambda { @class.new.run(:x => 10, :y => 20) }.should_not raise_error(Exception)
   end
+
+  it 'should be cached auto generated class' do
+    @class.new.run(:x => 10, :y => 20).class.should == @class.new.run(:x => 11, :y => 21).class
+  end
 end
