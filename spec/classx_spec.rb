@@ -44,12 +44,12 @@ describe ClassX do
         end
     end
 
-    describe 'with :is option' do
-      describe 'when you specify :ro for attribute' do
+    describe 'with :writable option' do
+      describe 'when you specify false for attribute' do
         before do
           @class = Class.new(ClassX)
           @class.class_eval do
-            has :x, :is => :ro
+            has :x, :writable => false
           end
         end
 
@@ -66,11 +66,11 @@ describe ClassX do
         end
       end
 
-      describe 'when you specify :rw for attribute' do 
+      describe 'when you specify true for attribute' do 
         before do
           @class = Class.new(ClassX)
           @class.class_eval do
-            has :x, :is => :rw
+            has :x, :writable => true
           end
         end
 

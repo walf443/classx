@@ -29,7 +29,7 @@ class ClassX
         end
       END_OF_ACCESSOR
 
-      if attrs[:is] == :ro
+      unless attrs[:writable]
         __send__ :private,"#{name}="
       end
 

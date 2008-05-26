@@ -5,16 +5,17 @@
 
   require 'classx'
   class Point < ClassX
-    has :x, :is => :ro, :kind_of => Fixnum, :required => true
-    has :y, :is => :ro, :kind_of => Fixnum, :required => true
+    has :x, :kind_of => Fixnum, :required => true
+    has :y, :kind_of => Fixnum, :required => true
   end
 
   class Point3D < Point
-    has :z, :is => :ro, :kind_of => Fixnum, :required => true
+    has :z, :writable => true, :kind_of => Fixnum, :required => true
   end
 
   Point.new(:x => 30, :y => 40)  #=> <# Point @x=30, @y=40 >
   Point3D.new(:x => 30, :y => 40, :z => 50)  #=> <# Point3D @x=30, @y=40, @z=50 >
+  Point3D.z = 60.0 # raise ClassX::InvalidSetterArgumentError
 
 == Description
 perl's Moose like Class interface.
