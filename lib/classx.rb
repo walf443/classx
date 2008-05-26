@@ -3,6 +3,7 @@ class ClassX
   class AttrRequiredError < Exception; end
   class InvalidSetterArgument < Exception; end
   class LazyOptionShouldHaveDefault < Exception; end
+  class OptionalAttrShouldBeWritable < Exception; end
   class RequiredAttrShouldNotHaveDefault < Exception; end
   class <<self
     def has name, attrs={}
@@ -29,10 +30,6 @@ class ClassX
         end
       END_OF_ACCESSOR
 
-      unless attrs[:writable]
-        __send__ :private,"#{name}="
-      end
-
       if attrs[:default].nil?
         raise LazyOptionShouldHaveDefault, "in :#{name}: :lazy option need specifying :default" if attrs[:lazy]
       else
@@ -49,8 +46,18 @@ class ClassX
         end
       end
 
-      unless attrs[:optional]
+      if attrs[:optional]
+        if attrs[:writable].nil?
+          attrs[:writable] = true
+        else
+          raise OptionalAttrShouldBeWritable unless attrs[:writable]
+        end
+      else
         register_attr_required name
+      end
+
+      unless attrs[:writable]
+        __send__ :private,"#{name}="
       end
 
     end

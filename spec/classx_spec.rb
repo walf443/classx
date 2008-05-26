@@ -206,5 +206,41 @@ describe ClassX do
         lambda { @class2.new }.should_not raise_error(ClassX::AttrRequiredError)
       end
     end
+
+    describe 'with :optional is true' do
+      describe 'without :writable option' do
+        before do
+          @class = Class.new(ClassX)
+          @class.class_eval do 
+            has :x, :optional => true
+          end
+        end
+        it 'should not raise AttrRequiredError' do
+          lambda { @class.new }.should_not raise_error(ClassX::AttrRequiredError)
+        end
+      end
+
+      describe 'with :writable is false' do
+        it 'should raise' do
+          lambda {
+            klass = Class.new(ClassX)
+            klass.class_eval do 
+              has :x, :optional => true, :writable => false
+            end
+          }.should raise_error(ClassX::OptionalAttrShouldBeWritable)
+        end
+      end
+
+      describe 'with :writable is true' do
+        it 'should raise' do
+          lambda {
+            klass = Class.new(ClassX)
+            klass.class_eval do 
+              has :x, :optional => true, :writable => true
+            end
+          }.should_not raise_error(ClassX::OptionalAttrShouldBeWritable)
+        end
+      end
+    end
   end
 end

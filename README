@@ -10,7 +10,7 @@
   end
 
   class Point3D < Point
-    has :z, :writable => true, :kind_of => Fixnum, :required => true
+    has :z, :writable => true, :kind_of => Fixnum
   end
 
   Point.new(:x => 30, :y => 40)  #=> <# Point @x=30, @y=40 >
