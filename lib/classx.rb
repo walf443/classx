@@ -1,7 +1,7 @@
 
 class ClassX
   class AttrRequiredError < Exception; end
-  class InvalidSetterArgument < Exception; end
+  class InvalidAttrArgument < Exception; end
   class LazyOptionShouldHaveDefault < Exception; end
   class OptionalAttrShouldBeWritable < Exception; end
   class RequiredAttrShouldNotHaveDefault < Exception; end
@@ -12,12 +12,12 @@ class ClassX
       setter_definition = ''
       if !attrs[:respond_to].nil?
         setter_definition += <<-END_OF_RESPOND_TO
-          raise InvalidSetterArgument, "param :#{name}'s value \#{val.inspect} should respond_to #{attrs[:respond_to]}}"  unless val.respond_to? #{attrs[:respond_to]}
+          raise InvalidAttrArgument, "param :#{name}'s value \#{val.inspect} should respond_to #{attrs[:respond_to]}}"  unless val.respond_to? #{attrs[:respond_to]}
         END_OF_RESPOND_TO
       end
       if !attrs[:kind_of].nil?
         setter_definition += <<-END_OF_KIND_OF
-          raise InvalidSetterArgument, "param :#{name}'s value \#{val.inspect} should kind_of #{attrs[:kind_of]}" unless val.kind_of? #{attrs[:kind_of]}
+          raise InvalidAttrArgument, "param :#{name}'s value \#{val.inspect} should kind_of #{attrs[:kind_of]}" unless val.kind_of? #{attrs[:kind_of]}
         END_OF_KIND_OF
       end
 

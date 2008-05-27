@@ -26,8 +26,8 @@ describe ClassX::Validate do
     lambda { @class.new.run({}) }.should raise_error(ClassX::AttrRequiredError)
   end
 
-  it 'should raise ClassX::InvalidArgumentError with InvalidArgument' do
-    lambda { @class.new.run(:x => 'hoge', :y => 'fuga') }.should raise_error(ClassX::InvalidSetterArgument)
+  it 'should raise ClassX::InvalidArgumentError with InvalidAttrArgument' do
+    lambda { @class.new.run(:x => 'hoge', :y => 'fuga') }.should raise_error(ClassX::InvalidAttrArgument)
   end
 
   it 'should not raise Exception' do
