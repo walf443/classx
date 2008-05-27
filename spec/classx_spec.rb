@@ -242,5 +242,20 @@ describe ClassX do
         end
       end
     end
+
+    describe 'not attribute param exist in #initialize argument' do
+      before do
+          @class = Class.new(ClassX)
+          @class.class_eval do 
+            has :x
+          end
+      end
+
+      # TODO: I'll change it to be able to choosee wheather check this strictly or not.
+      # In many case, lack argument cause any problem. On the other hand, extra argument does not cause any problem, I think.
+      it 'should be ignored' do
+        lambda { @class.new(:x => 10, :y => 20 ) }.should_not raise_error(Exception)
+      end
+    end
   end
 end

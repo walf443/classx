@@ -120,7 +120,9 @@ class ClassX
       raise AttrRequiredError, "param :#{name} is required to #{hash.inspect}" unless hash.keys.include?(name)
     end
     hash.each do |key,val|
-      __send__ "#{key}=", val
+      if respond_to? "#{key}=", true
+        __send__ "#{key}=", val
+      end
     end
     private_methods.select do |meth|
       meth.to_s =~ /^set_attr_default_value_of\[(.*?)\]$/
