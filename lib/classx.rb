@@ -112,12 +112,12 @@ class ClassX
     before_init hash
 
     unless hash && hash.kind_of?(Hash)
-      raise ArgumentError, "#{hash.inspect} was wrong as arguments of #{self.class}#initialize. please specify kind of Hash instance"
+      raise ArgumentError, "#{hash.inspect} was wrong as arguments. please specify kind of Hash instance"
     end
 
     hash = hash.inject({}) {|h,item| h[item.first.to_s] = item.last; h } # allow String or Symbol for key 
     self.class.required_attributes.each do |name|
-      raise AttrRequiredError, "param :#{name} is required to initialize #{self.class}" unless hash.keys.include?(name)
+      raise AttrRequiredError, "param :#{name} is required to #{hash.inspect}" unless hash.keys.include?(name)
     end
     hash.each do |key,val|
       __send__ "#{key}=", val
