@@ -5,12 +5,12 @@
 
   require 'classx'
   class Point < ClassX
-    has :x, :kind_of => Fixnum, :required => true
-    has :y, :kind_of => Fixnum, :required => true
+    has :x, :kind_of => Fixnum
+    has :y, :kind_of => Fixnum
   end
 
   class Point3D < Point
-    has :z, :writable => true, :kind_of => Fixnum
+    has :z, :writable => true, :kind_of => Fixnum, :optional => true
   end
 
   Point.new(:x => 30, :y => 40)  #=> <# Point @x=30, @y=40 >
