@@ -5,6 +5,11 @@ class ClassX
   class LazyOptionShouldHaveDefault < Exception; end
   class OptionalAttrShouldBeWritable < Exception; end
   class RequiredAttrShouldNotHaveDefault < Exception; end
+
+  ATTR_REGEX = /^([^=]*?)=$/
+  SET_ATTR_DEFAULT_VALUE_REGEX = /^set_attr_default_value_of\[(.*?)\]$/
+  ATTR_REQUIRED_REGEX = /^attr_required\[(.*?)\]/
+
   class <<self
     def add_attribute name, attrs={}
       name = name.to_s
@@ -91,7 +96,6 @@ class ClassX
       private "attr_required[#{name}]"
     end
 
-    ATTR_REGEX = /^([^=]*?)=$/
     def attributes
       ( public_instance_methods + private_instance_methods ).select {|meth|
         meth.to_s =~ ATTR_REGEX
@@ -100,7 +104,6 @@ class ClassX
       }
     end
     
-    ATTR_REQUIRED_REGEX = /^attr_required\[(.*?)\]/
     def required_attributes
       private_instance_methods.select {|meth|
         meth.to_s =~ ATTR_REQUIRED_REGEX
@@ -127,7 +130,7 @@ class ClassX
       end
     end
     private_methods.select do |meth|
-      meth.to_s =~ /^set_attr_default_value_of\[(.*?)\]$/
+      meth.to_s =~ SET_ATTR_DEFAULT_VALUE_REGEX
     end.each do |meth|
       __send__ meth
     end
