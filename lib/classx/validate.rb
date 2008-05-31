@@ -28,7 +28,7 @@ module ClassX::Validate
     uniq_key = caller[0]
     unless @@__validate_cached[uniq_key]
       @@__validate_cached[uniq_key] = Class.new(ClassX)
-      @@__validate_cached[uniq_key].class_eval &block
+      @@__validate_cached[uniq_key].class_eval(&block)
     end
     @@__validate_cached[uniq_key].new hash 
   end
