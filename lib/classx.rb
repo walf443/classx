@@ -6,7 +6,7 @@ class ClassX
   class OptionalAttrShouldBeWritable < Exception; end
   class RequiredAttrShouldNotHaveDefault < Exception; end
   class <<self
-    def has name, attrs={}
+    def add_attribute name, attrs={}
       name = name.to_s
 
       setter_definition = ''
@@ -61,6 +61,8 @@ class ClassX
       end
 
     end
+
+    alias has add_attribute
 
     def register_attr_default_value name, value
       self.class_eval do
