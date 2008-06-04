@@ -1,7 +1,8 @@
 
 class ClassX
-  class AttrRequiredError < Exception; end
-  class InvalidAttrArgument < Exception; end
+  class InstanceException < Exception; end
+  class AttrRequiredError < InstanceException; end
+  class InvalidAttrArgument < InstanceException; end
   class LazyOptionShouldHaveDefault < Exception; end
   class OptionalAttrShouldBeWritable < Exception; end
   class RequiredAttrShouldNotHaveDefault < Exception; end
