@@ -15,6 +15,34 @@ class ClassX
     def add_attribute name, attrs={}
       name = name.to_s
 
+      if attrs[:default].nil?
+        raise LazyOptionShouldHaveDefault, "in :#{name}: :lazy option need specifying :default" if attrs[:lazy]
+      else
+        # when you specify :optional to false explicitly, raise Error.
+        if attrs[:optional].nil?
+          attrs[:optional] = true
+        end
+        raise RequiredAttrShouldNotHaveDefault, "in :#{name}: required attribute should not have :default option" unless attrs[:optional]
+        case attrs[:default]
+        when Proc
+          unless attrs[:lazy]
+            register_attr_default_value_proc name, &attrs[:default]
+          end
+        else
+          register_attr_default_value name, attrs[:default]
+        end
+      end
+
+      if attrs[:optional]
+        if attrs[:writable].nil?
+          attrs[:writable] = true
+        else
+          raise OptionalAttrShouldBeWritable unless attrs[:writable]
+        end
+      else
+        register_attr_required name
+      end
+
       setter_definition = ''
       if !attrs[:respond_to].nil?
         setter_definition += <<-END_OF_RESPOND_TO
@@ -36,30 +64,14 @@ class ClassX
         end
       END_OF_ACCESSOR
 
-      if attrs[:default].nil?
-        raise LazyOptionShouldHaveDefault, "in :#{name}: :lazy option need specifying :default" if attrs[:lazy]
-      else
-        # when you specify :optional to false explicitly, raise Error.
-        if attrs[:optional].nil?
-          attrs[:optional] = true
-        end
-        raise RequiredAttrShouldNotHaveDefault, "in :#{name}: required attribute should not have :default option" unless attrs[:optional]
-        case attrs[:default]
-        when Proc
-          register_attr_default_value_proc name, &attrs[:default]
-        else
-          register_attr_default_value name, attrs[:default]
-        end
-      end
-
-      if attrs[:optional]
-        if attrs[:writable].nil?
-          attrs[:writable] = true
-        else
-          raise OptionalAttrShouldBeWritable unless attrs[:writable]
+      if attrs[:lazy] && attrs[:default]
+        define_method name do |mine|
+          unless mine.instance_variable_defined?("@__default_#{name}_proc")
+            mine.instance_variable_set("@__default_#{name}_proc", attrs[:default].call(self))
+          end
         end
       else
-        register_attr_required name
+        attr_reader name
       end
 
       unless attrs[:writable]
@@ -122,19 +134,26 @@ class ClassX
     end
 
     hash = hash.inject({}) {|h,item| h[item.first.to_s] = item.last; h } # allow String or Symbol for key 
-    self.class.required_attributes.each do |name|
-      raise AttrRequiredError, "param :#{name} is required to #{hash.inspect}" unless hash.keys.include?(name)
-    end
-    hash.each do |key,val|
-      if respond_to? "#{key}=", true
-        __send__ "#{key}=", val
-      end
-    end
+
+    # set default value to attr
     private_methods.select do |meth|
       meth.to_s =~ SET_ATTR_DEFAULT_VALUE_REGEX
     end.each do |meth|
       __send__ meth
     end
+
+    # check required attr in args
+    self.class.required_attributes.each do |name|
+      raise AttrRequiredError, "param :#{name} is required to #{hash.inspect}" unless hash.keys.include?(name)
+    end
+
+    # set value to attr
+    hash.each do |key,val|
+      if respond_to? "#{key}=", true
+        __send__ "#{key}=", val
+      end
+    end
+
     after_init
   end
 

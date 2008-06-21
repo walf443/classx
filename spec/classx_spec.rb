@@ -106,13 +106,14 @@ describe ClassX do
         end
 
         # TODO: with lazy option
-        # it "can use self as Proc's argument" do
-        #   @class.class_eval do
-        #     has :y, :default => proc {|mine| mine.x }
-        #   end
+        it "can use self as Proc's argument" do
+          @class.class_eval do
+            has :y, :default => proc {|mine| mine.x }, :lazy => true
+          end
 
-        #   @class.new.y.should equal(@class.new.x)
-        # end
+          instance = @class.new
+          instance.y.should equal(instance.x)
+        end
       end
 
       describe 'when value is not Proc' do
