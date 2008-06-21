@@ -65,9 +65,9 @@ class ClassX
       END_OF_ACCESSOR
 
       if attrs[:lazy] && attrs[:default]
-        define_method name do |mine|
-          unless mine.instance_variable_defined?("@__default_#{name}_proc")
-            mine.instance_variable_set("@__default_#{name}_proc", attrs[:default].call(self))
+        define_method name do
+          unless instance_variable_defined?("@__default_#{name}_proc")
+            instance_variable_set("@__default_#{name}_proc", attrs[:default].call(self))
           end
         end
       else
