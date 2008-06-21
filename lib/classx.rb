@@ -43,6 +43,28 @@ class ClassX
         register_attr_required name
       end
 
+      if attrs[:handles]
+        case attrs[:handles]
+        when Hash
+          attrs[:handles].each do |key, val|
+            raise if instance_methods.map {|meth| meth.to_s }.include? key.to_s
+
+            define_method key do |*args|
+              __send__(name).__send__(val, *args)
+            end
+          end
+        when Array
+          attrs[:handles].each do |meth|
+            raise if instance_methods.map {|m| m.to_s }.include? meth.to_s
+
+            define_method meth do |*args|
+              __send__(name).__send__(meth, *args)
+            end
+          end
+        else
+        end
+      end
+
       setter_definition = ''
       if !attrs[:respond_to].nil?
         setter_definition += <<-END_OF_RESPOND_TO
