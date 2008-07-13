@@ -79,6 +79,7 @@ class ClassX
           unless instance_variable_defined?("@__default_#{name}_proc")
             instance_variable_set("@__default_#{name}_proc", attrs[:default].call(self))
           end
+          instance_variable_get("@__default_#{name}_proc")
         end
       else
         attr_reader name
