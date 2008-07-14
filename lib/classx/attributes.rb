@@ -76,7 +76,13 @@ class ClassX
 
       if attrs[:lazy] && attrs[:default]
         define_method name do
-          unless instance_variable_defined?("@__default_#{name}_proc")
+          # XXX: instance_variable_defined? is not defined in Ruby 1.8.5
+          cond = if respond_to?(:instance_variable_defined?)
+            instance_variable_defined?("@__default_#{name}_proc")
+          else
+            instance_variables.include?("@__default_#{name}_proc")
+          end
+          unless cond
             instance_variable_set("@__default_#{name}_proc", attrs[:default].call(self))
           end
           instance_variable_get("@__default_#{name}_proc")
