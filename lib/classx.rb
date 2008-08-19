@@ -19,17 +19,15 @@ class ClassX
 
     hash = hash.inject({}) {|h,item| h[item.first.to_s] = item.last; h } # allow String or Symbol for key 
 
-    if respond_to? :attribute_of, true
-      hash.each do |key, val|
-        if attribute_of[key]
-          attribute_of[key].set val
-        end
+    hash.each do |key, val|
+      if attribute_of[key]
+        attribute_of[key].set val
       end
+    end
 
-      attribute_of.each do |key, val|
-        next if val.lazy?
-        raise AttrRequiredError, "param: :#{key} is required to #{hash.inspect}" if !val.optional? && !val.get
-      end
+    attribute_of.each do |key, val|
+      next if val.lazy?
+      raise AttrRequiredError, "param: :#{key} is required to #{hash.inspect}" if !val.optional? && !val.get
     end
 
     after_init

@@ -27,18 +27,6 @@ class ClassX
     def add_attribute name, attrs={}
       name = name.to_s
 
-      unless private_instance_methods.map {|meth| meth.to_s }.include?('attribute_of')
-        define_method :attribute_of do
-          hash = {}
-          private_methods.map {|meth| meth.to_s }.each do |meth|
-            next unless meth =~ ATTRIBUTE_REGEX
-            hash[$1] = __send__ "attribute_of:#$1"
-          end
-
-          hash
-        end
-      end
-
       define_attribute(name, attrs)
 
       define_method name do
