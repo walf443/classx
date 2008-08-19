@@ -52,6 +52,13 @@ class ClassX
           end
         end
 
+        # description for attribute
+        define_method :desc do
+          args[:desc] 
+        end
+
+        # default paramater for attribute.
+        # if default is Proc, run Proc every time in instanciate.
         define_method :default do
           case args[:default]
           when Proc
@@ -61,14 +68,19 @@ class ClassX
           end
         end
 
+        # when it lazy option specified, it will not be initialized when #initialize.
         define_method :lazy? do
           return args[:lazy]
         end
 
+        # when this option specify true, not raise error in #initialize without value.
         define_method :optional? do
           return args[:optional]
         end
 
+        # you can specify :validate option for checking when value is setted.
+        # you can use :respond_to as shotcut for specifying { :validate => proc {|val| respond_to?(val, true) } }
+        # you can use :isa or :kind_of as shotcut for specifying { :validate => proc {|val| kind_of?(val) } }
         define_method :validate? do |val|
           if args[:validate]
             case args[:validate]
