@@ -29,6 +29,29 @@ class ClassX
           @data ||= default
         end
 
+        # for extending attribute point.
+        if args[:include]
+          case args[:include]
+          when Array
+            args[:include].each do |mod|
+              self.__send__ :include, mod
+            end
+          else
+            self.__send__ :include, args[:include]
+          end
+        end
+
+        if args[:extend]
+          case args[:extend]
+          when Array
+            args[:extend].each do |mod|
+              self.__send__ :extend, mod
+            end
+          else
+            self.__send__ :extend, args[:extend]
+          end
+        end
+
         define_method :default do
           case args[:default]
           when Proc
