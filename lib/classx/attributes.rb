@@ -2,6 +2,9 @@ class ClassX
   module Attributes
     def define_attribute name, attribute
       @__attribute_param_of ||= {}
+      if @__attribute_param_of[name]
+        warn "attribute_of :#{name} redefined"
+      end
       @__attribute_param_of[name] = klass_attribute = ClassX::AttributeFactory.create(attribute)
       define_method "attribute_of:#{name}" do
         @__attribute_of ||= {}
