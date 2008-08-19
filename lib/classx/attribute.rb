@@ -52,6 +52,65 @@ class ClassX
           end
         end
 
+        # you specify type changing rule with :coerce option.
+        #
+        define_method :coerce do |val|
+          if args[:coerce]
+            case args[:coerce]
+            when Hash
+              result = val
+              args[:coerce].each do |cond, rule|
+                case cond
+                when Proc
+                  if cond.call(val)
+                    result = rule.call(val)
+                    break
+                  end
+                when Symbol
+                  if val.respond_to? cond
+                    result = rule.call(val)
+                    break
+                  end
+                when Module
+                  if val.kind_of? cond
+                    result = rule.call(val)
+                    break
+                  end
+                end
+              end
+
+              return result
+            when Array
+              result = val
+              args[:coerce].each do |item|
+                raise unless item.kind_of? Hash
+
+                case item
+                when Hash
+                  item.each do |cond, rule|
+                    
+                    case cond
+                    when Proc
+                      if cond.call(val)
+                        result = rule.call(val)
+                        break
+                      end
+                    end
+
+                    break if result
+                  end
+                end
+
+                break if result
+              end
+
+              return result
+            end
+          else
+            return val
+          end
+        end
+
         # description for attribute
         define_method :desc do
           args[:desc] 
@@ -102,6 +161,7 @@ class ClassX
         end
 
         define_method :set do |val|
+          val = coerce(val)
           raise ClassX::InvalidAttrArgument unless validate? val
           @data = val
         end
