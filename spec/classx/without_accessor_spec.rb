@@ -23,7 +23,7 @@ describe ClassX do
       end
 
       it 'should have empty attributes' do
-        @class.attributes.should be_empty
+        @class.attribute_of.keys.should be_empty
       end
     end
   end

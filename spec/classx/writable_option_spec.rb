@@ -21,7 +21,7 @@ describe ClassX do
         end
 
         it 'should have attributes [:x]' do
-          @class.attributes.should == ['x']
+          @class.attribute_of.keys.should == ['x']
         end
       end
 
@@ -42,7 +42,7 @@ describe ClassX do
         end
 
         it 'should have attributes [:x]' do
-          @class.attributes.should == ['x']
+          @class.attribute_of.keys.should == ['x']
         end
       end
 

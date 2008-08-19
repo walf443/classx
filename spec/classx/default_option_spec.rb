@@ -23,10 +23,12 @@ describe ClassX do
         it "can use self as Proc's argument" do
           @class.class_eval do
             has :y, :default => proc {|mine| mine.x }, :lazy => true
+            has :z, :default => proc {|mine| mine.y }, :lazy => true
           end
 
           instance = @class.new
           instance.y.should equal(instance.x)
+          instance.z.should equal(instance.y)
         end
       end
 

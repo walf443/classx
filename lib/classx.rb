@@ -1,3 +1,4 @@
+require 'classx/attribute'
 require 'classx/attributes'
 
 class ClassX
@@ -7,10 +8,6 @@ class ClassX
   class LazyOptionShouldHaveDefault < Exception; end
   class OptionalAttrShouldBeWritable < Exception; end
   class RequiredAttrShouldNotHaveDefault < Exception; end
-
-  ATTR_REGEX = /^([^=]*?)=$/
-  SET_ATTR_DEFAULT_VALUE_REGEX = /^set_attr_default_value_of\[(.*?)\]$/
-  ATTR_REQUIRED_REGEX = /^attr_required\[(.*?)\]/
 
   extend Attributes
   def initialize hash={}
@@ -22,26 +19,29 @@ class ClassX
 
     hash = hash.inject({}) {|h,item| h[item.first.to_s] = item.last; h } # allow String or Symbol for key 
 
-    # set default value to attr
-    private_methods.select do |meth|
-      meth.to_s =~ SET_ATTR_DEFAULT_VALUE_REGEX
-    end.each do |meth|
-      __send__ meth
-    end
+    if respond_to? :attribute_of, true
+      hash.each do |key, val|
+        if attribute_of[key]
+          attribute_of[key].set val
+        end
+      end
 
-    # check required attr in args
-    self.class.required_attributes.each do |name|
-      raise AttrRequiredError, "param :#{name} is required to #{hash.inspect}" unless hash.keys.include?(name)
-    end
-
-    # set value to attr
-    hash.each do |key,val|
-      if respond_to? "#{key}=", true
-        __send__ "#{key}=", val
+      attribute_of.each do |key, val|
+        raise AttrRequiredError, "param: :#{key} is required to #{hash.inspect}" if !val.optional? && !val.get
       end
     end
 
     after_init
+  end
+
+  def attribute_of
+    hash = {}
+    private_methods.map {|meth| meth.to_s }.each do |meth|
+      next unless meth =~ ClassX::Attributes::ATTRIBUTE_REGEX
+      hash[$1] = __send__ "attribute_of:#$1"
+    end
+
+    hash
   end
 
   # just extend point
