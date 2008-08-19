@@ -5,13 +5,13 @@ class ClassX
       klass.class_eval do
         
         # XXX: Hack for defining class method for klass
-        mod = Module.new
-        mod.module_eval do
+        tmp_mod = Module.new
+        tmp_mod.module_eval do
           define_method :config do
             args
           end
         end
-        __send__ :extend, mod
+        __send__ :extend, tmp_mod
 
         raise ClassX::RequiredAttrShouldNotHaveDefault if args[:optional] == false && !args[:default].nil?
         raise ClassX::OptionalAttrShouldBeWritable if args[:optional] && args[:writable] == false
@@ -129,8 +129,8 @@ class ClassX
             else
               return args[:validate] == val
             end
-          elsif klass = ( args[:isa] || args[:kind_of] )
-            return val.kind_of?(klass)
+          elsif mod = ( args[:isa] || args[:kind_of] )
+            return val.kind_of?(mod)
           elsif args[:respond_to]
             return val.respond_to?(args[:respond_to], true)
           else
