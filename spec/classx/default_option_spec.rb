@@ -12,7 +12,7 @@ describe ClassX do
           end
         end
 
-        it 'shouold have any value when instanciate' do
+        it 'should have any value when instanciate' do
           @class.new.x.should_not be_nil
         end
 
