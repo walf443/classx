@@ -10,6 +10,7 @@ class ClassX
   class RequiredAttrShouldNotHaveDefault < Exception; end
 
   extend Attributes
+
   def initialize *args
     hash = before_init(*args)
 
