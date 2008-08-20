@@ -10,8 +10,8 @@ class ClassX
   class RequiredAttrShouldNotHaveDefault < Exception; end
 
   extend Attributes
-  def initialize hash={}
-    before_init hash
+  def initialize *args
+    hash = before_init(*args)
 
     unless hash && hash.kind_of?(Hash)
       raise ArgumentError, "#{hash.inspect} was wrong as arguments. please specify kind of Hash instance"
@@ -44,7 +44,11 @@ class ClassX
   end
 
   # just extend point
-  def before_init hash
+  def before_init *args
+    raise ArgumentError if args.size > 1
+
+    hash = args.first
+    hash.nil? ? {} : hash
   end
 
   def after_init

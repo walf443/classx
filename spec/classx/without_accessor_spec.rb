@@ -14,10 +14,6 @@ describe ClassX do
         lambda { @class.new }.should_not raise_error(Exception)
       end
 
-      it 'should raise ArgumentError when recieved nil as initialize argument' do
-        lambda { @class.new(nil) }.should raise_error(ArgumentError)
-      end
-
       it 'should raise ArgumentError when recieved not kind of Hash instance as initialize argument' do
         lambda { @class.new([]) }.should raise_error(ArgumentError)
       end
