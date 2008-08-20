@@ -18,15 +18,21 @@ class ClassX
       raise ArgumentError, "#{hash.inspect} was wrong as arguments. please specify kind of Hash instance"
     end
 
-    hash = hash.inject({}) {|h,item| h[item.first.to_s] = item.last; h } # allow String or Symbol for key 
+    # allow String or Symbol for key 
+    tmp_hash = {}
+    hash.each do |key,val|
+      tmp_hash[key.to_s] = val
+    end
+    hash = tmp_hash
 
+    cached_attribute_of = attribute_of
     hash.each do |key, val|
-      if attribute_of[key]
-        attribute_of[key].set val
+      if cached_attribute_of[key]
+        cached_attribute_of[key].set val
       end
     end
 
-    attribute_of.each do |key, val|
+    cached_attribute_of.each do |key, val|
       next if val.class.lazy?
       raise AttrRequiredError, "param: :#{key} is required to #{hash.inspect}" if !val.class.optional? && !val.get
     end

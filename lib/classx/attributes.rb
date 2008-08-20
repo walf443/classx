@@ -3,14 +3,7 @@ class ClassX
     ATTRIBUTE_REGEX = /\Aattribute_of:(\w+)\z/
 
     def attribute_of
-      hash = {}
       @__attribute_param_of ||= {}
-      private_instance_methods.map {|meth| meth.to_s }.each do |meth|
-        next unless meth =~ ATTRIBUTE_REGEX
-        hash[$1] = @__attribute_param_of[$1]
-      end
-
-      hash
     end
 
     private 
