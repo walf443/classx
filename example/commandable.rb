@@ -4,7 +4,7 @@ require 'classx/commandable'
 
 $ClassXCommandableMappingOf[Symbol] = String
 
-class SomeCommand < ClassX
+class YourApp < ClassX
   extend Commandable
 
   has :arg1, 
@@ -24,5 +24,5 @@ class SomeCommand < ClassX
 end
 
 if $0 == __FILE__
-  SomeCommand.from_argv.run
+  YourApp.from_argv.run
 end
