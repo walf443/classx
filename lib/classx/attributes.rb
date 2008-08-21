@@ -3,7 +3,6 @@ class ClassX
     ATTRIBUTE_REGEX = /\Aattribute_of:(\w+)\z/
 
     def attribute_of
-      @__attribute_of
       unless @__attribute_of
         @__attribute_of = {}
         private_instance_methods.select {|meth| meth.to_s =~ ATTRIBUTE_REGEX }.each do |meth|
@@ -13,10 +12,6 @@ class ClassX
       end
 
       @__attribute_of
-    end
-
-    def included klass
-      klass.extend self
     end
 
     private 
@@ -81,6 +76,10 @@ class ClassX
       end
 
       alias has add_attribute
+
+      def included klass
+        klass.extend self
+      end
 
   end
 end
