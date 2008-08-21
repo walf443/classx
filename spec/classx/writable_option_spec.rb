@@ -60,7 +60,7 @@ describe ClassX do
     end
 
     describe 'with :writable is true' do
-      it 'should raise ClassX::OptionalAttrShouldBeWritable' do
+      it 'should not raise ClassX::OptionalAttrShouldBeWritable' do
         lambda {
           klass = Class.new(ClassX)
           klass.class_eval do 
