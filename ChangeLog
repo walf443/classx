@@ -1,4 +1,410 @@
-== 0.0.1 / 2008-05-20
+commit 08727ad7905c9f16a95d2b788b9c5e51288d1580
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Thu Aug 21 17:20:16 2008 +0900
 
-* initial release
+    tweak rake tasks.
 
+commit 6540c8afadedf7f72cfacea7d67efadba38f8e5a
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Thu Aug 21 16:42:15 2008 +0900
+
+    added presentation slide for TokyoRubyKaigi01.
+
+commit 84f215407ea6bcb76022ef41ecf4e55088d73b9b
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Thu Aug 21 13:23:48 2008 +0900
+
+    included should private
+
+commit 7bf3db95eff3205a8c7dd05a7d0e34dd658d2ac2
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Thu Aug 21 13:04:56 2008 +0900
+
+    fixed bug when extending classX based class.
+
+commit 633f7e88b16f94fc4fb64dd84cd68cf8a4b5d3a2
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Thu Aug 21 11:46:31 2008 +0900
+
+    typo fixed.
+
+commit 93347e055db4f132356f990be82efc332dba3962
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Wed Aug 20 23:23:13 2008 +0900
+
+    added benchmark for attribute_set.
+
+commit 283903a6b88fe5a6bdb453b13e10d6427e4a7113
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Wed Aug 20 22:52:02 2008 +0900
+
+    It seems that it is facter [ select => convert ] than [ convert => select ].
+
+commit 7d345a994d585e7ef9fdae97b84169e0fec71ddf
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Wed Aug 20 22:32:37 2008 +0900
+
+     #attribute_of is too slow. So, change caching the result in the same method.
+
+commit 28f399333add1d80b76dd3c91a44cb2938d55772
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Wed Aug 20 21:58:10 2008 +0900
+
+    added initialize benchmark. classX is TOOOOOOOOOOOOOOOOOOOOOOOOOOO SLOOOOOW now!!!
+
+commit d5619b6533955eb46367103119bc7cff5d3d35e7
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Wed Aug 20 21:13:44 2008 +0900
+
+    fixed typo.
+
+commit ea6fd14775f58b800b64468af9c08a0c4a4acc28
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Wed Aug 20 21:03:56 2008 +0900
+
+    tweak line break.
+
+commit a3323a233f031cdbc774c88b786241f260a22a24
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Wed Aug 20 21:02:23 2008 +0900
+
+    allow user changing argument with overriding #before_init .
+
+commit dfa9fe29791bae22fd91d0b7edcf9b4ec9d8d9e2
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Wed Aug 20 20:55:59 2008 +0900
+
+    tweak.
+
+commit aff7bea9fa71a98c6e7fc23ae6a8f78b93554599
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Wed Aug 20 20:40:12 2008 +0900
+
+    added ClassX::Commandable.
+
+commit e3a2f7ea88f980c1dd701bb17c934347bc52841b
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Wed Aug 20 08:47:53 2008 +0900
+
+    change many method to class method.
+
+commit f34fd672c66e9ba91157e594032933d0170d7264
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Wed Aug 20 08:20:53 2008 +0900
+
+    variable name is worse.
+
+commit 0b58fc18a0ea81803c284df6243d0086f15809ba
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Wed Aug 20 08:03:11 2008 +0900
+
+    change to private many method and tweak method define order.
+
+commit 9f43a491609034a94d4df7954f5526225e3a7ce5
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Wed Aug 20 07:51:20 2008 +0900
+
+    output warn when attribute was overridden.
+
+commit ff20fbc16efff13b367d473c0c033373a2c2f51c
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Wed Aug 20 02:57:57 2008 +0900
+
+    added coerce option.
+
+commit b4a5afc74037bd14d1d9204de76723c4c7b876ff
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Wed Aug 20 02:11:02 2008 +0900
+
+    added :desc option to attribute and added doc.
+
+commit bd06dccff2f367a0ea4d1d107f45620a61574314
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Wed Aug 20 01:54:10 2008 +0900
+
+    It may be something wrong.
+
+commit 5122329bf074239b6c7ea872d3740c79056bd083
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Wed Aug 20 01:50:24 2008 +0900
+
+    support :include and :extend option for extending attrubte.
+
+commit 0c22d5655c4a8e76b9eb0ef58ac179b2325138be
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Wed Aug 20 01:24:02 2008 +0900
+
+    added classx/attrubte. lazy support.
+
+commit 73a36575cf7c219da716d0a59decf99d0b9b3c40
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Wed Aug 20 01:16:20 2008 +0900
+
+    Merge branches 'master' and 'with_classx_attribute'
+
+commit bc9924c17b1cb45a73b033172979a4a288c12b1d
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Wed Aug 20 01:15:46 2008 +0900
+
+    change to use ClassX::AttributeFactory class that generate Attribute class.
+
+commit 221548d16464e00180e38045976b93da05d63bdc
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Tue Jul 15 07:14:39 2008 +0900
+
+    added code for Ruby1.8.5
+
+commit 1b53e64aa57af2b14031cdc4780ce036032d411b
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Mon Jul 14 08:55:33 2008 +0900
+
+    fied bug: when second access using lazy option was return nil.
+
+commit a7093b487c699ee18e91c2f86c83ca94e5687bb6
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sun Jun 22 03:19:10 2008 +0900
+
+    added test.
+
+commit 9c43ef589df6ae5b3e41b646e03f51c011004123
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sun Jun 22 03:04:06 2008 +0900
+
+    you can use attribute defenition in module
+
+commit fc3c7329036576c0c44428d014b0de7dc9f20763
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sun Jun 22 02:44:22 2008 +0900
+
+    added :handles option.
+
+commit 1b6cc210418a4f1b3e772bdd6979f043924637cc
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sun Jun 22 02:20:21 2008 +0900
+
+    split test code for maintenancibirity.
+
+commit 801f39272c57f19a40449a455b3eacaf0b535e7d
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sun Jun 22 00:03:36 2008 +0900
+
+    bug fixed.
+
+commit c309461c56487d9f722720b36385128bbd50df03
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sat Jun 21 23:49:33 2008 +0900
+
+    support :lazy option
+
+commit 6ebdfce9cde0c596997348be4c4804fee7f4e6c2
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Thu Jun 5 07:55:06 2008 +0900
+
+    make InstanceException to rescue multiple exception of classx.
+
+commit cf1b0742dbded5a43cfec4b500ec0378bdc4b23c
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Thu Jun 5 00:33:34 2008 +0900
+
+    Fixed doc.
+
+commit 8f4ba237852a5166004e9fbd2530ee548c4394c5
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sat May 31 16:32:22 2008 +0900
+
+    change to caching set_attr_default_value_of[] methods regex.
+
+commit 87726f13ba5c1910c7c4c7537d01ec94f08d3586
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sat May 31 16:31:27 2008 +0900
+
+    for warning.
+
+commit 95b2f4497af4cd5b0fc393d3276ec9f033fc0e00
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sat May 31 15:59:04 2008 +0900
+
+    It may be conflict class method 'has'. So set 'add_attribute' as default name.
+
+commit 0f2d6aee6d8c21cf6e37721d6f25af9c3311a153
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Wed May 28 01:09:16 2008 +0900
+
+    Fixed doc. :required param was deprecated.
+
+commit 13a8d62c43bb2697e76ceb3f3913696efd17aef4
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Wed May 28 01:07:02 2008 +0900
+
+    When not attribute param exist in #initialize params, it should be ignored.
+
+commit c1837234062d8570c776f7371424790dcd3cd656
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Tue May 27 23:44:30 2008 +0900
+
+    tweak spec.
+
+commit 158a33e5dff79dd03b7298b01ffec1cf9d12c74a
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Tue May 27 09:21:23 2008 +0900
+
+    Tweak error message for easy debuging with ClassX::Validate
+
+commit 2194a9f8ba7bb1a6141c2c28efd5c7257f38b7d3
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Tue May 27 09:13:25 2008 +0900
+
+    rename ClassX::InvalidSetterArgument to ClassX::InvalidAttrArgument
+
+commit ca42b54f0300a709a3a950422e430b92523d1736
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Tue May 27 03:06:32 2008 +0900
+
+    Change to raise Exception when you specify :optional is true and :writable is false.
+
+commit d6652e91881ee21d1abd635230f19054bd388116
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Tue May 27 02:51:05 2008 +0900
+
+    XXX: compatible change. Rename option :required to :optional.
+    As :optional does not specify false, attribute should be required.
+    If you specify :option and does not specify :optional, :optional is true.
+
+commit 8f19213bbab485d5f95af9527e4ebe1d3c335e29
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Tue May 27 02:08:13 2008 +0900
+
+    XXX: compatible change. when you want to define setter as public, you should specify more expricitly.
+
+commit 39c5e6a2ba8bc550ab8168d88c9d46d6cf1876d9
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Tue May 27 01:57:26 2008 +0900
+
+    Moved hook point of before_init and change to take argument for tweaking constructor arguments
+
+commit 2fb2bfe2fdf2e1c3e66fa0180341b5a7a2cd5010
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Tue May 27 01:43:21 2008 +0900
+
+    If attribute is optional, it should declare expricitly.
+
+commit 2b6d048a469850308050e9d7188f834a76858657
+Author: Keiji, Yoshimi <walf443@gmail dot com>
+Date:   Tue May 27 01:26:48 2008 +0900
+
+    Added spec.
+
+commit 566f79d80c562b3c99b8744cc60411fbc3b525ff
+Author: Keiji, Yoshimi <walf443@gmail dot com>
+Date:   Tue May 27 01:17:46 2008 +0900
+
+    Oh my got! It's not worth caching without redifine.
+
+commit 53129fae5970eee849271e323ed8bd95ac560197
+Author: Keiji, Yoshimi <walf443@gmail dot com>
+Date:   Tue May 27 01:10:18 2008 +0900
+
+    required attribute should not have :default option.
+
+commit f382e00c615ada6fdb77d81fa5c311800bae70f1
+Author: Keiji, Yoshimi <walf443@gmail dot com>
+Date:   Tue May 27 00:22:11 2008 +0900
+
+    Added experimental feature for caching autogenerated class to validate.Hash
+
+commit dd0790a8f03b465e506ec6cc6a7e4004e0dbb6f0
+Author: Keiji, Yoshimi <walf443@gmail dot com>
+Date:   Mon May 26 23:59:51 2008 +0900
+
+    Tweaked docs.
+
+commit e697f6e45c64827dfaebf5de839ccb34f2688fc5
+Author: Keiji, Yoshimi <walf443@gmail dot com>
+Date:   Mon May 26 23:53:18 2008 +0900
+
+    Added ClassX::Validate.
+
+commit 88e75d9b7ceb18e654df108827eb3aebac14039b
+Author: Keiji, Yoshimi <walf443@gmail dot com>
+Date:   Mon May 26 08:47:55 2008 +0900
+
+    Added attributes class method.
+
+commit 50981b2a813c215e987953e8ad6f4e5915a11be1
+Author: Keiji, Yoshimi <walf443@gmail dot com>
+Date:   Sun May 25 16:24:20 2008 +0900
+
+    \# required attributes should be public class methods
+
+commit 65b3ab3a00e96dff9407acb62bdd29551734598d
+Author: Keiji, Yoshimi <walf443@gmail dot com>
+Date:   Sun May 25 03:10:14 2008 +0900
+
+    Change process order for warings
+
+commit b27bce22642bfe6e83322aab5cc333add00f270d
+Author: Keiji, Yoshimi <walf443@gmail dot com>
+Date:   Sun May 25 01:11:44 2008 +0900
+
+    tweek RequeredAttributeError's error message
+
+commit b33f3d0246ecc191564bb74b3ab3849e529c9a9f
+Author: Keiji, Yoshimi <walf443@gmail dot com>
+Date:   Sun May 25 00:51:22 2008 +0900
+
+    fixed bug that all classes that extend ClassX are affected when you change class variable
+
+commit 868c6e981067a243c70937026feae6e77ac734ec
+Author: Keiji, Yoshimi <walf443@gmail dot com>
+Date:   Sun May 25 00:34:24 2008 +0900
+
+    delete garbage.
+
+commit 8178791b39199222df912cee95532bd501acf923
+Author: Keiji, Yoshimi <walf443@gmail dot com>
+Date:   Sun May 25 00:26:07 2008 +0900
+
+    delete debug print
+
+commit 853bd274400e0a56f20b8ee2907952c9219a7519
+Author: Keiji, Yoshimi <walf443@gmail dot com>
+Date:   Sun May 25 00:24:00 2008 +0900
+
+    change to be able to use String as #initialize arguments
+
+commit 89b0a251c270e804ee92e7be87417f1fcf0cafb5
+Author: Keiji, Yoshimi <walf443@gmail dot com>
+Date:   Sat May 24 23:59:49 2008 +0900
+
+    fixed bug that abort when you specify none kind_of Hash value to initialize argument.
+
+commit d53494a4694ac7d5f3bc191d3deff011f03aad90
+Author: Keiji, Yoshimi <walf443@gmail dot com>
+Date:   Sat May 24 19:37:46 2008 +0900
+
+    tweak error message
+
+commit dbf90e3c3261ffc4b6b77260d9e9906b5bed01d1
+Author: Keiji, Yoshimi <walf443 at gmail dot com>
+Date:   Wed May 21 01:16:37 2008 +0900
+
+    add test
+
+commit cfc3043d481a9736df85ffc5118207c3ac4d0e76
+Author: Keiji, Yoshimi <walf443 at gmail dot com>
+Date:   Tue May 20 23:58:20 2008 +0900
+
+    add simple document
+
+commit 5571feb0934a05ca1789d4570f70ac67a9df4285
+Author: Keiji, Yoshimi <walf443 at gmail dot com>
+Date:   Tue May 20 23:50:13 2008 +0900
+
+    - fixed bug that can't specify any object except for literal object as :default values
+    - set_attr_default_value shold private method
+
+commit 0856eadc3ff3e3bf0e26691a25c0267a4fab1ead
+Author: Keiji, Yoshimi <walf443 at gmail dot com>
+Date:   Tue May 20 23:33:54 2008 +0900
+
+    start new project.
