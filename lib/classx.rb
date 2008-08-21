@@ -42,10 +42,10 @@ class ClassX
 
   def attribute_of
     hash = {}
-    private_methods.select {|meth| meth.to_s =~ ClassX::Attributes::ATTRIBUTE_REGEX }.each do |meth|
-      meth.to_s =~ ClassX::Attributes::ATTRIBUTE_REGEX
-      key = meth.to_s.sub(ClassX::Attributes::ATTRIBUTE_REGEX, $1)
-      hash[key] = __send__ "attribute_of:#{key}"
+    if self.class.attribute_of
+      self.class.attribute_of.keys.each do |key|
+        hash[key] = __send__ "attribute_of:#{key}"
+      end
     end
 
     hash

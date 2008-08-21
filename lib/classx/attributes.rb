@@ -3,16 +3,37 @@ class ClassX
     ATTRIBUTE_REGEX = /\Aattribute_of:(\w+)\z/
 
     def attribute_of
-      @__attribute_param_of ||= {}
+      @__attribute_of
+      unless @__attribute_of
+        @__attribute_of = {}
+        private_instance_methods.select {|meth| meth.to_s =~ ATTRIBUTE_REGEX }.each do |meth|
+          key = meth.to_s.sub(ATTRIBUTE_REGEX) { $1 }
+          @__attribute_of[key] = __send__ "attribute_of:#{key}"
+        end
+      end
+
+      @__attribute_of
+    end
+
+    def included klass
+      klass.extend self
     end
 
     private 
       def define_attribute name, attribute
-        @__attribute_param_of ||= {}
-        if @__attribute_param_of[name]
-          warn "attribute_of :#{name} redefined"
+        klass_attribute = ClassX::AttributeFactory.create(attribute)
+        mod = Module.new
+        mod.module_eval do
+          define_method "attribute_of:#{name}" do
+            klass_attribute
+          end
+
+          private "attribute_of:#{name}"
         end
-        @__attribute_param_of[name] = klass_attribute = ClassX::AttributeFactory.create(attribute)
+        self.extend(mod)
+        @__attribute_of ||= {}
+        @__attribute_of[name] = klass_attribute
+
         define_method "attribute_of:#{name}" do
           @__attribute_of ||= {}
           @__attribute_of[name] ||= klass_attribute.new(self)
@@ -34,22 +55,22 @@ class ClassX
           attribute_of[name].set val
         end
 
-        @__attribute_param_of ||= {}
-        if @__attribute_param_of[name] 
-          unless @__attribute_param_of[name].config[:writable]
+        cached_attribute_of = attribute_of
+        if cached_attribute_of[name]
+          unless cached_attribute_of[name].config[:writable]
             private "#{name}="
           end
 
-          if @__attribute_param_of[name].config[:handles]
-            case @__attribute_param_of[name].config[:handles]
+          if cached_attribute_of[name].config[:handles]
+            case cached_attribute_of[name].config[:handles]
             when Hash
-              @__attribute_param_of[name].config[:handles].each do |before, after|
+              cached_attribute_of[name].config[:handles].each do |before, after|
                 define_method before do
                   attribute_of[name].get.__send__ after
                 end
               end
             when Array
-              @__attribute_param_of[name].config[:handles].each do |meth|
+              cached_attribute_of[name].config[:handles].each do |meth|
                 define_method meth do
                   attribute_of[name].get.__send__ meth
                 end
