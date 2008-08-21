@@ -14,9 +14,13 @@ RDOC_OPTS = [
 DEFAULT_EXTRA_RDOC_FILES = ['README', 'ChangeLog']
 PKG_FILES = [ 'Rakefile' ] + 
   DEFAULT_EXTRA_RDOC_FILES +
-  Dir.glob('{bin,lib,test,spec,doc,tasks,script,generator,templates,extras,website}/**/*') + 
+  Dir.glob('{bin,lib,test,spec,doc,example,tasks,script,generator,templates,extras,website}/**/*') + 
   Dir.glob('ext/**/*.{h,c,rb}') +
   Dir.glob('examples/**/*.rb') +
   Dir.glob('tools/*.rb')
+
+[ %r{^doc/.+\.pdf}, %r{^doc/.+\.key} ].each do |ignore|
+  PKG_FILES.delete_if {|file| file =~ ignore }
+end
 
 EXTENSIONS = FileList['ext/**/extconf.rb'].to_a

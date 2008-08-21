@@ -41,9 +41,10 @@ SPEC = Gem::Specification.new do |s|
 	s.autorequire       = ""
 	s.test_files        = Dir["spec/*_spec.rb"]
 
-	#s.add_dependency('activesupport', '>=1.3.1')
+  if Gem::RubyGemsVersion >= "1.2"
+	  s.add_development_dependency('rspec', '>=1.1.4')
+  end
 	#s.required_ruby_version = '>= 1.8.2'
-  s.add_dependency('date_time-duration', '>= 0.0.1')
 
 	s.files = PKG_FILES + EXTRA_RDOC_FILES
 	s.extensions = EXTENSIONS
