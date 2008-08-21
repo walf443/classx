@@ -11,25 +11,43 @@ class ClassX
         begin
           opt.banner = "#{$0} [options]"
           value_of = {}
+          short_option_of = {}
           attribute_of.each do |key, val|
             
-            val_format = val.value_class ? val.value_class : "VAL"
+            val_format = val.value_class ? "=#{val.value_class.to_s.upcase}" : "=VAL"
             if val.optional?
-              val_format = "[ #{val_format} ]"
+              val_format = "[#{val_format}]"
+            end
+
+            short_option = key.split(//).first
+            unless short_option_of[short_option]
+              short_option_of[short_option] = key
             end
 
             if val.value_class
               begin
-                opt.on("--#{key} #{val_format}", val.value_class, val.desc) {|v| value_of[key] = v }
+                if short_option_of[short_option] == key
+                  opt.on("-#{short_option}", "--#{key} #{val_format}", val.value_class, val.desc) {|v| value_of[key] = v }
+                else
+                  opt.on("--#{key} #{val_format}", val.value_class, val.desc) {|v| value_of[key] = v }
+                end
               rescue Exception => e
                 if $ClassXCommandableMappingOf[val.value_class]
-                  opt.on("--#{key} #{val_format}", $ClassXCommandableMappingOf[val.value_class], val.desc) {|v| value_of[key] = v }
+                  if short_option_of[short_option] == key
+                    opt.on("-#{short_option}", "--#{key} #{val_format}", $ClassXCommandableMappingOf[val.value_class], val.desc) {|v| value_of[key] = v }
+                  else
+                    opt.on("--#{key} #{val_format}", $ClassXCommandableMappingOf[val.value_class], val.desc) {|v| value_of[key] = v }
+                  end
                 else
                   raise MissingCoerceMapping, "missing coerce rule. please specify $ClassXCommandableMappingOf"
                 end
               end
             else
-              opt.on("--#{key} #{val_format}") {|v| value_of[key] = v }
+              if short_option_of[short_option] == key
+                opt.on("-#{short_option}", "--#{key} #{val_format}") {|v| value_of[key] = v }
+              else
+                opt.on("--#{key} #{val_format}") {|v| value_of[key] = v }
+              end
             end
           end
 
