@@ -109,7 +109,11 @@ class ClassX
             when Proc
               args[:default].call(parent)
             else
-              args[:default]
+              begin
+                args[:default].dup
+              rescue Exception
+                args[:default]
+              end
             end
           end
 

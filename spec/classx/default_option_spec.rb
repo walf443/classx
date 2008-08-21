@@ -43,10 +43,6 @@ describe ClassX do
         it 'should have any value when instanciate' do
           @class.new.x.should == []
         end
-
-        it 'should have the same object_id between some instance' do
-          @class.new.x.should equal(@class.new.x)
-        end
       end
     end
 
