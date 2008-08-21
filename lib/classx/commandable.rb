@@ -14,7 +14,7 @@ class ClassX
           short_option_of = {}
           attribute_of.each do |key, val|
             
-            val_format = val.value_class ? "=#{val.value_class.to_s.upcase}" : "=VAL"
+            val_format = val.value_class ? "#{val.value_class}" : "VAL"
             if val.optional?
               val_format = "[#{val_format}]"
             end
