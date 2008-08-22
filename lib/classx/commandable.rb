@@ -34,9 +34,9 @@ class ClassX
               rescue Exception => e
                 if $ClassXCommandableMappingOf[val.value_class]
                   if short_option_of[short_option] == key
-                    opt.on("-#{short_option}", "--#{key} #{val_format}", $ClassXCommandableMappingOf[val.value_class], val.desc) {|v| value_of[key] = v }
+                    opt.on("-#{short_option}", "--#{key} #{$ClassXCommandableMappingOf[val.value_class]}", $ClassXCommandableMappingOf[val.value_class], val.desc) {|v| value_of[key] = v }
                   else
-                    opt.on("--#{key} #{val_format}", $ClassXCommandableMappingOf[val.value_class], val.desc) {|v| value_of[key] = v }
+                    opt.on("--#{key} #{$ClassXCommandableMappingOf[val.value_class]}", $ClassXCommandableMappingOf[val.value_class], val.desc) {|v| value_of[key] = v }
                   end
                 else
                   raise MissingCoerceMapping, "missing coerce rule. please specify $ClassXCommandableMappingOf"
