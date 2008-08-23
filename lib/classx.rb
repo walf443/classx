@@ -5,7 +5,6 @@ module ClassX
   autoload :Validate,    'classx/validate'
   autoload :Commandable, 'classx/commandable'
   autoload :Declare,     'classx/declare'
-  autoload :Util,        'classx/util'
   module Role
     autoload :Logger,    'classx/role/logger'
   end
