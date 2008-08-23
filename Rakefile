@@ -17,7 +17,7 @@ DESCRIPTION       = <<-"END_DESCRIPTION"
 
 END_DESCRIPTION
 BIN_FILES         = %w(  )
-VERS              = "0.0.2"
+VERS              = "0.0.3"
 
 EXTRA_RDOC_FILES = []
 HECKLE_ROOT_MODULES = ["Classx"]
