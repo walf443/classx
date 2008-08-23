@@ -6,9 +6,10 @@ require 'pp'
 
 $ClassXCommandableMappingOf[Symbol] = String
 
-class YourApp < ClassX
-  extend Commandable
-  include Role::Logger
+class YourApp 
+  include ClassX
+  extend ClassX::Commandable
+  include ClassX::Role::Logger
 
   has :arg1, 
     :kind_of => Symbol, 
