@@ -5,7 +5,8 @@ module ClassX
     # SYNOPSIS
     #
     #   require 'classx/role/logger'
-    #   class YourApp < ClassX
+    #   class YourApp 
+    #     include ClassX
     #     extends ClassX::Commandable
     #     include ClassX::Role::Logger
     #   
