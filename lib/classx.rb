@@ -35,14 +35,13 @@ module ClassX
     end
     hash = tmp_hash
 
-    cached_attribute_of = attribute_of
     hash.each do |key, val|
-      if cached_attribute_of[key]
-        cached_attribute_of[key].set val
+      if attribute_of[key]
+        attribute_of[key].set val
       end
     end
 
-    cached_attribute_of.each do |key, val|
+    attribute_of.each do |key, val|
       next if val.class.lazy?
       raise AttrRequiredError, "param: :#{key} is required to #{hash.inspect}" if !val.class.optional? && !val.get
     end
@@ -51,14 +50,16 @@ module ClassX
   end
 
   def attribute_of
-    hash = {}
-    if self.class.attribute_of
-      self.class.attribute_of.keys.each do |key|
-        hash[key] = __send__ "attribute_of:#{key}"
+    unless instance_variable_defined?('@__attribute_of') && @__attribute_of
+      @__attribute_of = {}
+      if self.class.attribute_of
+        self.class.attribute_of.keys.each do |key|
+          @__attribute_of[key] = __send__ "attribute_of:#{key}"
+        end
       end
     end
 
-    hash
+    @__attribute_of
   end
 
   # just extend point

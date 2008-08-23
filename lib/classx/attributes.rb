@@ -3,7 +3,7 @@ module ClassX
     ATTRIBUTE_REGEX = /\Aattribute_of:(\w+)\z/
 
     def attribute_of
-      unless @__attribute_of
+      unless instance_variable_defined?('@__attribute_of') && @__attribute_of
         @__attribute_of = {}
         private_instance_methods.select {|meth| meth.to_s =~ ATTRIBUTE_REGEX }.each do |meth|
           key = meth.to_s.sub(ATTRIBUTE_REGEX) { $1 }
