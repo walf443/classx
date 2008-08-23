@@ -127,6 +127,9 @@ class ClassX
             return args[:lazy]
           end
 
+          define_method :inspect do
+            "ClassX::Attribute[#{self.config.inspect}]"
+          end
         end
         __send__ :extend, tmp_mod
 
@@ -172,7 +175,7 @@ class ClassX
         end
 
         define_method :inspect do
-          "<#ClassX::Attribute #{self.class.config.inspect}:#{object_id} #{ @data.nil? ? '' : '@data=' + @data.inspect } >"
+          "<#ClassX::Attribute:#{object_id} #{ @data.nil? ? '@data=nil' : '@data=' + @data.inspect } config=#{self.class.config.inspect}>"
         end
       end
 
