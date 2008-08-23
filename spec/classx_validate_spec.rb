@@ -7,10 +7,9 @@ describe ClassX::Validate do
   before do
     @class = Class.new
     @class.class_eval do
-      include ClassX::Validate
 
       def run params
-        validate params do
+        ClassX::Validate.validate params do
           has :x
           has :y, :kind_of => Integer
         end

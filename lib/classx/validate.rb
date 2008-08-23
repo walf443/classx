@@ -35,4 +35,6 @@ module ClassX::Validate
     end
     @@__validate_cached[uniq_key].new hash 
   end
+
+  module_function :validate
 end
