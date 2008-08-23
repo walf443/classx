@@ -12,7 +12,9 @@ class ClassX
           opt.banner = "#{$0} [options]"
           value_of = {}
           short_option_of = {}
-          attribute_of.each do |key, val|
+          attribute_of.keys.sort.each do |key|
+            val = attribute_of[key]
+            next if val.config[:no_cmd_option]
             
             val_format = val.value_class ? "#{val.value_class}" : "VAL"
             if val.optional?
