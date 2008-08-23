@@ -2,6 +2,11 @@ require 'classx/attribute'
 require 'classx/attributes'
 
 class ClassX
+  autoload :Validate,    'classx/validate'
+  autoload :Commandable, 'classx/commandable'
+  autoload :Declare,     'classx/declare'
+  autoload :Util,        'classx/util'
+
   class InstanceException < Exception; end
   class AttrRequiredError < InstanceException; end
   class InvalidAttrArgument < InstanceException; end
