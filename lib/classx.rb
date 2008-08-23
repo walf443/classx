@@ -6,6 +6,9 @@ module ClassX
   autoload :Commandable, 'classx/commandable'
   autoload :Declare,     'classx/declare'
   autoload :Util,        'classx/util'
+  module Role
+    autoload :Logger,    'classx/role/logger'
+  end
 
   class InstanceException < Exception; end
   class AttrRequiredError < InstanceException; end

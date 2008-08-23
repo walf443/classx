@@ -1,3 +1,87 @@
+commit 106a6048c9dd61009a54bd35081e849461785560
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sat Aug 23 14:22:09 2008 +0900
+
+    update pdf new version.
+
+commit b12c2f6af136152941acff3e24cc7bb2e0d7bec2
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sat Aug 23 14:05:15 2008 +0900
+
+    fixed.
+
+commit 7655a1b8a2e719ab6aef5e4239333c2271974fec
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sat Aug 23 13:57:31 2008 +0900
+
+    CAVEAT: change ClassX class to module!!!
+
+commit a92bcb221eb44b7e699c23dcbd85ca6b8124f74b
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sat Aug 23 13:04:51 2008 +0900
+
+    tweaked inspect for easy debugging.
+
+commit 75b464c029eb075381eac6c3901766838f8ae935
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sat Aug 23 12:41:29 2008 +0900
+
+    added ClassX::Role::Logger. and ignore as commandline option if :no_cmd_option specified to define attribute.
+
+commit c0b5ab6ff524a3a085cd85ef9300fd4900cfcb1c
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sat Aug 23 12:09:15 2008 +0900
+
+    FATAL: fixed BUG: when mixin module that has attribute to ClassX based class, attribute_something wrong.
+
+commit 367d3faf52f20adacd73a63616600bcd254ae9fe
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sat Aug 23 09:15:57 2008 +0900
+
+    fix document.
+
+commit 6a13669476240c944c34ead40e5785f523992a16
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sat Aug 23 09:13:49 2008 +0900
+
+    change to autoload optional class.
+
+commit 57afc39197a4ebb149fde046bc4a5feca85b10ac
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sat Aug 23 08:12:57 2008 +0900
+
+    help should show type specify from command line.
+
+commit 3af7753e0a64434ce8e02f820da7d096355873f9
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Fri Aug 22 07:03:09 2008 +0900
+
+    change to dup as possible when you take :default option.as not Proc object.
+
+commit b8770a895f674f7eb2eb100c016385377d01bf22
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Fri Aug 22 06:47:44 2008 +0900
+
+    tweak help message.
+
+commit d204b63f683aad7bf25cdba19ac941113f5f395f
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Fri Aug 22 03:19:55 2008 +0900
+
+    support short option. thanks advice for Shintaro, Kakutani.
+
+commit 28f1694a54968cb56c674fe62a6f2b6ad35a46b9
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Thu Aug 21 20:30:33 2008 +0900
+
+    added ClassX::Declare. thanks Naoto, Takai !!
+
+commit c3fb1968643ff195258d027012a2a3dab1c4c7f2
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Thu Aug 21 17:21:48 2008 +0900
+
+    release 0.0.2
+
 commit 08727ad7905c9f16a95d2b788b9c5e51288d1580
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Thu Aug 21 17:20:16 2008 +0900
