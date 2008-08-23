@@ -15,7 +15,7 @@
 
   Point.new(:x => 30, :y => 40)  #=> <# Point @x=30, @y=40 >
   point3d = Point3D.new(:x => 30, :y => 40, :z => 50)  #=> <# Point3D @x=30, @y=40, @z=50 >
-  point3d.z = 60.0 # raise ClassX::InvalidSetterArgumentError
+  point3d.z = 60.0 # raise ClassX::InvalidAttrArgument
 
 == Description
 perl's Moose like Class interface.
