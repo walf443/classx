@@ -2,7 +2,8 @@ require 'benchmark'
 $LOAD_PATH.unshift(File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib' )))
 require 'classx'
 
-class PointWithClassX < ClassX
+class PointWithClassX
+  include ClassX
   has :x
   has :y
   has :z

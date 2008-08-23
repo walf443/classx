@@ -5,8 +5,8 @@ module ClassX::Validate
   #
   #   require 'classx/validate'
   #
-  #   class YourClass < ClassX
-  #     include Validate
+  #   class YourClass
+  #     include ClassX::Validate
   #
   #     def run params
   #       validate params do
@@ -27,7 +27,10 @@ module ClassX::Validate
     @@__validate_cached ||= {} 
     uniq_key = caller[0]
     unless @@__validate_cached[uniq_key]
-      @@__validate_cached[uniq_key] = Class.new(ClassX)
+      @@__validate_cached[uniq_key] = Class.new
+      @@__validate_cached[uniq_key].class_eval do
+        include ::ClassX
+      end
       @@__validate_cached[uniq_key].class_eval(&block)
     end
     @@__validate_cached[uniq_key].new hash 

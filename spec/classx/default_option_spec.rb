@@ -6,8 +6,9 @@ describe ClassX do
     describe 'with :default option' do
       describe 'when value is Proc' do
         before do
-          @class = Class.new(ClassX)
+          @class = Class.new
           @class.class_eval do
+            include ClassX
             has :x, :default => proc { Object.new }
           end
         end
@@ -34,8 +35,9 @@ describe ClassX do
 
       describe 'when value is not Proc' do
         before do
-          @class = Class.new(ClassX)
+          @class = Class.new
           @class.class_eval do
+            include ClassX
             has :x, :default => []
           end
         end
@@ -48,8 +50,9 @@ describe ClassX do
 
     describe 'with :optional is false' do
       before do
-        @class = Class.new(ClassX)
+        @class = Class.new
         @class.class_eval do
+          include ClassX
           has :x, :optional => false
         end
       end
@@ -70,8 +73,9 @@ describe ClassX do
     describe ':optional is false and with :default option' do
       it 'should raise ClassX::RequiredAttrShouldNotHaveDefault' do
         lambda {
-          klass = Class.new(ClassX)
+          klass = Class.new
           klass.class_eval do
+            include ClassX
             has :x, :optional => false, :default => 1
           end
         }.should raise_error(ClassX::RequiredAttrShouldNotHaveDefault)
@@ -80,8 +84,9 @@ describe ClassX do
 
     describe 'declare attribute without :optional and :default option' do
       before do
-        @class = Class.new(ClassX)
+        @class = Class.new
         @class.class_eval do
+          include ClassX
           has :x, :kind_of => Integer
         end
       end
@@ -93,8 +98,9 @@ describe ClassX do
 
     describe ':optional is true and without :default option' do
       before do
-        @class = Class.new(ClassX)
+        @class = Class.new
         @class.class_eval do
+          include ClassX
           has :x, :optional => true, :kind_of => Integer
         end
       end
@@ -107,8 +113,9 @@ describe ClassX do
     describe 'with :optional is true' do
       describe 'without :writable option' do
         before do
-          @class = Class.new(ClassX)
+          @class = Class.new
           @class.class_eval do 
+            include ClassX
             has :x, :optional => true
           end
         end
@@ -120,8 +127,9 @@ describe ClassX do
 
     describe 'not attribute param exist in #initialize argument' do
       before do
-          @class = Class.new(ClassX)
+          @class = Class.new
           @class.class_eval do 
+            include ClassX
             has :x
           end
       end

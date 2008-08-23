@@ -5,12 +5,14 @@ describe ClassX do
   describe '#has' do
     describe 'with multiple class' do
       before do
-        @class1 = Class.new(ClassX)
+        @class1 = Class.new
         @class1.class_eval do
+          include ClassX
           has :x
         end
-        @class2 = Class.new(ClassX)
+        @class2 = Class.new
         @class2.class_eval do
+          include ClassX
         end
       end
 

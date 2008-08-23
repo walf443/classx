@@ -1,11 +1,15 @@
 $LOAD_PATH.unshift(File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib' )))
 require 'classx'
 require 'classx/commandable'
+require 'classx/role/logger'
+require 'pp'
 
 $ClassXCommandableMappingOf[Symbol] = String
 
-class YourApp < ClassX
-  extend Commandable
+class YourApp 
+  include ClassX
+  extend ClassX::Commandable
+  include ClassX::Role::Logger
 
   has :arg1, 
     :kind_of => Symbol, 
@@ -19,7 +23,9 @@ class YourApp < ClassX
 
   def run
     # do something!!
-    p attribute_of
+    logger.info('starting your_app')
+    logger.debug(attribute_of.pretty_inspect)
+    logger.info('end your app')
   end
 end
 
