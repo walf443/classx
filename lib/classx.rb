@@ -1,7 +1,7 @@
 require 'classx/attribute'
 require 'classx/attributes'
 
-class ClassX
+module ClassX
   autoload :Validate,    'classx/validate'
   autoload :Commandable, 'classx/commandable'
   autoload :Declare,     'classx/declare'
@@ -14,7 +14,9 @@ class ClassX
   class OptionalAttrShouldBeWritable < Exception; end
   class RequiredAttrShouldNotHaveDefault < Exception; end
 
-  extend Attributes
+  def self.included klass
+    klass.extend(Attributes)
+  end
 
   def initialize *args
     hash = before_init(*args)

@@ -2,7 +2,7 @@ require 'optparse'
 
 $ClassXCommandableMappingOf = {}
 
-class ClassX
+module ClassX
   module Commandable
     class MissingCoerceMapping < Exception; end
 

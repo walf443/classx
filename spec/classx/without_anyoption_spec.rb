@@ -5,8 +5,10 @@ describe ClassX do
   describe '#has' do
     describe 'without any option' do
         before do
-          @class = Class.new(ClassX)
+          @class = Class.new
           @class.class_eval do
+            include ClassX
+
             has :x
           end
         end

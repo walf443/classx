@@ -6,8 +6,9 @@ describe ClassX do
     describe 'with :writable option' do
       describe 'when you specify false for attribute' do
         before do
-          @class = Class.new(ClassX)
+          @class = Class.new
           @class.class_eval do
+            include ClassX
             has :x, :writable => false
           end
         end
@@ -27,8 +28,9 @@ describe ClassX do
 
       describe 'when you specify true for attribute' do 
         before do
-          @class = Class.new(ClassX)
+          @class = Class.new
           @class.class_eval do
+            include ClassX
             has :x, :writable => true
           end
         end
@@ -51,8 +53,9 @@ describe ClassX do
     describe 'with :writable is false' do
       it 'should raise ClassX::OptionalAttrShouldBeWritable' do
         lambda {
-          klass = Class.new(ClassX)
+          klass = Class.new
           klass.class_eval do 
+            include ClassX
             has :x, :optional => true, :writable => false
           end
         }.should raise_error(ClassX::OptionalAttrShouldBeWritable)
@@ -62,8 +65,9 @@ describe ClassX do
     describe 'with :writable is true' do
       it 'should not raise ClassX::OptionalAttrShouldBeWritable' do
         lambda {
-          klass = Class.new(ClassX)
+          klass = Class.new
           klass.class_eval do 
+            include ClassX
             has :x, :optional => true, :writable => true
           end
         }.should_not raise_error(ClassX::OptionalAttrShouldBeWritable)

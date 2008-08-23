@@ -5,7 +5,7 @@ describe ClassX do
   describe '#has' do
     describe 'with include' do
       before do
-        @class = Class.new(ClassX)
+        @class = Class.new
         mod = Module.new
         mod.module_eval do
           define_method :test do
@@ -13,6 +13,8 @@ describe ClassX do
           end
         end
         @class.class_eval do
+          include ClassX
+
           has :x, :include => mod
         end
       end

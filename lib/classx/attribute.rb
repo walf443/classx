@@ -1,4 +1,4 @@
-class ClassX
+module ClassX
   class AttributeFactory
     def self.create args
       klass = Class.new

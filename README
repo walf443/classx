@@ -4,7 +4,9 @@
 == Synopsis
 
   require 'classx'
-  class Point < ClassX
+  class Point
+    include ClassX
+
     has :x, :kind_of => Fixnum
     has :y, :kind_of => Fixnum
   end

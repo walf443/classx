@@ -1,6 +1,6 @@
 require 'logger'
 
-class ClassX
+module ClassX
   module Role
     # SYNOPSIS
     #

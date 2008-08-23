@@ -1,4 +1,4 @@
-class ClassX
+module ClassX
   module Attributes
     ATTRIBUTE_REGEX = /\Aattribute_of:(\w+)\z/
 

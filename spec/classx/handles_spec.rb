@@ -5,8 +5,9 @@ describe ClassX do
   describe '#has' do
     describe 'with handles option as Hash' do
       before do
-        @class1 = Class.new(ClassX)
+        @class1 = Class.new
         @class1.class_eval do
+          include ClassX
           has :x, :handles => { :x_inspect => :inspect }
         end
       end
@@ -24,8 +25,10 @@ describe ClassX do
 
     describe 'with handles option as Array' do
       before do
-        @class1 = Class.new(ClassX)
+        @class1 = Class.new
         @class1.class_eval do
+          include ClassX
+
           has :x, :handles => [ :length ]
         end
       end
