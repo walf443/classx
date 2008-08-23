@@ -175,7 +175,7 @@ module ClassX
         end
 
         define_method :inspect do
-          "<#ClassX::Attribute:#{object_id} #{ @data.nil? ? '@data=nil' : '@data=' + @data.inspect } config=#{self.class.config.inspect}>"
+          "<#ClassX::Attribute:#{object_id} #{ @data.nil? ? '@data=nil' : '@data=' + @data.inspect } @parent=#{@parent} config=#{self.class.config.inspect}>"
         end
       end
 

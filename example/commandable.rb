@@ -24,6 +24,7 @@ class YourApp
   def run
     # do something!!
     logger.info('starting your_app')
+    attribute_of
     logger.debug(attribute_of.pretty_inspect)
     logger.info('end your app')
   end
