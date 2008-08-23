@@ -49,11 +49,13 @@ module ClassX
         define_attribute(name, attrs)
 
         define_method name do
-          attribute_of[name].get
+          attr_instance = __send__ "attribute_of:#{name}"
+          attr_instance.get
         end
 
         define_method "#{name}=" do |val|
-          attribute_of[name].set val
+          attr_instance = __send__ "attribute_of:#{name}"
+          attr_instance.set val
         end
 
         cached_attribute_of = attribute_of
