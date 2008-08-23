@@ -24,7 +24,11 @@ describe ClassX::Attributes do
     klass = Class.new(ClassX)
     klass.class_eval do
       include mod
+
+      has :y, :default => 10
     end
+
     klass.new.x.should == 10
+    klass.new.y.should == 10
   end
 end

@@ -18,6 +18,12 @@ class ClassX
       def define_attribute name, attribute
         klass_attribute = ClassX::AttributeFactory.create(attribute)
         mod = Module.new
+        begin
+          mod = self.const_get('ClassMethods')
+        rescue NameError => e
+          mod = Module.new
+          const_set('ClassMethods', mod)
+        end
         mod.module_eval do
           define_method "attribute_of:#{name}" do
             klass_attribute
@@ -26,7 +32,7 @@ class ClassX
           private "attribute_of:#{name}"
         end
         self.extend(mod)
-        @__attribute_of ||= {}
+        @__attribute_of ||= self.attribute_of
         @__attribute_of[name] = klass_attribute
 
         define_method "attribute_of:#{name}" do
@@ -77,8 +83,9 @@ class ClassX
 
       alias has add_attribute
 
+      # hook for module to ClassX base class.
       def included klass
-        klass.extend self
+        klass.extend(self.const_get('ClassMethods'))
       end
 
   end
