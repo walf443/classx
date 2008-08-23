@@ -34,9 +34,9 @@ module ClassX
       end
 
       has :logger, 
-        :lazy          => true, 
         :optional      => true,
         :no_cmd_option => true,
+        :lazy          => true, 
         :default       => proc {|mine|
           logger = ::Logger.new(mine.logfile)
           logger.level = mine.attribute_of['log_level'].to_i
