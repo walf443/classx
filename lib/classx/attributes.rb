@@ -68,14 +68,14 @@ module ClassX
             case cached_attribute_of[name].config[:handles]
             when Hash
               cached_attribute_of[name].config[:handles].each do |before, after|
-                define_method before do
-                  attribute_of[name].get.__send__ after
+                define_method before do |*args|
+                  attribute_of[name].get.__send__ after, *args
                 end
               end
             when Array
               cached_attribute_of[name].config[:handles].each do |meth|
-                define_method meth do
-                  attribute_of[name].get.__send__ meth
+                define_method meth do |*args|
+                  attribute_of[name].get.__send__ meth, *args
                 end
               end
             end
