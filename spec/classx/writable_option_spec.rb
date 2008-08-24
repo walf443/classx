@@ -46,6 +46,12 @@ describe ClassX do
         it 'should have attributes [:x]' do
           @class.attribute_of.keys.should == ['x']
         end
+
+        it 'should update value' do
+          instance = @class.new(:x => 10)
+          instance.x = 20
+          instance.x.should == 20
+        end
       end
 
     end

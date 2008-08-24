@@ -87,10 +87,8 @@ module ClassX
               case args[:validate]
               when Proc
                 return args[:validate].call(val)
-              when Regexp
-                return args[:validate] =~ val
               else
-                return args[:validate] == val
+                return args[:validate] === val
               end
             elsif mod = ( args[:isa] || args[:kind_of] )
               return val.kind_of?(mod)
