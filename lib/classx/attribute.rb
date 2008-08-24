@@ -1,13 +1,15 @@
 module ClassX
   class AttributeFactory
     def self.create args
+      # TODO:  hmm, ClassX::Commandable do nothing when freezed.
+      #
       # if you would like to change attribute's infomation, it's better to redefine attribute.
       # So, config should freezed.
-      args.each do |key, val|
-        key.freeze
-        val.freeze
-      end
-      args.freeze
+      # args.each do |key, val|
+      #   key.freeze
+      #   val.freeze
+      # end
+      # args.freeze
 
       klass = Class.new
       klass.class_eval do
