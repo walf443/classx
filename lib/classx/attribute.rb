@@ -1,6 +1,14 @@
 module ClassX
   class AttributeFactory
     def self.create args
+      # if you would like to change attribute's infomation, it's better to redefine attribute.
+      # So, config should freezed.
+      args.each do |key, val|
+        key.freeze
+        val.freeze
+      end
+      args.freeze
+
       klass = Class.new
       klass.class_eval do
         
@@ -12,22 +20,21 @@ module ClassX
           end
 
           define_method :value_class do
-            args[:isa] || args[:kind_of]
+            config[:isa] || config[:kind_of]
           end
 
           # description for attribute
           define_method :desc do
-            args[:desc] 
+            config[:desc] 
           end
 
           # you specify type changing rule with :coerce option.
-          #
-          define_method :coerce do |val|
-            if args[:coerce]
-              case args[:coerce]
-              when Hash
+          if args[:coerce]
+            case args[:coerce]
+            when Hash
+              define_method :coerce do |val|
                 result = val
-                args[:coerce].each do |cond, rule|
+                config[:coerce].each do |cond, rule|
                   case cond
                   when Proc
                     if cond.call(val)
@@ -48,9 +55,11 @@ module ClassX
                 end
 
                 return result
-              when Array
+              end
+            when Array
+              define_method :coerce do |val|
                 result = val
-                args[:coerce].each do |item|
+                config[:coerce].each do |item|
                   raise unless item.kind_of? Hash
 
                   case item
@@ -74,27 +83,37 @@ module ClassX
 
                 return result
               end
-            else
-              return val
+            end
+          else
+            define_method :coerce do |val|
+              val
             end
           end
 
           # you can specify :validate option for checking when value is setted.
           # you can use :respond_to as shotcut for specifying { :validate => proc {|val| respond_to?(val, true) } }
           # you can use :isa or :kind_of as shotcut for specifying { :validate => proc {|val| kind_of?(val) } }
-          define_method :validate? do |val|
-            if args[:validate]
-              case args[:validate]
-              when Proc
-                return args[:validate].call(val)
-              else
-                return args[:validate] === val
+          if args[:validate]
+            case args[:validate]
+            when Proc
+              define_method :validate? do |val|
+                return config[:validate].call(val)
               end
-            elsif mod = ( args[:isa] || args[:kind_of] )
-              return val.kind_of?(mod)
-            elsif args[:respond_to]
-              return val.respond_to?(args[:respond_to], true)
             else
+              define_method :validate? do |val|
+                return config[:validate] === val
+              end
+            end
+          elsif mod = ( args[:isa] || args[:kind_of] )
+            define_method :validate? do |val|
+              return val.kind_of?(self.value_class)
+            end
+          elsif args[:respond_to]
+            define_method :validate? do |val|
+              return val.respond_to?(config[:respond_to])
+            end
+          else
+            define_method :validate? do |val|
               # nothing checked.
               true
             end
@@ -102,27 +121,29 @@ module ClassX
 
           # default paramater for attribute.
           # if default is Proc, run Proc every time in instanciate.
-          define_method :default do |parent|
-            case args[:default]
-            when Proc
-              args[:default].call(parent)
-            else
+          case args[:default]
+          when Proc
+            define_method :default do |parent|
+              config[:default].call(parent)
+            end
+          else
+            define_method :default do |parent|
               begin
-                args[:default].dup
+                config[:default].dup
               rescue Exception
-                args[:default]
+                config[:default]
               end
             end
           end
 
           # when this option specify true, not raise error in #initialize without value.
           define_method :optional? do
-            return args[:optional]
+            return config[:optional]
           end
 
           # when it lazy option specified, it will not be initialized when #initialize.
           define_method :lazy? do
-            return args[:lazy]
+            return config[:lazy]
           end
 
           define_method :inspect do
