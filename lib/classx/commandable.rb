@@ -55,8 +55,9 @@ module ClassX
 
           opt.on('-h', '--help', 'show this document') {|v| raise OptionParser::ParseError }
           opt.parse!(argv)
+
           return new(value_of)
-        rescue ClassX::AttrRequiredError, OptionParser::ParseError => e
+        rescue ClassX::InstanceException, OptionParser::ParseError => e
           warn opt
           exit
         end

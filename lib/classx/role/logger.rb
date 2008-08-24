@@ -52,12 +52,7 @@ module ClassX
         :default    => 'info',
         :include    => ToLogLevel,
         :validate   => proc {|val|
-          begin
-            ::Logger::Severity.const_get(val.upcase)
-          rescue NameError => e
-            return false
-          end
-          true
+          val && ::Logger::Severity.const_defined?(val.to_s.upcase)
         }
 
       has :logfile,
