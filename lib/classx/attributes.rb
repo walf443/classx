@@ -17,10 +17,10 @@ module ClassX
     private 
       def define_attribute name, attribute
         klass_attribute = ClassX::AttributeFactory.create(attribute)
-        mod = Module.new
-        begin
+        mod = nil
+        if self.const_defined? 'ClassMethods' 
           mod = self.const_get('ClassMethods')
-        rescue NameError => e
+        else
           mod = Module.new
           const_set('ClassMethods', mod)
         end
