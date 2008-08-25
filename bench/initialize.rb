@@ -21,22 +21,31 @@ end
 
 COUNT = 1000
 
+def do_bench klass
+  GC.disable
+  COUNT.times do 
+    klass.new({ :x => rand(10), :y => rand(10), :z => rand(10) })
+  end
+  GC.enable
+end
+
 Benchmark.bm do |x|
   x.report 'classx' do
-    COUNT.times do
-      PointWithClassX.new({ :x => rand(10), :y => rand(10), :z => rand(10) })
-    end
+    do_bench PointWithClassX
   end
   x.report 'normal class' do
-    COUNT.times do 
-      PointWithoutClassX.new({ :x => rand(10), :y => rand(10), :z => rand(10) })
-    end
+    do_bench PointWithoutClassX
   end
 end
 
 # On my environment( MacBook1.1 Intel Core Duo 1.83 GHz, 2GB), result is like that. TOOOOO SLOOOW classX!!!!.
 # 
 #
+# ----------------------------------------------------------
+# result after 1f4c448b
+#                 user     system      total        real
+# classx        0.090000   0.010000   0.100000 (  0.093254)
+# normal class  0.000000   0.000000   0.000000 (  0.004242)
 # ----------------------------------------------------------
 # result after a23be1ac
 #                 user     system      total        real
