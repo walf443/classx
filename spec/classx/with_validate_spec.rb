@@ -203,5 +203,161 @@ describe ClassX do
         lambda { instance.x = 20 }.should_not raise_error(Exception) 
       end
     end
+
+    describe 'with :validate_each option and take Array' do
+      before do
+        @class = Class.new
+        @class.class_eval do
+          include ClassX
+          has :x, 
+            :writable => true,
+            :validate_each => proc {|item| item.kind_of? String }
+        end
+      end
+
+      it 'should raise ClassX::InstanceException when it take invalid args on instanciate' do
+        lambda { @class.new(:x => [ "str", 10 ]) }.should raise_error(ClassX::InvalidAttrArgument) 
+      end
+
+      it 'should not raise error when it take valid args on instanciate' do
+        lambda { @class.new(:x => ['abc', 'def'] ) }.should_not raise_error(Exception) 
+      end
+
+      it 'should raise ClassX::InvalidAttrArgument when it take invalid args on update value' do
+        instance = @class.new(:x => ['abc', 'def' ])
+        lambda { instance.x = ["str", 10] }.should raise_error(ClassX::InvalidAttrArgument) 
+      end
+
+      it 'should not raise error when it take valid args on update value' do
+        instance = @class.new(:x => ['abc', 'def'])
+        lambda { instance.x = ['ghi', 'jkl'] }.should_not raise_error(Exception) 
+      end
+    end
+
+    describe 'with :validate_each option and take Array' do
+      before do
+        @class = Class.new
+        @class.class_eval do
+          include ClassX
+          has :x, 
+            :writable => true,
+            :kind_of  => Array,
+            :validate_each => proc {|item| item.kind_of? String }
+        end
+      end
+
+      it 'should raise ClassX::InstanceException when it take invalid args on instanciate' do
+        lambda { @class.new(:x => [ "str", 10 ]) }.should raise_error(ClassX::InvalidAttrArgument) 
+      end
+
+      it 'should not raise error when it take valid args on instanciate' do
+        lambda { @class.new(:x => ['abc', 'def'] ) }.should_not raise_error(Exception) 
+      end
+
+      it 'should raise ClassX::InvalidAttrArgument when it take invalid args on update value' do
+        instance = @class.new(:x => ['abc', 'def' ])
+        lambda { instance.x = ["str", 10] }.should raise_error(ClassX::InvalidAttrArgument) 
+      end
+
+      it 'should not raise error when it take valid args on update value' do
+        instance = @class.new(:x => ['abc', 'def'])
+        lambda { instance.x = ['ghi', 'jkl'] }.should_not raise_error(Exception) 
+      end
+    end
+
+    describe 'with :validate_each option and take Hash' do
+      before do
+        @class = Class.new
+        @class.class_eval do
+          include ClassX
+          has :x, 
+            :writable => true,
+            :validate_each => proc {|key,val| val.kind_of? String }
+        end
+      end
+
+      it 'should raise ClassX::InstanceException when it take invalid args on instanciate' do
+        lambda { @class.new(:x => { 'abc' => 10 }) }.should raise_error(ClassX::InvalidAttrArgument) 
+      end
+
+      it 'should not raise error when it take valid args on instanciate' do
+        lambda { @class.new(:x => { 'abc' => 'str' } ) }.should_not raise_error(Exception) 
+      end
+
+      it 'should raise ClassX::InvalidAttrArgument when it take invalid args on update value' do
+        instance = @class.new(:x => {'abc' => 'str' })
+        lambda { instance.x = {'abc' => 10 } }.should raise_error(ClassX::InvalidAttrArgument) 
+      end
+
+      it 'should not raise error when it take valid args on update value' do
+        instance = @class.new(:x => {'abc' => 'str' })
+        lambda { instance.x = { 'ghi' => 'jkl' } }.should_not raise_error(Exception) 
+      end
+    end
+
+    describe 'with :validate_each option with arity two and :kind_of and take Hash' do
+      before do
+        @class = Class.new
+        @class.class_eval do
+          include ClassX
+          has :x, 
+            :writable => true,
+            :kind_of  => Hash,
+            :validate_each => proc {|key,val| val.kind_of? String }
+        end
+      end
+
+      it 'should raise ClassX::InstanceException when it take invalid args on instanciate' do
+        lambda { @class.new(:x => { 'abc' => 10 }) }.should raise_error(ClassX::InvalidAttrArgument) 
+      end
+
+      it 'should not raise error when it take valid args on instanciate' do
+        lambda { @class.new(:x => { 'abc' => 'str' } ) }.should_not raise_error(Exception) 
+      end
+
+      it 'should raise ClassX::InvalidAttrArgument when it take invalid args on update value' do
+        instance = @class.new(:x => {'abc' => 'str' })
+        lambda { instance.x = {'abc' => 10 } }.should raise_error(ClassX::InvalidAttrArgument) 
+      end
+
+      it 'should not raise error when it take valid args on update value' do
+        instance = @class.new(:x => {'abc' => 'str' })
+        lambda { instance.x = { 'ghi' => 'jkl' } }.should_not raise_error(Exception) 
+      end
+    end
+
+    describe 'with :validate_each option with arity two and :kind_of and take Hash' do
+      before do
+        @class = Class.new
+        @class.class_eval do
+          include ClassX
+          has :x, 
+            :writable => true,
+            :kind_of  => Hash,
+            :validate_each => proc {|mod|
+              has :foo
+              has :bar
+            }
+        end
+      end
+
+      it 'should raise ClassX::InstanceException when it take invalid args on instanciate' do
+        lambda { @class.new(:x => { 'abc' => 10 }) }.should raise_error(ClassX::AttrRequiredError) 
+      end
+
+      it 'should not raise error when it take valid args on instanciate' do
+        lambda { @class.new(:x => { 'foo' => :foo, "bar" => :bar } ) }.should_not raise_error(Exception) 
+      end
+
+      it 'should raise ClassX::InvalidAttrArgument when it take invalid args on update value' do
+        instance = @class.new(:x => {'foo' => :foo, "bar" => :bar })
+        lambda { instance.x = {'abc' => 10 } }.should raise_error(ClassX::AttrRequiredError) 
+      end
+
+      it 'should not raise error when it take valid args on update value' do
+        instance = @class.new(:x => {'foo' => :foo, "bar" => :bar })
+        lambda { instance.x = {'foo' => :foo, "bar" => :bar, "baz" => :baz } }.should_not raise_error(Exception) 
+      end
+    end
   end
 end

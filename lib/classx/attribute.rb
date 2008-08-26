@@ -106,6 +106,27 @@ module ClassX
                 return config[:validate] === val
               end
             end
+          elsif args[:validate_each]
+            define_method :validate? do |val|
+              return false unless val.respond_to? :all?
+
+              if self.value_class
+                return false unless val.kind_of?(self.value_class)
+
+                case val
+                when Hash
+                  if args[:validate_each].arity == 2
+                    val.all? {|item| config[:validate_each].call(*item) }
+                  else
+                    ClassX::Validate.validate(val, &args[:validate_each])
+                  end
+                else
+                  val.all? {|item| config[:validate_each].call(*item) }
+                end
+              else
+                val.all? {|item| config[:validate_each].call(*item) }
+              end
+            end
           elsif mod = ( args[:isa] || args[:kind_of] )
             define_method :validate? do |val|
               return val.kind_of?(self.value_class)
