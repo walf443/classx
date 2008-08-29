@@ -51,7 +51,7 @@ describe ClassX do
         end
 
         it 'should raise ClassX::InvalidAttrArgument when it take none String argument on instanciate' do
-          lambda { @class.new(:x => :test_hoge ) }.should raise_error(ClassX::InvalidAttrArgument)
+          lambda { @class.new(:x => :hoge ) }.should raise_error(ClassX::InvalidAttrArgument)
         end
 
         it 'should not raise error when it take valid args on instanciate' do
@@ -65,7 +65,7 @@ describe ClassX do
 
         it 'should raise ClassX::InvalidAttrArgument when it take none String argument on update value' do
           instance = @class.new(:x => 'test_hoge')
-          lambda { instance.x = :test_fuga }.should raise_error(ClassX::InvalidAttrArgument)
+          lambda { instance.x = :fuga }.should raise_error(ClassX::InvalidAttrArgument)
         end
 
         it 'should not raise error when it take valid args on update value' do
