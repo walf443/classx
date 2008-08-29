@@ -17,7 +17,7 @@ describe ClassX do
 
       it 'should respond_to x_inspect method' do
         obj = []
-        @class1.new(:x => obj).should be_respond_to(:x_inspect)
+        @class1.new(:x => obj).respond_to?(:x_inspect).should be_true
       end
 
       it 'should delegate method to value' do
@@ -44,7 +44,7 @@ describe ClassX do
 
       it 'should respond_to item name method' do
         obj = [1, 2, 3]
-        @class1.new(:x => obj).should be_respond_to(:length)
+        @class1.new(:x => obj).respond_to?(:length).should be_true
       end
 
       it 'should delegate method to the same item name' do

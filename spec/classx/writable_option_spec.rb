@@ -14,11 +14,11 @@ describe ClassX do
         end
 
         it 'should define #x public method to class' do
-          @class.instance_methods.map {|meth| meth.to_s }.should be_include('x')
+          @class.instance_methods.map {|meth| meth.to_s }.should include('x')
         end
 
         it 'should define #x= private method to class' do
-          @class.private_instance_methods.map {|meth| meth.to_s }.should be_include("x=")
+          @class.private_instance_methods.map {|meth| meth.to_s }.should include("x=")
         end
 
         it 'should have attributes [:x]' do
@@ -36,11 +36,11 @@ describe ClassX do
         end
 
         it 'should define #x public method to class' do
-          @class.instance_methods.map {|meth| meth.to_s }.should be_include('x')
+          @class.instance_methods.map {|meth| meth.to_s }.should include('x')
         end
 
         it 'should define #x= public method to class' do
-          @class.public_instance_methods.map {|meth| meth.to_s }.should be_include("x=")
+          @class.public_instance_methods.map {|meth| meth.to_s }.should include("x=")
         end
 
         it 'should have attributes [:x]' do
