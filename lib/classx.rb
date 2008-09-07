@@ -72,4 +72,49 @@ module ClassX
   def after_init
   end
 
+  def == other
+    return false unless other.kind_of? self.class
+    attribute_of.all? do |key, val|
+      val.get == other.__send__(key)
+    end
+  end
+
+  def to_hash
+    result = {}
+
+    attribute_of.each do |key, val|
+      result[key] = val.get
+    end
+
+    result
+  end
+
+  def dup
+    self.class.new(to_hash)
+  end
+
+  alias marshal_dump  to_hash
+
+  def marshal_load val
+    self.attribute_of.each do |k, v|
+      v.set(val[k])
+    end
+  end
+
+  def to_yaml opts={}
+    require 'yaml'
+    YAML.quick_emit(self, opts) do |out|
+      out.map( taguri, to_yaml_style ) do |map|
+        to_hash.each do |key, val|
+          map.add(key, val)
+        end
+      end
+    end
+  end
+
+  def yaml_initialize tag, val
+    self.attribute_of.each do |k, v|
+      v.set(val[k])
+    end
+  end
 end
