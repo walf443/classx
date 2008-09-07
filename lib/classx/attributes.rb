@@ -48,9 +48,21 @@ module ClassX
 
         define_attribute(name, attrs)
 
-        define_method name do
+        # XXX: Why this can take *args?
+        # =>  It's for avoid warnings when you call it without values.
+        define_method name do |*vals|
           attr_instance = __send__ "attribute_of:#{name}"
-          attr_instance.get
+          if vals.nil? or vals == []
+            attr_instance.get
+          else
+            raise ArgumentError if vals.size > 1
+            if attr_instance.class.config[:writable]
+              val = vals.first
+              attr_instance.set val
+            else
+              raise RuntimeError, ":#{name.to_s} is not writable"
+            end
+          end
         end
 
         define_method "#{name}=" do |val|

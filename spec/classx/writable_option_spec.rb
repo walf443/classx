@@ -24,6 +24,19 @@ describe ClassX do
         it 'should have attributes [:x]' do
           @class.attribute_of.keys.should == ['x']
         end
+
+        it 'should raise NoMethodError using attr_name = val' do
+          instance = @class.new(:x => 10)
+          lambda { instance.x = 20 }.should raise_error(NoMethodError)
+        end
+
+        # NOTE: why don't it unify Exception Class between above and this?
+        # => This exception was caused by mistake of program. So, in general I think, you should not
+        # rascue this error.
+        it 'should raise RuntimeError using attr_name(val)' do
+          instance = @class.new(:x => 10)
+          lambda { instance.x(20) }.should raise_error(RuntimeError)
+        end
       end
 
       describe 'when you specify true for attribute' do 
@@ -47,9 +60,15 @@ describe ClassX do
           @class.attribute_of.keys.should == ['x']
         end
 
-        it 'should update value' do
+        it 'should update value using attr_name = val' do
           instance = @class.new(:x => 10)
           instance.x = 20
+          instance.x.should == 20
+        end
+
+        it 'should update value using attr_name(val)' do
+          instance = @class.new(:x => 10)
+          instance.x(20)
           instance.x.should == 20
         end
       end
