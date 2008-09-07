@@ -53,16 +53,21 @@ module ClassX
         # XXX: Why this can take *args?
         # =>  It's for avoid warnings when you call it without values.
         define_method name do |*vals|
-          attr_instance = __send__ "attribute_of:#{name}"
-          if vals.nil? or vals == []
-            attr_instance.get
+          if vals == []
+            @__attribute_data_of ||= {}
+            if @__attribute_data_of[name]
+              return @__attribute_data_of[name]
+            else
+              attr_instance = __send__ "attribute_of:#{name}"
+              return @__attribute_data_of[name] = attr_instance.get
+            end
           else
             raise ArgumentError if vals.size > 1
-            if attr_instance.class.config[:writable]
-              val = vals.first
-              attr_instance.set val
+            val = vals.first
+            if respond_to? "#{name}="
+              __send__ "#{name}=", val
             else
-              raise RuntimeError, ":#{name.to_s} is not writable"
+              raise RuntimeError, ":#{name} is not writable"
             end
           end
         end
@@ -70,6 +75,8 @@ module ClassX
         define_method "#{name}=" do |val|
           attr_instance = __send__ "attribute_of:#{name}"
           attr_instance.set val
+          @__attribute_data_of ||= {}
+          @__attribute_data_of[name] = val
         end
 
         unless attr_class.config[:writable]

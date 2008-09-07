@@ -55,6 +55,12 @@ end
 # On my environment( MacBook1.1 Intel Core Duo 1.83 GHz, 2GB), result is like that. TOOOOO SLOOOW classX!!!!.
 # 
 # ----------------------------------------------------------
+# result after 3e97a758
+#                                 user     system      total        real
+# classx with attr_name = val   0.020000   0.000000   0.020000 (  0.026784)
+# classx with attr_name(val)    0.030000   0.010000   0.040000 (  0.051044)
+# normal class                  0.010000   0.000000   0.010000 (  0.002661)
+# ----------------------------------------------------------
 # result after dd155598
 #                                 user     system      total        real
 # classx with attr_name = val   0.020000   0.000000   0.020000 (  0.020638)

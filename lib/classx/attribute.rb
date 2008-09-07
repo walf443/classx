@@ -164,6 +164,9 @@ module ClassX
         @data ||= self.class.default(@parent)
       end
 
+      # XXX:
+      #   you should not call this method except for @parent instance's setter method.
+      #   It's because caching as instance_variable in @parent instance for performance.
       def set val
         val = self.class.coerce(val)
         raise ClassX::InvalidAttrArgument unless self.class.validate? val
