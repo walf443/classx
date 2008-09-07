@@ -41,12 +41,14 @@ module ClassX
         end
 
         private "attribute_of:#{name}"
+
+        klass_attribute
       end
 
       def add_attribute name, attrs={}
         name = name.to_s
 
-        define_attribute(name, attrs)
+        attr_class = define_attribute(name, attrs)
 
         # XXX: Why this can take *args?
         # =>  It's for avoid warnings when you call it without values.
@@ -70,25 +72,22 @@ module ClassX
           attr_instance.set val
         end
 
-        cached_attribute_of = attribute_of
-        if cached_attribute_of[name]
-          unless cached_attribute_of[name].config[:writable]
-            private "#{name}="
-          end
+        unless attr_class.config[:writable]
+          private "#{name}="
+        end
 
-          if cached_attribute_of[name].config[:handles]
-            case cached_attribute_of[name].config[:handles]
-            when Hash
-              cached_attribute_of[name].config[:handles].each do |before, after|
-                define_method before do |*args|
-                  attribute_of[name].get.__send__ after, *args
-                end
+        if attr_class.config[:handles]
+          case attr_class.config[:handles]
+          when Hash
+            attr_class.config[:handles].each do |before, after|
+              define_method before do |*args|
+                __send__("#{name}").__send__ after, *args
               end
-            when Array
-              cached_attribute_of[name].config[:handles].each do |meth|
-                define_method meth do |*args|
-                  attribute_of[name].get.__send__ meth, *args
-                end
+            end
+          when Array
+            attr_class.config[:handles].each do |meth|
+              define_method meth do |*args|
+                __send__("#{name}").__send__ meth, *args
               end
             end
           end
