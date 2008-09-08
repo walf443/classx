@@ -79,6 +79,7 @@ module ClassX
     end
   end
 
+  UNSERIALIZE_INSTANCE_VARIABLES = ["@__attribute_of", "@__attribute_data_of"]
   def to_hash
     result = {}
 
@@ -93,11 +94,23 @@ module ClassX
     self.class.new(to_hash)
   end
 
-  alias marshal_dump  to_hash
+  def marshal_dump
+    dump_of = {}
+    dump_of[:attribute_of] = to_hash
+    dump_of[:instance_variable_of] = {}
+    ( instance_variables - UNSERIALIZE_INSTANCE_VARIABLES ).each do |ival|
+      dump_of[:instance_variable_of][ival] = instance_variable_get(ival)
+    end
+
+    dump_of
+  end
 
   def marshal_load val
     self.attribute_of.each do |k, v|
-      v.set(val[k])
+      v.set(val[:attribute_of][k])
+    end
+    val[:instance_variable_of].each do |key, val|
+      instance_variable_set(key, val)
     end
   end
 
@@ -105,16 +118,28 @@ module ClassX
     require 'yaml'
     YAML.quick_emit(self, opts) do |out|
       out.map( taguri, to_yaml_style ) do |map|
+        attribute_of = {}
         to_hash.each do |key, val|
-          map.add(key, val)
+          attribute_of[key] = val
         end
+        map.add(:attribute_of, attribute_of)
+
+        instance_variable_of = {}
+        ( instance_variables - UNSERIALIZE_INSTANCE_VARIABLES ).each do |ival|
+          instance_variable_of[ival] = instance_variable_get(ival)
+        end
+        map.add(:instance_variable_of, instance_variable_of)
       end
     end
   end
 
   def yaml_initialize tag, val
     self.attribute_of.each do |k, v|
-      v.set(val[k])
+      v.set(val[:attribute_of][k])
+    end
+
+    val[:instance_variable_of].each do |k, v|
+      instance_variable_set(k, v)
     end
   end
 end
