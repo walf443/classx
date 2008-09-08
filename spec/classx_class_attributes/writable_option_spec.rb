@@ -13,11 +13,11 @@ describe ClassX::ClassAttributes do
           end
         end
 
-        it 'should define #x public method to class' do
+        it 'should define class.x public method to class' do
           @class.methods.map {|meth| meth.to_s }.should include('x')
         end
 
-        it 'should define #x= private method to class' do
+        it 'should define class.x= private method to class' do
           @class.private_methods.map {|meth| meth.to_s }.should include("x=")
         end
 
@@ -46,11 +46,11 @@ describe ClassX::ClassAttributes do
           end
         end
 
-        it 'should define #x public method to class' do
+        it 'should define class.x public method to class' do
           @class.methods.map {|meth| meth.to_s }.should include('x')
         end
 
-        it 'should define #x= public method to class' do
+        it 'should define class.x= public method to class' do
           @class.public_methods.map {|meth| meth.to_s }.should include("x=")
         end
 

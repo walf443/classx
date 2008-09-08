@@ -13,7 +13,7 @@ describe ClassX::ClassAttributes do
           end
         end
 
-        it 'should define #x= private method to class' do
+        it 'should define class.x= private method to class' do
           @class.private_methods.map {|meth| meth.to_s }.should include("x=")
         end
     end
