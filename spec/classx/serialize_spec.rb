@@ -3,13 +3,15 @@ require 'classx'
 
 describe ClassX do
   describe 'Serialize' do
-    before do
-      DumpedObject = Class.new
-      DumpedObject.class_eval do
+    before(:all) do
+      klass = Class.new
+      klass.class_eval do
         include ClassX
         has :x, :default => proc { [ "abc" ] }
         has :y, :default => proc { {"foo" => "bar" } }
       end
+
+      Object.const_set(:DumpedObject, klass)
     end
 
     it 'should be serialized with Marshal' do

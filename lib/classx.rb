@@ -99,7 +99,7 @@ module ClassX
     dump_of = {}
     dump_of[:attribute_of] = to_hash
     dump_of[:instance_variable_of] = {}
-    ( instance_variables - UNSERIALIZE_INSTANCE_VARIABLES ).each do |ival|
+    ( instance_variables.map {|ival| ival.to_s } - UNSERIALIZE_INSTANCE_VARIABLES ).each do |ival|
       dump_of[:instance_variable_of][ival] = instance_variable_get(ival)
     end
 
@@ -126,7 +126,7 @@ module ClassX
         map.add(:attribute_of, attribute_of)
 
         instance_variable_of = {}
-        ( instance_variables - UNSERIALIZE_INSTANCE_VARIABLES ).each do |ival|
+        ( instance_variables.map {|ival| ival.to_s } - UNSERIALIZE_INSTANCE_VARIABLES ).each do |ival|
           instance_variable_of[ival] = instance_variable_get(ival)
         end
         map.add(:instance_variable_of, instance_variable_of)
@@ -143,4 +143,5 @@ module ClassX
       instance_variable_set(k, v)
     end
   end
+
 end
