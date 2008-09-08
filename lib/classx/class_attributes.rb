@@ -121,11 +121,5 @@ module ClassX
       end
 
       alias class_has add_class_attribute
-
-      # hook for module to ClassX base class.
-      def included klass
-        klass.extend(self.const_get('ClassMethods'))
-      end
-
   end
 end
