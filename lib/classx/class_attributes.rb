@@ -1,6 +1,35 @@
 
 
 module ClassX
+  #
+  # for easy defining inheritable class accessor using classx attribute interface.
+  #
+  #   require 'classx'
+  #   class YourClass
+  #     extend ClassX::ClassAttributes
+  #
+  #     class_has :table_name, :writable => true, :default => proc {|klass| klass.to_s.downcase }
+  #   end
+  #
+  #   YourClass.table_name #=> 'yourclass'
+  #   YourClass.table_name = 'test'
+  #   YourClass.table_name #=> 'test'
+  #
+  #   class SubClass < YourClass
+  #   end
+  #
+  #   SubClass.table_name #=> 'subclass' # it's not "test"!!
+  #
+  #   # you can also write following:
+  #   SubClass.table_name('test2')
+  #   SubClass.table_name #=> 'test2'
+  #
+  #
+  # == SEE ALSO
+  #   dsl_accessor:
+  #     It's have also similar functions. It's implemented simply using activesupport's inheritable_accessor.
+  #     classx is complex but more extensible to define class attribute.
+  #
   module ClassAttributes
     CLASS_ATTRIBUTE_REGEX = /\Aclass_attribute_of:(\w+)\z/
 
@@ -128,4 +157,7 @@ module ClassX
 
       alias class_has add_class_attribute
   end
+
+  # alias for lazy people.
+  CAttrs = ClassAttributes
 end

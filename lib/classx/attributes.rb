@@ -108,5 +108,7 @@ module ClassX
         klass.extend(self.const_get('ClassMethods'))
       end
 
+      # alias for lazy people
+      Attrs = Attributes
   end
 end

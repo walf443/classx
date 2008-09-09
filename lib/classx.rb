@@ -3,6 +3,7 @@ require 'classx/attributes'
 
 module ClassX
   autoload :ClassAttributes, 'classx/class_attributes'
+  autoload :CAttrs,          'classx/class_attributes'
   autoload :Validate,    'classx/validate'
   autoload :Commandable, 'classx/commandable'
   autoload :Declare,     'classx/declare'
