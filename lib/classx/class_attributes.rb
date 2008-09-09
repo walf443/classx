@@ -81,6 +81,7 @@ module ClassX
               #   class SomeClass
               #       class_has :attr
               #       attr 'setting value example'
+              #       self.attr = 'stting value example' # It's same meaning above but longer and not declaretive.
               #   end
               #
               __send__ "#{name}=", val
