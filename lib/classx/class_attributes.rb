@@ -62,7 +62,7 @@ module ClassX
                 return @__class_attribute_data_of[name]
               else
                 attr_instance = nil
-                if @__class_attribute_of 
+                if instance_variable_defined?('@__class_attribute_of') && @__class_attribute_of
                   attr_instance = @__class_attribute_of[name] 
                 else
                   @__class_attribute_of = self.class_attribute_of
@@ -75,11 +75,15 @@ module ClassX
             else
               raise ArgumentError if vals.size > 1
               val = vals.first
-              if respond_to? "#{name}="
-                __send__ "#{name}=", val
-              else
-                raise RuntimeError, ":#{name} is not writable"
-              end
+              # TODO: It's not consider whether setter method is writable.
+              # I want to write following when setter method is private:
+              #
+              #   class SomeClass
+              #       class_has :attr
+              #       attr 'setting value example'
+              #   end
+              #
+              __send__ "#{name}=", val
             end
           end
 
@@ -91,6 +95,7 @@ module ClassX
               @__class_attribute_of = self.class_attribute_of
               attr_instance = @__class_attribute_of[name]
             end
+
             attr_instance.set val
             @__class_attribute_data_of ||= {}
             @__class_attribute_data_of[name] = val
