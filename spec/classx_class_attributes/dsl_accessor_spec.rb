@@ -86,37 +86,3 @@ describe ClassX::ClassAttributes do
     end
   end
 end
-
-
-#  class DslOverwritenDefaultAccessorTest < Test::Unit::TestCase
-#    class CoolActiveRecord
-#      dsl_accessor :primary_key, :default=>"id"
-#      dsl_accessor :table_name,  :default=>proc{|klass| klass.name.demodulize.underscore.pluralize}
-#    end
-#  
-#    class Item < CoolActiveRecord
-#      primary_key :item_id
-#      table_name  :item_table
-#    end
-#  
-#    def test_overwrite_default_accessor
-#      assert_equal :item_id,    Item.primary_key
-#      assert_equal :item_table, Item.table_name
-#    end
-#  end
-#  
-#  class DslAccessorUsingExtendTest < Test::Unit::TestCase
-#    module CoolActiveRecordlize
-#      dsl_accessor :primary_key, :default=>"id"
-#      dsl_accessor :table_name,  :default=>proc{|klass| klass.name.demodulize.underscore.pluralize}
-#    end
-#  
-#    class Item
-#      extend CoolActiveRecordlize
-#    end
-#  
-#    def test_accessor_using_extend
-#      assert_equal 'id', Item.primary_key
-#      assert_equal 'items', Item.table_name
-#    end
-#  end
