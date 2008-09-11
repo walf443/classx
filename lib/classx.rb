@@ -7,10 +7,19 @@ module ClassX
   autoload :Validate,    'classx/validate'
   autoload :Commandable, 'classx/commandable'
   autoload :Declare,     'classx/declare'
-  autoload :Blanketable, 'classx/blanketable'
+  autoload :Bracketable, 'classx/bracketable'
   module Role
     autoload :Logger,    'classx/role/logger'
   end
+
+  MODULE_USAGE_MAP_OF = {
+    :ClassAttributes => :extend,
+    :CAttrs => :extend,
+    :Commandable => :extend,
+    :Declare     => :extend,
+    :Bracketable => :include,
+    :Validate => :include,
+  }
 
   class InstanceException < Exception; end
   class AttrRequiredError < InstanceException; end
