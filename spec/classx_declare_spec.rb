@@ -17,7 +17,7 @@ describe ClassX::Declare do
     end
 
     it 'should define class into class' do
-      @class.constants.should include("Class")
+      @class.constants.map {|k| k.to_s }.should include("Class")
     end
 
     it 'should have attributes' do
@@ -39,7 +39,7 @@ describe ClassX::Declare do
     end
 
     it 'should define class into class' do
-      @class.constants.should include("Class")
+      @class.constants.map {|k| k.to_s }.should include("Class")
     end
 
     it 'should have class attributes' do
@@ -60,7 +60,7 @@ describe ClassX::Declare do
     end
 
     it 'should define class into class' do
-      @class.constants.should include("Class")
+      @class.constants.map {|k| k.to_s }.should include("Class")
     end
 
     it 'should have :from_argv method' do
@@ -82,7 +82,7 @@ describe ClassX::Declare do
     end
 
     it 'should define class into class' do
-      @class.constants.should include("Class")
+      @class.constants.map {|k| k.to_s }.should include("Class")
     end
 
     it 'should access Hash like interface' do
@@ -107,7 +107,7 @@ describe ClassX::Declare do
     end
 
     it 'should define class into class' do
-      @class.const_get('Class').constants.should include("Class")
+      @class.const_get('Class').constants.map {|k| k.to_s }.should include("Class")
     end
 
     it 'should have attributes' do
