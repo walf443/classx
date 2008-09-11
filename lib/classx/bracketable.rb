@@ -2,7 +2,7 @@ module ClassX
   # you can access class_attribute using Hash like interface.
   #   class YourClass
   #      include ClassX
-  #      include ClassX::Blanketable
+  #      include ClassX::Bracketable
   #      has :x
   #   end
   #
@@ -10,7 +10,7 @@ module ClassX
   #   your[:x] #=> 20
   #   your[:x] = 30
   #   your[:x] #=> 30
-  module Blanketable
+  module Bracketable
     def [] name
       if respond_to? name
         __send__ name
