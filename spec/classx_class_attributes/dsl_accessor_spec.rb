@@ -10,7 +10,7 @@ describe ClassX::ClassAttributes do
         class CoolActiveRecord
           extend ClassX::ClassAttributes
           class_has :primary_key, :default  => proc { "id" }
-          class_has :table_name,  :default  => proc {|klass| klass.to_s.downcase }
+          class_has :table_name,  :default  => proc {|klass| klass.to_s.split(/::/).last.downcase } # ruby 1.9.0 return klass.to_s as "<Class:0x725470>::Item"
         end
 
         class Item < CoolActiveRecord
