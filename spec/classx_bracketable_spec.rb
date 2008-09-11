@@ -137,4 +137,24 @@ describe ClassX::Bracketable do
       end
     end
   end
+
+  describe 'for non-ClassX class' do
+    before do
+      @class = Class.new
+      @class.class_eval do
+        include ClassX::Bracketable
+      end
+
+      @obj = @class.new
+    end
+
+    it 'should return nil' do
+      @obj[:x].should be_nil
+    end
+
+    it 'should return nil' do
+      @obj[:x] = 20
+      @obj[:x].should be_nil
+    end
+  end
 end
