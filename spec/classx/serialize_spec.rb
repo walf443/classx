@@ -14,6 +14,12 @@ describe ClassX do
       Object.const_set(:DumpedObject, klass)
     end
 
+    it 'should be duplicatable' do
+      obj = DumpedObject.new(:x => ["not abc"])
+      obj2 = obj.dup
+      obj2.should == obj
+    end
+
     it 'should be serialized with Marshal' do
       obj = DumpedObject.new(:x => ["not abc"])
       dump = Marshal.dump(obj)
