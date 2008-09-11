@@ -6,10 +6,9 @@ module ClassX::Validate
   #   require 'classx/validate'
   #
   #   class YourClass
-  #     include ClassX::Validate
   #
   #     def run params
-  #       validate params do
+  #       validated_prams = Class::Validate.validate params do
   #         has :x
   #         has :y, :default => "hoge", :kind_of => Hash
   #       end
@@ -30,6 +29,7 @@ module ClassX::Validate
       @@__validate_cached[uniq_key] = Class.new
       @@__validate_cached[uniq_key].class_eval do
         include ::ClassX
+        include ::ClassX::Bracketable
       end
       @@__validate_cached[uniq_key].class_eval(&block)
     end
