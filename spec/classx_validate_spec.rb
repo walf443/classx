@@ -3,7 +3,6 @@ require 'classx'
 require 'classx/validate'
 
 describe ClassX::Validate do
-  include ClassX::Validate
   before do
     @class = Class.new
     @class.class_eval do
