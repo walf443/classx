@@ -31,7 +31,7 @@ module ClassX
         end
         include(ClassX)
       end
-      klass.class_eval &block
+      klass.class_eval(&block)
       ctx.module_eval do
         const_set(name.to_s.capitalize, klass)
       end
