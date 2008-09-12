@@ -156,6 +156,22 @@ end
 # On my environment( MacBook1.1 Intel Core Duo 1.83 GHz, 2GB), result is like that. TOOOOO SLOOOW classX!!!!.
 # 
 # ----------------------------------------------------------
+# result after 92ed088b ( before 0.0.4 )
+# attr_reader               0.010000   0.000000   0.010000 (  0.011373)
+# simple define             0.190000   0.020000   0.210000 (  0.245375)
+# with declare              0.210000   0.020000   0.230000 (  0.269984)
+# with writable             0.170000   0.020000   0.190000 (  0.198645)
+# with optional             0.230000   0.020000   0.250000 (  0.265170)
+# with default              0.170000   0.010000   0.180000 (  0.190290)
+# with default Proc         0.240000   0.020000   0.260000 (  0.271484)
+# with default Proc lazy    0.180000   0.010000   0.190000 (  0.204015)
+# with validate Proc        0.290000   0.030000   0.320000 (  0.317159)
+# with validate Regexp      0.170000   0.010000   0.180000 (  0.201919)
+# with handles Array        0.330000   0.020000   0.350000 (  0.352262)
+# with handles Hash         0.210000   0.020000   0.230000 (  0.233292)
+# with include              0.320000   0.020000   0.340000 (  0.353505)
+# with extend               0.190000   0.010000   0.200000 (  0.218557)
+# ----------------------------------------------------------
 # result after dd1bb608
 #                             user     system      total        real
 # attr_reader               0.010000   0.000000   0.010000 (  0.011491)
