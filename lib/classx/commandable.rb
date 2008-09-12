@@ -3,6 +3,45 @@ require 'optparse'
 $ClassXCommandableMappingOf = {}
 
 module ClassX
+  # add cli interface to your classx based class.
+  #
+  #   require 'classx'
+  #
+  #   $ClassXCommandableMappingOf[Symbol] = String
+  #
+  #   class YourApp 
+  #     include ClassX
+  #     extend ClassX::Commandable
+  #
+  #     has :arg1, 
+  #       :kind_of => Symbol, 
+  #       :desc => 'please specify arg1',
+  #       :coerce => { String => proc {|val| val.to_sym } }
+  #
+  #     has :arg2,
+  #       :kind_of => Integer,
+  #       :desc => "this is arg2",
+  #       :optional => true
+  #
+  #     def run
+  #       # do something!!
+  #       p attribute_of
+  #     end
+  #   end
+  #
+  #   if $0 == __FILE__
+  #     YourApp.from_argv.run
+  #   end
+  #
+  # and run, $ruby example/commandable.rb
+  #
+  #   example/commandable.rb [options]
+  #       -a, --arg1 String                please specify arg1
+  #           --arg2 [Integer]             this is arg2
+  #       -h, --help                       show this document
+  #
+  # please see and run example/commandable.rb
+  #
   module Commandable
     class MissingCoerceMapping < Exception; end
 

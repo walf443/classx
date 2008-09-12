@@ -1,4 +1,23 @@
 module ClassX
+  #
+  # added attribute feature to module.
+  #
+  #   require 'classx'
+  #   module YourApp::Role::SomeModule
+  #     extend Attributes
+  #
+  #     has :some_attr
+  #
+  #   end
+  #
+  #   class YourApp
+  #     included ClassX
+  #     included YourApp::Role::SomeModule
+  #
+  #   end
+  #
+  #   YourApp.new(:some_attr => 10)
+  #
   module Attributes
     ATTRIBUTE_REGEX = /\Aattribute_of:(\w+)\z/
 

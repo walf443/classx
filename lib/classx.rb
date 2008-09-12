@@ -1,6 +1,23 @@
 require 'classx/attribute'
 require 'classx/attributes'
 
+# usage
+#
+#   require 'classx'
+#   class Point
+#     include ClassX
+#   
+#     has :x, :kind_of => Fixnum
+#     has :y, :kind_of => Fixnum
+#   end
+#   
+#   class Point3D < Point
+#     has :z, :writable => true, :kind_of => Fixnum, :optional => true
+#   end
+#   
+#   Point.new(:x => 30, :y => 40)  #=> <# Point @x=30, @y=40 >
+#   point3d = Point3D.new(:x => 30, :y => 40, :z => 50)  #=> <# Point3D @x=30, @y=40, @z=50 >
+#   point3d.z = 60.0 # raise ClassX::InvalidAttrArgument
 module ClassX
   autoload :ClassAttributes, 'classx/class_attributes'
   autoload :CAttrs,          'classx/class_attributes'

@@ -1,6 +1,6 @@
 module ClassX
-  module AttributeMethods
-    module ClassMethods
+  module AttributeMethods #:nodoc:
+    module ClassMethods #:nodoc:
       def value_class
         config[:isa] || config[:kind_of]
       end
@@ -24,7 +24,7 @@ module ClassX
         "ClassX::Attribute[#{self.config.inspect}]"
       end
 
-      module CoerceWithHash
+      module CoerceWithHash #:nodoc:
         def coerce val
           result = val
           config[:coerce].each do |cond, rule|
@@ -50,7 +50,7 @@ module ClassX
           return result
         end
       end
-      module CoerceWithArray
+      module CoerceWithArray #:nodoc:
         def coerce val
           result = val
           config[:coerce].each do |item|
@@ -78,18 +78,18 @@ module ClassX
         end
       end
 
-      module CoerceNothing
+      module CoerceNothing #:nodoc:
         def coerce val
           val
         end
       end
 
-      module DefaultWithProc
+      module DefaultWithProc #:nodoc:
         def default parent
           config[:default].call(parent)
         end
       end
-      module DefaultWithNoProc
+      module DefaultWithNoProc #:nodoc:
         def default parent
           begin
             config[:default].dup
@@ -99,19 +99,19 @@ module ClassX
         end
       end
 
-      module ValidateWithProc
+      module ValidateWithProc #:nodoc:
         def validate? val
           return config[:validate].call(val)
         end
       end
 
-      module ValidateWithNotProc
+      module ValidateWithNotProc #:nodoc:
         def validate? val
           return config[:validate] === val
         end
       end
 
-      module ValidateEach
+      module ValidateEach #:nodoc:
         def validate? val
           return false unless val.respond_to? :all?
 
@@ -134,19 +134,19 @@ module ClassX
         end
       end
 
-      module ValidateKindOf
+      module ValidateKindOf #:nodoc:
         def validate? val
           return val.kind_of?(self.value_class)
         end
       end
 
-      module ValidateRespondTo
+      module ValidateRespondTo #:nodoc:
         def validate? val
           return val.respond_to?(config[:respond_to])
         end
       end
 
-      module ValidateNothing
+      module ValidateNothing #:nodoc:
         def validate? val
           # nothing checked.
           true
@@ -154,7 +154,7 @@ module ClassX
       end
     end
 
-    module InstanceMethods
+    module InstanceMethods #:nodoc:
       def initialize val
         @parent = val
         @data = nil
@@ -179,6 +179,9 @@ module ClassX
     end
   end
 
+  #
+  # generating anonymous class for meta attribute class.
+  #
   class AttributeFactory
     def self.create args
       # TODO:  hmm, ClassX::Commandable do nothing when freezed.

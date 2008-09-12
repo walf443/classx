@@ -19,7 +19,7 @@ module ClassX
   #     end
   #   end
   #
-  # #=> define Klass::Klass2
+  #   #=> define Klass::Klass2
   #
   module Declare
     def classx name, options=[] , ctx=_guess_parent_namespace(), &block
