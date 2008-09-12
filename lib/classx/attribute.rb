@@ -183,6 +183,8 @@ module ClassX
   # generating anonymous class for meta attribute class.
   #
   class AttributeFactory
+    #
+    # creating anonymous class for meta attribute class.
     def self.create args
       # TODO:  hmm, ClassX::Commandable do nothing when freezed.
       #

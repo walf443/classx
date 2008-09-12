@@ -1,5 +1,6 @@
 
 = classx
+Meta Framework extending and flexible attribute like Moose ( perl )
 
 == Synopsis
 
@@ -33,6 +34,10 @@ perl's Moose like Class interface.
 	gem install classx
 
 == Features/Problems
+
+== SEE ALSO
+
+Moose: http://search.cpan.org/~drolsky/Moose-0.57/lib/Moose.pm
 
 == Copyright
 

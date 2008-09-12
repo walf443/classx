@@ -45,10 +45,10 @@ module ClassX
   class OptionalAttrShouldBeWritable < Exception; end
   class RequiredAttrShouldNotHaveDefault < Exception; end
 
-  def self.included klass
-    klass.extend(Attributes)
-  end
-
+  # *args is Hash in default.
+  # Hash should have attribute's key and valid value for attribute.
+  # This method checking required value is setted and taking value is valid to attribute.
+  #
   def initialize *args
     hash = before_init(*args)
 
@@ -56,7 +56,7 @@ module ClassX
       raise ArgumentError, "#{hash.inspect} was wrong as arguments. please specify kind of Hash instance"
     end
 
-    # allow String or Symbol for key 
+    # allow String or Symbol for key
     tmp_hash = {}
     hash.each do |key,val|
       tmp_hash[key.to_s] = val
@@ -77,6 +77,17 @@ module ClassX
     after_init
   end
 
+  # return Hash of attribute's name as a key and attribute's meta class instance as a value.
+  # for example, 
+  #
+  #   class YourClass
+  #      include ClassX
+  #      has :x
+  #   end
+  #
+  #   obj = YourClass.new(:x => 10)
+  #   obj.attribute_of    #=> { "x" => <#<ClassX::Attribute> parent=<# YourClass> ... > }
+  #
   def attribute_of
     unless instance_variable_defined?('@__attribute_of') && @__attribute_of
       @__attribute_of = {}
@@ -90,7 +101,8 @@ module ClassX
     @__attribute_of
   end
 
-  # just extend point
+  # processing initialize argument to hash
+  # you can override this method for not taking initializer your classx based class.
   def before_init *args
     raise ArgumentError if args.size > 1
 
@@ -98,9 +110,14 @@ module ClassX
     hash.nil? ? {} : hash
   end
 
+  alias process_init_args before_init
+
+  # automatically called this method on last of #initialize.
+  # you can override this method.
   def after_init
   end
 
+  # shared implementation for comparing classx based object.
   def == other
     return false unless other.kind_of? self.class
     attribute_of.all? do |key, val|
@@ -109,6 +126,8 @@ module ClassX
   end
 
   UNSERIALIZE_INSTANCE_VARIABLES = ["@__attribute_of", "@__attribute_data_of"]
+
+  # convert attribute key and value to Hash.
   def to_hash
     result = {}
 
@@ -119,10 +138,12 @@ module ClassX
     result
   end
 
+  # dupping classx based class.
   def dup
     self.class.new(to_hash)
   end
 
+  # for Marshal.dump
   def marshal_dump
     dump_of = {}
     dump_of[:attribute_of] = to_hash
@@ -134,6 +155,7 @@ module ClassX
     dump_of
   end
 
+  # for Marshal.load
   def marshal_load val
     self.attribute_of.each do |k, v|
       v.set(val[:attribute_of][k])
@@ -143,6 +165,7 @@ module ClassX
     end
   end
 
+  # for YAML.dump
   def to_yaml opts={}
     require 'yaml'
     YAML.quick_emit(self, opts) do |out|
@@ -162,6 +185,7 @@ module ClassX
     end
   end
 
+  # for YAML.load
   def yaml_initialize tag, val
     self.attribute_of.each do |k, v|
       v.set(val[:attribute_of][k])
@@ -170,6 +194,12 @@ module ClassX
     val[:instance_variable_of].each do |k, v|
       instance_variable_set(k, v)
     end
+  end
+
+  private
+
+  def self.included klass
+    klass.extend(Attributes)
   end
 
 end

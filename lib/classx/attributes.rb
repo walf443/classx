@@ -21,6 +21,16 @@ module ClassX
   module Attributes
     ATTRIBUTE_REGEX = /\Aattribute_of:(\w+)\z/
 
+    # return Hash of attribute's name as a key and attribute's meta class as a value.
+    # for example, 
+    #
+    #   class YourClass
+    #      include ClassX
+    #      has :x
+    #   end
+    #
+    #   YourClass.attribute_of  #=> { "x" => <ClassX::Attribute: ... > }
+    #
     def attribute_of
       unless instance_variable_defined?('@__attribute_of') && @__attribute_of
         @__attribute_of = {}
@@ -34,7 +44,9 @@ module ClassX
     end
 
     private 
-      def define_attribute name, attribute
+      # generating attribute's meta class and bind to this class.
+      #
+      def define_attribute name, attribute #:doc:
         klass_attribute = ClassX::AttributeFactory.create(attribute)
         mod = nil
         if self.const_defined? 'ClassMethods' 
@@ -64,7 +76,20 @@ module ClassX
         klass_attribute
       end
 
-      def add_attribute name, attrs={}
+      # adding new attribute to class, and define accessor methods related to this attribute.
+      # You can also use +has+ more declaretivly.
+      #
+      #   class YourClass
+      #     include ClassX
+      #     add_attribute :x,
+      #       :writable => true,  # defining accessor scope.
+      #       :optional => ture,  # defining attribute is required in initialize.
+      #       :validate => proc {|val| val.respond_to? :to_s }  # this attribute's value should adopted to this rule.
+      #       :default  => proc {|mine| mine.class.to_s.split(/::/).last.downcase } # default value for this attribute.
+      #
+      #   end
+      #
+      def add_attribute name, attrs={} #:doc:
         name = name.to_s
 
         attr_class = define_attribute(name, attrs)
