@@ -1,4 +1,23 @@
 module ClassX
+  #
+  # added attribute feature to module.
+  #
+  #   require 'classx'
+  #   module YourApp::Role::SomeModule
+  #     extend Attributes
+  #
+  #     has :some_attr
+  #
+  #   end
+  #
+  #   class YourApp
+  #     included ClassX
+  #     included YourApp::Role::SomeModule
+  #
+  #   end
+  #
+  #   YourApp.new(:some_attr => 10)
+  #
   module Attributes
     ATTRIBUTE_REGEX = /\Aattribute_of:(\w+)\z/
 
@@ -17,10 +36,10 @@ module ClassX
     private 
       def define_attribute name, attribute
         klass_attribute = ClassX::AttributeFactory.create(attribute)
-        mod = Module.new
-        begin
+        mod = nil
+        if self.const_defined? 'ClassMethods' 
           mod = self.const_get('ClassMethods')
-        rescue NameError => e
+        else
           mod = Module.new
           const_set('ClassMethods', mod)
         end
@@ -41,42 +60,60 @@ module ClassX
         end
 
         private "attribute_of:#{name}"
+
+        klass_attribute
       end
 
       def add_attribute name, attrs={}
         name = name.to_s
 
-        define_attribute(name, attrs)
+        attr_class = define_attribute(name, attrs)
 
-        define_method name do
-          attr_instance = __send__ "attribute_of:#{name}"
-          attr_instance.get
+        # XXX: Why this can take *args?
+        # =>  It's for avoid warnings when you call it without values.
+        define_method name do |*vals|
+          if vals == []
+            @__attribute_data_of ||= {}
+            if @__attribute_data_of[name]
+              return @__attribute_data_of[name]
+            else
+              attr_instance = __send__ "attribute_of:#{name}"
+              return @__attribute_data_of[name] = attr_instance.get
+            end
+          else
+            raise ArgumentError if vals.size > 1
+            val = vals.first
+            if respond_to? "#{name}="
+              __send__ "#{name}=", val
+            else
+              raise RuntimeError, ":#{name} is not writable"
+            end
+          end
         end
 
         define_method "#{name}=" do |val|
           attr_instance = __send__ "attribute_of:#{name}"
           attr_instance.set val
+          @__attribute_data_of ||= {}
+          @__attribute_data_of[name] = val
         end
 
-        cached_attribute_of = attribute_of
-        if cached_attribute_of[name]
-          unless cached_attribute_of[name].config[:writable]
-            private "#{name}="
-          end
+        unless attr_class.config[:writable]
+          private "#{name}="
+        end
 
-          if cached_attribute_of[name].config[:handles]
-            case cached_attribute_of[name].config[:handles]
-            when Hash
-              cached_attribute_of[name].config[:handles].each do |before, after|
-                define_method before do
-                  attribute_of[name].get.__send__ after
-                end
+        if attr_class.config[:handles]
+          case attr_class.config[:handles]
+          when Hash
+            attr_class.config[:handles].each do |before, after|
+              define_method before do |*args|
+                __send__("#{name}").__send__ after, *args
               end
-            when Array
-              cached_attribute_of[name].config[:handles].each do |meth|
-                define_method meth do
-                  attribute_of[name].get.__send__ meth
-                end
+            end
+          when Array
+            attr_class.config[:handles].each do |meth|
+              define_method meth do |*args|
+                __send__("#{name}").__send__ meth, *args
               end
             end
           end
@@ -90,5 +127,7 @@ module ClassX
         klass.extend(self.const_get('ClassMethods'))
       end
 
+      # alias for lazy people
+      Attrs = Attributes
   end
 end

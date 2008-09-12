@@ -9,7 +9,7 @@ module ClassX
     #     include ClassX
     #     extends ClassX::Commandable
     #     include ClassX::Role::Logger
-    #   
+    #
     #     def run
     #       logger.debug("debug!!")
     #       # do something
@@ -22,10 +22,15 @@ module ClassX
     #
     # SEE ALSO: +ClassX::Commandable+
     #
-    module Logger
+    module Logger #:doc:
       extend ClassX::Attributes
 
-      module ToLogLevel
+      # added log_level's attribute class to utility method
+      #
+      #   your_class.attribute_of['log_level'].to_log_level #=> 0
+      #   your_class.attribute_of['log_level'].to_i # alias for to_log_level
+      #
+      module ToLogLevel #:nodoc:
         def to_log_level str=self.get
           ::Logger::Severity.const_get(str.upcase)
         end
@@ -33,7 +38,10 @@ module ClassX
         alias to_i to_log_level
       end
 
-      has :logger, 
+      # dummy method for rdoc.
+      def logger; end
+
+      has :logger,
         :optional      => true,
         :no_cmd_option => true,
         :lazy          => true, 
@@ -45,19 +53,14 @@ module ClassX
           logger
         }
 
-      has :log_level, 
+      has :log_level,
         :kind_of    => String,
         :desc       => 'log_level (debug|info|warn|error|fatal) (default info)',
         :optional   => true,
         :default    => 'info',
         :include    => ToLogLevel,
         :validate   => proc {|val|
-          begin
-            ::Logger::Severity.const_get(val.upcase)
-          rescue NameError => e
-            return false
-          end
-          true
+          val && ::Logger::Severity.const_defined?(val.to_s.upcase)
         }
 
       has :logfile,

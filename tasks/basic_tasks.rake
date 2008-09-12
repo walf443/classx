@@ -18,7 +18,7 @@ Spec::Rake::SpecTask.new(:spec) do |t|
   t.warning = true
   t.rcov = true
   t.rcov_dir = 'doc/output/coverage'
-  t.rcov_opts = ['--exclude', 'spec,\.autotest']
+  t.rcov_opts = ['--exclude', 'spec,\.autotest,/Library/']
 end
 
 desc "Heckle each module and class in turn"

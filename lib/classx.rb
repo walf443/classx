@@ -1,14 +1,43 @@
 require 'classx/attribute'
 require 'classx/attributes'
 
+# usage
+#
+#   require 'classx'
+#   class Point
+#     include ClassX
+#   
+#     has :x, :kind_of => Fixnum
+#     has :y, :kind_of => Fixnum
+#   end
+#   
+#   class Point3D < Point
+#     has :z, :writable => true, :kind_of => Fixnum, :optional => true
+#   end
+#   
+#   Point.new(:x => 30, :y => 40)  #=> <# Point @x=30, @y=40 >
+#   point3d = Point3D.new(:x => 30, :y => 40, :z => 50)  #=> <# Point3D @x=30, @y=40, @z=50 >
+#   point3d.z = 60.0 # raise ClassX::InvalidAttrArgument
 module ClassX
+  autoload :ClassAttributes, 'classx/class_attributes'
+  autoload :CAttrs,          'classx/class_attributes'
   autoload :Validate,    'classx/validate'
   autoload :Commandable, 'classx/commandable'
   autoload :Declare,     'classx/declare'
   autoload :Util,        'classx/util'
+  autoload :Bracketable, 'classx/bracketable'
   module Role
     autoload :Logger,    'classx/role/logger'
   end
+
+  MODULE_USAGE_MAP_OF = {
+    :ClassAttributes => :extend,
+    :CAttrs => :extend,
+    :Commandable => :extend,
+    :Declare     => :extend,
+    :Bracketable => :include,
+    :Validate => :include,
+  }
 
   class InstanceException < Exception; end
   class AttrRequiredError < InstanceException; end
@@ -71,6 +100,77 @@ module ClassX
   end
 
   def after_init
+  end
+
+  def == other
+    return false unless other.kind_of? self.class
+    attribute_of.all? do |key, val|
+      val.get == other.__send__(key)
+    end
+  end
+
+  UNSERIALIZE_INSTANCE_VARIABLES = ["@__attribute_of", "@__attribute_data_of"]
+  def to_hash
+    result = {}
+
+    attribute_of.each do |key, val|
+      result[key] = val.get
+    end
+
+    result
+  end
+
+  def dup
+    self.class.new(to_hash)
+  end
+
+  def marshal_dump
+    dump_of = {}
+    dump_of[:attribute_of] = to_hash
+    dump_of[:instance_variable_of] = {}
+    ( instance_variables.map {|ival| ival.to_s } - UNSERIALIZE_INSTANCE_VARIABLES ).each do |ival|
+      dump_of[:instance_variable_of][ival] = instance_variable_get(ival)
+    end
+
+    dump_of
+  end
+
+  def marshal_load val
+    self.attribute_of.each do |k, v|
+      v.set(val[:attribute_of][k])
+    end
+    val[:instance_variable_of].each do |key, val|
+      instance_variable_set(key, val)
+    end
+  end
+
+  def to_yaml opts={}
+    require 'yaml'
+    YAML.quick_emit(self, opts) do |out|
+      out.map( taguri, to_yaml_style ) do |map|
+        attribute_of = {}
+        to_hash.each do |key, val|
+          attribute_of[key] = val
+        end
+        map.add(:attribute_of, attribute_of)
+
+        instance_variable_of = {}
+        ( instance_variables.map {|ival| ival.to_s } - UNSERIALIZE_INSTANCE_VARIABLES ).each do |ival|
+          instance_variable_of[ival] = instance_variable_get(ival)
+        end
+        map.add(:instance_variable_of, instance_variable_of)
+      end
+    end
+  end
+
+  def yaml_initialize tag, val
+    self.attribute_of.each do |k, v|
+      v.set(val[:attribute_of][k])
+    end
+
+    val[:instance_variable_of].each do |k, v|
+      instance_variable_set(k, v)
+    end
   end
 
 end
