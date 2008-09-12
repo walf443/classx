@@ -1,3 +1,357 @@
+commit c27d76a9e41d7f1d6f02160c6c0b555c6cd68206
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sat Sep 13 00:28:06 2008 +0900
+
+    adding doc for methods.
+
+commit 55c86d08d2a6a6acfd19a0d986a38e7b90e268b3
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Fri Sep 12 23:46:38 2008 +0900
+
+    update benchmark script.
+
+commit 92ed088b66fdbf04c3c9bff6439b6f98dbf66a03
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Fri Sep 12 23:36:17 2008 +0900
+
+    fixed warnings.
+
+commit 212fd510001ffac66d8c318bc8aee645566cc81f
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Fri Sep 12 09:23:48 2008 +0900
+
+    added rdoc.
+
+commit 29129de8ad1f740df7a812547b734c530e4bd26e
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Fri Sep 12 08:36:48 2008 +0900
+
+    fixed fail test in Ruby 1.9.0
+
+commit 058d0588e6626403bcaef9464ef40c50d52b516d
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Fri Sep 12 08:28:43 2008 +0900
+
+    added test for #dup
+
+commit 1d591c1b8f78e3892b7fb010b62063da142dae16
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Fri Sep 12 08:25:32 2008 +0900
+
+    change to use ClassX::Bracketable in ClassX::Validate class
+
+commit 57e61cf163f351e05bf6cdedcc519e2aa32cdc67
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Fri Sep 12 08:24:21 2008 +0900
+
+    added spec to ClassX::Declare and fixed bug about autoload ClassX::Bracketable
+
+commit 0e3b72eb7d63a4bf84f121ce3a08b8d535b16d91
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Fri Sep 12 02:47:11 2008 +0900
+
+    fixed bug of test in Ruby 1.9.0
+
+commit 72d4a1e60a6bbcf53d976508724c4d4948d1c744
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Fri Sep 12 02:36:06 2008 +0900
+
+    added test.
+
+commit d8285a1c6f86ecb1de78f0ba61557591aca38e34
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Fri Sep 12 02:33:22 2008 +0900
+
+    file name is wrong in convention.
+
+commit 0c97f016b63fb7853fcc058709ff631be13e2e5e
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Fri Sep 12 02:27:43 2008 +0900
+
+    It may be caching is wrong.
+
+commit 6306fc00771d955deede79c20e68b5d2706738e8
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Fri Sep 12 02:19:25 2008 +0900
+
+    not commited.
+
+commit 1883e78a6b032740350c87a5d083b959b61d04c1
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Fri Sep 12 01:52:15 2008 +0900
+
+    added test for ClassX::Brancketable
+
+commit 72d8a64cc065b191a8399db1fa05abbed7b8e955
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Fri Sep 12 01:51:45 2008 +0900
+
+    no need to include ClassX::Validate
+
+commit 9b437319d3a681d413dc511876e6d4146daf964f
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Wed Sep 10 09:11:18 2008 +0900
+
+    added ClassX::Blanketable
+
+commit b899ce53177852463ad184f166ad8e6ce6359f8d
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Wed Sep 10 07:55:07 2008 +0900
+
+    added doc. make alias CAttrs as ClassX::ClassAttributes, Attrs as ClassX::Attributes
+
+commit e08c704466dd4af37e8ab2b92ba984d03af42db6
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Wed Sep 10 01:20:08 2008 +0900
+
+    remove garbage.
+
+commit cbcd811ff3fb88212f4dad175064bb1d05692275
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Wed Sep 10 00:20:57 2008 +0900
+
+    added comment.
+
+commit 55775bed9ee0e686da52b2c649f7c40a6b5758f5
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Wed Sep 10 00:08:35 2008 +0900
+
+    added dsl_accessor compatible tests.
+
+commit 691562a088b1a7b7ab2ff659a214aa9656212df6
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Tue Sep 9 08:09:30 2008 +0900
+
+    ruby1.9 return each items in instance_variables with Symbol.
+
+commit 72a128ae5b80636799c3466a303c3caba3e2f919
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Tue Sep 9 02:03:07 2008 +0900
+
+    fixed spec docs.
+
+commit e6f03314479f1692e9a04739c2395006ad9cf871
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Tue Sep 9 01:50:15 2008 +0900
+
+    added test about inheritance.
+
+commit 6cfd2852d3dd4d461ab06ae983585558d576b360
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Tue Sep 9 01:06:14 2008 +0900
+
+    ClassX::ClassAttributes should be extend. So self.include is not need.
+
+commit 580936730fffd5ded27ae0b47a9937ada48174e1
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Tue Sep 9 01:03:01 2008 +0900
+
+    added class attribute feature. you can define class attributes with a same interface of attribute.
+
+commit 413edbea25cbc3991dd546fb0af21e82008853b7
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Mon Sep 8 22:35:37 2008 +0900
+
+    Serialization should support restoring instance_variables except for classx's attribute_class caching.
+
+commit 967bb8ef27de37ea951ff2199a1d1df8d7ba3cae
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Mon Sep 8 08:34:58 2008 +0900
+
+    oops.
+
+commit 3713b743286bc3076f6ef5a190dba31aebfef3a4
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Mon Sep 8 08:33:02 2008 +0900
+
+    added serialization support using Marshl, YAML.
+
+commit 07a290cd3f9befefbd2987c78f889a67b81f89c8
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sun Sep 7 19:24:20 2008 +0900
+
+    Become caching value when you use getter method.
+
+commit 3e97a758c8f421b5089d44abe399ab328174afbb
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sun Sep 7 18:35:08 2008 +0900
+
+    fixed revision.
+
+commit dd1bb608dd23ebf8e569c62784778aca56917044
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sun Sep 7 18:34:03 2008 +0900
+
+    refactoring code. not using attribute_of as possible.
+
+commit 8e6541a01a49a032f59c9f6b238e0f5ccb37ddbc
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sun Sep 7 18:12:54 2008 +0900
+
+    attr_get became slower a little than before.
+
+commit 83519953e9f7140ccd10324670d37cfec3cceb16
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sun Sep 7 18:06:23 2008 +0900
+
+    Allow another setter style. you can use #attr_name(val) alternate #attr_name= val
+
+commit dd1555988fe38e3fc53e780e7b0922e8802feca1
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Fri Aug 29 09:09:33 2008 +0900
+
+    ruby19 can use =~ between Symbol and Regexp.
+
+commit a48eb7c03bcee64d285eda4bd24a537f5cede81f
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Fri Aug 29 09:05:11 2008 +0900
+
+    support mspec because it's easy to run test as ruby 1.9.  (rspec is not worked in ruby 1.9 !! )
+
+commit 2340039002a3ff315fad5028bf2c7931ac1d1c91
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Thu Aug 28 00:40:51 2008 +0900
+
+    no define_method if it doesn't need.
+
+commit 29a8e3293d07ca8dd0b4a3305d615b2968b13c55
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Wed Aug 27 08:28:56 2008 +0900
+
+    added :validate_each option. It's useful to validate complex structure ( for example nested Array ).
+
+commit 36fd5a4e2320b0a68c38640ab86a1bc5cda0da2d
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Tue Aug 26 08:24:26 2008 +0900
+
+    don't measure GC time.
+
+commit 1f4c448bcbc74d744be2a6e3805b461b798a7f91
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Mon Aug 25 09:34:28 2008 +0900
+
+    added benchmark for taking time of defining attributes.
+
+commit 066787b4d379bdf1a83700b5fe5e629e6a423d74
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sun Aug 24 23:20:09 2008 +0900
+
+    :handle option should be able to delegate method with arguments.
+
+commit d08d8f5cc87e1a7979dc11cc0abc914a2a4c61a3
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sun Aug 24 22:39:43 2008 +0900
+
+    insert line break to too long line to read.
+
+commit 2120fafb35ee33048130b6c23c9c009e3c47f629
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sun Aug 24 21:01:59 2008 +0900
+
+    fixed.BUG: when it specify invalid attribute as option, commandable would not show help message.
+
+commit f23eb5c82c644dc45cd83568a9270153b422f8a3
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sun Aug 24 17:59:26 2008 +0900
+
+    It should use Class.const_defined?
+
+commit dd0d8b4ab4610d39b2f81361ad0b85e87bdb6847
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sun Aug 24 17:52:23 2008 +0900
+
+    When attribute's config freezed. ClassX::Commandable is not worked.
+
+commit ada4424c9d8bd443eebc0c661040ccfdebca12e4
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sun Aug 24 17:43:41 2008 +0900
+
+    change not using args[key] in define_method but using via config method.
+
+commit d0c318b1e45cdd134ca47bf48a4aae06cfcd215c
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sun Aug 24 16:53:23 2008 +0900
+
+    added tests.
+
+commit 588d9b3643ad12cfcc7b8c85a0a71834f83de24f
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sun Aug 24 16:34:38 2008 +0900
+
+    test file name should be /_spec.rb$/.
+
+commit 9a5c6802a1de610c6f93b614cbca56e10721965d
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sun Aug 24 15:57:33 2008 +0900
+
+    /Libraray should not use as rcov coverage.
+
+commit d37368e32770e14a6242bf7eb5e8390a8577e4e0
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sun Aug 24 12:20:07 2008 +0900
+
+    supported defining nested name space.
+
+commit 32ed48c6ae8a470acb3a12151102174fedccfc58
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sat Aug 23 23:25:31 2008 +0900
+
+    classx/util is not merged.
+
+commit 8e81180a717458b53fa09ec6ac4f9852f7175e8b
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sat Aug 23 22:35:59 2008 +0900
+
+    added benchmark for attribute_get.
+
+commit 115d1bcfb9cb3964c14da851259dc5bb2a6f2784
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sat Aug 23 22:29:07 2008 +0900
+
+    change to cache ClassX#attribute_of. And fixed warnings.
+
+commit a23be1ac7760fea83e4b80fdc6f06fb2839b8883
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sat Aug 23 21:35:05 2008 +0900
+
+    It may be better to show attibute's parent at inspect for debugging.
+
+commit 3593145aeb05ebba55719405232b40af903e0882
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sat Aug 23 21:26:04 2008 +0900
+
+    tweaked define order.
+
+commit daf1861b1507ea6ad87fc2be109461fd070a6b6b
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sat Aug 23 20:52:11 2008 +0900
+
+    added ClassX::Validate.validate. It's good to write explicity code.
+
+commit 508f568535cdac3319cd80b812de1fb4175c17cf
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sat Aug 23 19:00:48 2008 +0900
+
+    fixed doc.
+
+commit 6fc2c5dbbc4ed8cbd6ef62f9aaad0e3ffc7be498
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sat Aug 23 15:19:20 2008 +0900
+
+    it's faster than calling from attribute_of
+
+commit 458848fded3eeb55a7fc9048bada7c825dfb73ad
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sat Aug 23 14:53:37 2008 +0900
+
+    added bench dir to gem.
+
+commit 52afdcbfbc105d93defbf6513bc89a6827f0f386
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sat Aug 23 14:27:39 2008 +0900
+
+    release 0.0.3
+
 commit 106a6048c9dd61009a54bd35081e849461785560
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Sat Aug 23 14:22:09 2008 +0900
