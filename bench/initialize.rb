@@ -41,6 +41,10 @@ end
 # On my environment( MacBook1.1 Intel Core Duo 1.83 GHz, 2GB), result is like that. TOOOOO SLOOOW classX!!!!.
 #
 # ----------------------------------------------------------
+# result after 0171feab
+# classx        0.080000   0.000000   0.080000 (  0.099778)
+# normal class  0.000000   0.000000   0.000000 (  0.005175)
+# ----------------------------------------------------------
 # result after d85fa7de
 # classx        0.070000   0.000000   0.070000 (  0.094902)
 # normal class  0.010000   0.000000   0.010000 (  0.004398)

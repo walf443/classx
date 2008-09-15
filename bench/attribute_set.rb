@@ -55,6 +55,11 @@ end
 # On my environment( MacBook1.1 Intel Core Duo 1.83 GHz, 2GB), result is like that. TOOOOO SLOOOW classX!!!!.
 # 
 # ----------------------------------------------------------
+# result after 0171feab
+# classx with attr_name = val   0.030000   0.000000   0.030000 (  0.035114)
+# classx with attr_name(val)    0.040000   0.000000   0.040000 (  0.053949)
+# normal class                  0.010000   0.000000   0.010000 (  0.001969)
+# ----------------------------------------------------------
 # result after d85fa7ded
 # classx with attr_name = val   0.020000   0.010000   0.030000 (  0.031880)
 # classx with attr_name(val)    0.040000   0.000000   0.040000 (  0.049979)

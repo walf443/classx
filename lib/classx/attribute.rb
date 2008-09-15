@@ -151,15 +151,11 @@ module ClassX
         end
       end
 
-      module TriggerProc #:nodoc:
+      module TriggerArrayProc #:nodoc:
         def trigger parent, val
-          config[:trigger].call(parent, val)
-        end
-      end
-
-      module TriggerNothing #:nodoc:
-        def trigger parent, val
-          val
+          config[:trigger].each do |trg|
+            trg.call(parent, val)
+          end
         end
       end
     end
@@ -258,9 +254,13 @@ module ClassX
       end
 
       if args[:trigger]
-        klass.extend(ClassX::AttributeMethods::ClassMethods::TriggerProc)
+        unless args[:trigger].kind_of?(Array)
+          args[:trigger] = [ args[:trigger] ]
+        end
+        klass.extend(ClassX::AttributeMethods::ClassMethods::TriggerArrayProc)
       else
-        klass.extend(ClassX::AttributeMethods::ClassMethods::TriggerNothing)
+        args[:trigger] = []
+        klass.extend(ClassX::AttributeMethods::ClassMethods::TriggerArrayProc)
       end
 
       # for extending attribute point.
