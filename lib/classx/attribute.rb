@@ -91,11 +91,9 @@ module ClassX
       end
       module DefaultWithNoProc #:nodoc:
         def default parent
-          begin
-            config[:default].dup
-          rescue Exception
-            config[:default]
-          end
+          config[:default].dup
+        rescue Exception
+          config[:default]
         end
       end
 
