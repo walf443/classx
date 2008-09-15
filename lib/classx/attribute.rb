@@ -150,6 +150,18 @@ module ClassX
           true
         end
       end
+
+      module TriggerProc #:nodoc:
+        def trigger parent, val
+          config[:trigger].call(parent, val)
+        end
+      end
+
+      module TriggerNothing #:nodoc:
+        def trigger parent, val
+          val
+        end
+      end
     end
 
     module InstanceMethods #:nodoc:
@@ -169,6 +181,9 @@ module ClassX
         val = self.class.coerce(val)
         raise ClassX::InvalidAttrArgument unless self.class.validate? val
         @data = val
+
+        self.class.trigger(@parent, val)
+        @data
       end
 
       def inspect
@@ -240,6 +255,12 @@ module ClassX
         klass.extend(ClassX::AttributeMethods::ClassMethods::ValidateRespondTo)
       else
         klass.extend(ClassX::AttributeMethods::ClassMethods::ValidateNothing)
+      end
+
+      if args[:trigger]
+        klass.extend(ClassX::AttributeMethods::ClassMethods::TriggerProc)
+      else
+        klass.extend(ClassX::AttributeMethods::ClassMethods::TriggerNothing)
       end
 
       # for extending attribute point.
