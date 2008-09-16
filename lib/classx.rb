@@ -50,7 +50,11 @@ module ClassX
   # This method checking required value is setted and taking value is valid to attribute.
   #
   def initialize *args
-    hash = before_init(*args)
+    if respond_to? :before_init
+      warn 'before_init is deprecated. please define process_init_args class method'
+    else
+      hash = self.class.process_init_args(*args)
+    end
 
     unless hash && hash.kind_of?(Hash)
       raise ArgumentError, "#{hash.inspect} was wrong as arguments. please specify kind of Hash instance"
@@ -100,17 +104,6 @@ module ClassX
 
     @__attribute_of
   end
-
-  # processing initialize argument to hash
-  # you can override this method for not taking initializer your classx based class.
-  def before_init *args
-    raise ArgumentError if args.size > 1
-
-    hash = args.first
-    hash.nil? ? {} : hash
-  end
-
-  alias process_init_args before_init
 
   # automatically called this method on last of #initialize.
   # you can override this method.
@@ -196,10 +189,22 @@ module ClassX
     end
   end
 
+  module ClassMethods
+    # processing initialize argument to hash
+    # you can override this method for not taking initializer your classx based class.
+    def process_init_args *args
+      raise ArgumentError if args.size > 1
+
+      hash = args.first
+      hash.nil? ? {} : hash
+    end
+  end
+
   private
 
   def self.included klass
     klass.extend(Attributes)
+    klass.extend(ClassMethods)
   end
 
 end
