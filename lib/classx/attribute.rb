@@ -253,6 +253,8 @@ module ClassX
         klass.extend(ClassX::AttributeMethods::ClassMethods::ValidateNothing)
       end
 
+      # you can specify :trigger option for invoking event on setting value to attribute.
+      # :trigger should take Proc or multi Proc Array.
       if args[:trigger]
         unless args[:trigger].kind_of?(Array)
           args[:trigger] = [ args[:trigger] ]
