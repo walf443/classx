@@ -66,9 +66,6 @@ module ClassX
         :validate   => proc {|val|
           val && ::Logger::Severity.const_defined?(val.to_s.upcase)
         },
-        :trigger    => proc {|mine, val|
-          mine.logger.level = mine.attribute_of['log_level'].to_i
-        }
       }
 
       # output logfile ( default STDERR ).
@@ -76,7 +73,7 @@ module ClassX
         :kind_of    => String,
         :desc       => 'output logfile. (default STDERR)',
         :optional   => true,
-        :default    => $stderr # hmm, is name bad?
+        :default    => $stderr, # hmm, is name bad?
       }
 
     end
