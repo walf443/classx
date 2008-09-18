@@ -48,7 +48,7 @@ module ClassX
         :no_cmd_option => true,
         :lazy          => true,
         :default       => proc {|mine|
-          logger = ::Logger.new(mine.logfile)
+          logger = ::Logger.new(mine.logfile, mine.log_rotate)
           logger.level = mine.attribute_of['log_level'].to_i
           logger.progname = $0
 
@@ -74,6 +74,12 @@ module ClassX
         :desc       => 'output logfile. (default STDERR)',
         :optional   => true,
         :default    => $stderr, # hmm, is name bad?
+      }
+
+      # size or (daily|weekly|monthly) (default nil)
+      has :log_rotate, {
+        :optional => true,
+        :desc     => "size or (daily|weekly|monthly) (default nil)",
       }
 
     end
