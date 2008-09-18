@@ -38,13 +38,15 @@ module ClassX
         alias to_i to_log_level
       end
 
-      # dummy method for rdoc.
-      def logger; end
+      def logger; end # dummy method for rdoc
 
-      has :logger,
+      # you can use logger.debug, logger.info or logger.warn.
+      # default output is $stderr.
+      # see also Logger
+      has :logger, {
         :optional      => true,
         :no_cmd_option => true,
-        :lazy          => true, 
+        :lazy          => true,
         :default       => proc {|mine|
           logger = ::Logger.new(mine.logfile)
           logger.level = mine.attribute_of['log_level'].to_i
@@ -52,8 +54,10 @@ module ClassX
 
           logger
         }
+      }
 
-      has :log_level,
+      # log_level (debug|info|warn|error|fatal) ( default info )
+      has :log_level, {
         :kind_of    => String,
         :desc       => 'log_level (debug|info|warn|error|fatal) (default info)',
         :optional   => true,
@@ -61,13 +65,19 @@ module ClassX
         :include    => ToLogLevel,
         :validate   => proc {|val|
           val && ::Logger::Severity.const_defined?(val.to_s.upcase)
+        },
+        :trigger    => proc {|mine, val|
+          mine.logger.level = mine.attribute_of['log_level'].to_i
         }
+      }
 
-      has :logfile,
+      # output logfile ( default STDERR ).
+      has :logfile, {
         :kind_of    => String,
         :desc       => 'output logfile. (default STDERR)',
         :optional   => true,
         :default    => $stderr # hmm, is name bad?
+      }
 
     end
   end

@@ -9,6 +9,7 @@ RDOC_OPTS = [
 	"--line-numbers",
 	"--main", "README",
 	"--inline-source",
+  "--accessor", "has=rw",
   '--exclude', '^(example|extras)/'
 ]
 DEFAULT_EXTRA_RDOC_FILES = ['README', 'ChangeLog']
