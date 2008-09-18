@@ -78,6 +78,12 @@ module ClassX
         end
       end
 
+      module CoerceWithProc #:nodoc:
+        def coerce val
+          config[:coerce].call(val)
+        end
+      end
+
       module CoerceNothing #:nodoc:
         def coerce val
           val
@@ -219,6 +225,8 @@ module ClassX
           klass.extend(ClassX::AttributeMethods::ClassMethods::CoerceWithHash)
         when Array
           klass.extend(ClassX::AttributeMethods::ClassMethods::CoerceWithArray)
+        when Proc
+          klass.extend(ClassX::AttributeMethods::ClassMethods::CoerceWithProc)
         end
       else
         klass.extend(ClassX::AttributeMethods::ClassMethods::CoerceNothing)

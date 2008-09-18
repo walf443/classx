@@ -18,7 +18,7 @@ describe ClassX::ClassAttributes do
         end
 
         it 'attrubute :x should convert Str to Integer' do
-          lambda { 
+          lambda {
             @class.class_eval do
               self.x = "10"
             end
@@ -26,7 +26,7 @@ describe ClassX::ClassAttributes do
         end
 
         it 'attrubute :x should not convert  Object to Integer' do
-          lambda { 
+          lambda {
             @class.class_eval do
               self.x = Object.new
             end
@@ -34,6 +34,33 @@ describe ClassX::ClassAttributes do
         end
       end
 
+      describe 'when Proc is value' do
+        before do
+          @class = Class.new
+          @class.class_eval do
+            extend ClassX::ClassAttributes
+
+            class_has :x, :isa => Integer, :coerce => proc {|val| ( val.respond_to?(:to_i) && val.to_i > 0 ) ? val.to_i : val }
+          end
+        end
+
+        it 'attrubute :x should convert Str to Integer' do
+          lambda {
+            @class.class_eval do
+              self.x = 10
+            end
+          }.should_not raise_error(Exception)
+          @class.x.should == 10
+        end
+
+        it 'attrubute :x should not convert  Object to Integer' do
+          lambda {
+            @class.class_eval do
+              self.x = Object.new
+            end
+          }.should raise_error(ClassX::InvalidAttrArgument)
+        end
+      end
       describe 'when Proc is key' do
         before do
           @class = Class.new
@@ -45,7 +72,7 @@ describe ClassX::ClassAttributes do
         end
 
         it 'attrubute :x should convert Str to Integer' do
-          lambda { 
+          lambda {
             @class.class_eval do
               self.x = "10"
             end
@@ -53,7 +80,7 @@ describe ClassX::ClassAttributes do
         end
 
         it 'attrubute :x should not convert  Object to Integer' do
-          lambda { 
+          lambda {
             @class.class_eval do
               self.x = Object.new
             end
@@ -72,7 +99,7 @@ describe ClassX::ClassAttributes do
         end
 
         it 'attrubute :x should convert Str to Integer' do
-          lambda { 
+          lambda {
             @class.class_eval do
               self.x = 10
             end
@@ -80,7 +107,7 @@ describe ClassX::ClassAttributes do
         end
 
         it 'attrubute :x should not convert  Object to Integer' do
-          lambda { 
+          lambda {
             @class.class_eval do
               self.x = Object.new
             end
@@ -99,7 +126,7 @@ describe ClassX::ClassAttributes do
         end
 
         it 'attrubute :x should convert Str to Integer' do
-          lambda { 
+          lambda {
             @class.class_eval do
               self.x = 10
             end
@@ -107,7 +134,7 @@ describe ClassX::ClassAttributes do
         end
 
         it 'attrubute :x should not convert  Object to Integer' do
-          lambda { 
+          lambda {
             @class.class_eval do
               self.x = Object.new
             end
