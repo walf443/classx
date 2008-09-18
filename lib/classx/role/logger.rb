@@ -82,6 +82,12 @@ module ClassX
       has :log_rotate, {
         :desc     => "size or (daily|weekly|monthly) (default nil)",
         :optional => true,
+        :validate => proc {|val|
+          return true if val =~ /^(daily|weekly|monthly)$/
+          return true if val.to_i > 0
+
+          false
+        },
       }
 
     end
