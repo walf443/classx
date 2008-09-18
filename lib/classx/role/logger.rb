@@ -40,7 +40,8 @@ module ClassX
 
       def logger; end # dummy method for rdoc
 
-      # you can use logger.debug, logger.info or logger.warn.
+      # you can use #debug, #info, #warn, #error, #fatal method
+      # shortcut for logger.debug, logger.info, logger.warn, logger.error, logger.fatal.
       # default output is $stderr.
       # see also Logger
       has :logger, {
@@ -53,7 +54,8 @@ module ClassX
           logger.progname = $0
 
           logger
-        }
+        },
+        :handles => [:debug, :info, :warn, :error, :fatal ],
       }
 
       # log_level (debug|info|warn|error|fatal) ( default info )
