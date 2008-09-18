@@ -88,6 +88,17 @@ module ClassX
 
           false
         },
+        # convert for ClassX::Commandable
+        :coerce   => proc {|val|
+          return val if val.kind_of? Integer
+          return val if val =~ /^(daily|weekly|monthly)$/
+
+          if val.respond_to?(:to_i) && val.to_i > 0
+            val.to_i
+          else
+            val
+          end
+        },
       }
 
     end
