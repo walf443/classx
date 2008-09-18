@@ -80,8 +80,8 @@ module ClassX
 
       # size or (daily|weekly|monthly) (default nil)
       has :log_rotate, {
-        :optional => true,
         :desc     => "size or (daily|weekly|monthly) (default nil)",
+        :optional => true,
       }
 
     end

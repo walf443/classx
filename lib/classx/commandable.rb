@@ -96,9 +96,9 @@ module ClassX
               end
             else
               if short_option_of[short_option] == key
-                opt.on("-#{short_option}", "--#{key} #{val_format}") {|v| value_of[key] = v }
+                opt.on("-#{short_option}", "--#{key} #{val_format}", val.desc ) {|v| value_of[key] = v }
               else
-                opt.on("--#{key} #{val_format}") {|v| value_of[key] = v }
+                opt.on("--#{key} #{val_format}", val.desc ) {|v| value_of[key] = v }
               end
             end
           end
