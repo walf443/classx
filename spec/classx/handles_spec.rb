@@ -32,7 +32,7 @@ describe ClassX do
         @class1.new(:x => obj).x_slice(0).should == obj.slice(0)
       end
 
-      it 'should delegate method with args to value' do
+      it 'should delegate method with block' do
         obj = [1, 2, 3]
         @class1.new(:x => obj).x_map {|i| i * 2 }.should == [2, 4, 6]
       end
@@ -64,7 +64,7 @@ describe ClassX do
         @class1.new(:x => obj).slice(0).should == obj.slice(0)
       end
 
-      it 'should delegate method with args to value' do
+      it 'should delegate method with block' do
         obj = [1, 2, 3]
         @class1.new(:x => obj).map {|i| i * 2 }.should == [2, 4, 6]
       end
