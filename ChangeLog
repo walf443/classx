@@ -1,3 +1,117 @@
+commit de3b716466a8c30e31f75483977bfcd9f19f871a
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Mon Oct 27 00:00:14 2008 +0900
+
+    oops. spec message fixed.
+
+commit 8c892fc051bba7175cbaa02dd9d29cdd3bab7d51
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sun Oct 26 23:00:20 2008 +0900
+
+    update benchmark result.
+
+commit ad6a1e8be27e44d38b2a357f060086053572ecb2
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sun Oct 26 18:53:28 2008 +0900
+
+    fixed bug. when you handle some methods that use with block, it not worked.
+
+commit ad34cf6a7f3d119379a2bc78b4060504b404db9e
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Fri Sep 19 08:59:34 2008 +0900
+
+    added coerce to log_rotate.
+
+commit 8b4cc50e9395bb801beafd60afc579e279e7604d
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Fri Sep 19 08:52:38 2008 +0900
+
+    added CoerceWithProc.
+
+commit cc2917b5b7f1088428936f9065932c7d630ae356
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Fri Sep 19 08:37:39 2008 +0900
+
+    added validate to log_rotate.
+
+commit ef422314b28c741950a04e4a9d75a532c4f4a0ab
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Fri Sep 19 08:29:22 2008 +0900
+
+    fixed bug:  ClassX::Commandable with none kind_of specified attribute does not output :desc to help.
+
+commit 62217b9347f6470db829ef66de116a9bdab04c7c
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Fri Sep 19 08:20:01 2008 +0900
+
+    added more shortcut.
+
+commit 497ac5c854faa719a90eabcabeb5fbecdd25997f
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Fri Sep 19 08:11:18 2008 +0900
+
+    added log_rotate attribute.
+
+commit b06e8dac0d7084623426f37568369ca251cf6550
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Fri Sep 19 08:01:23 2008 +0900
+
+    trigger is not neeed.
+
+commit 343c1efcb9c8fe4c6ccb7674edefeeacf64740e9
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Fri Sep 19 07:55:14 2008 +0900
+
+    tweak for rdoc.
+
+commit 51dcdd598cfac6d432494dede4427589dcefb665
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Wed Sep 17 08:59:48 2008 +0900
+
+    change #before_init to class method and change name process_init_args.
+
+commit 6437f8ca6ef3cb443d3e1ced0a7a7d2b61062edb
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Wed Sep 17 08:42:13 2008 +0900
+
+    adding document.
+
+commit b9bdffc8f2146ef793a0c03e63182d5a4388ad07
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Tue Sep 16 09:00:40 2008 +0900
+
+    added document.
+
+commit 4a2807b839fe7c9e4d2989e025cf94d415c92e69
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Tue Sep 16 08:52:28 2008 +0900
+
+    trigger should take array as default.
+
+commit 0171feab3293523d26f70220d8501de1ac6f518d
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Tue Sep 16 08:14:18 2008 +0900
+
+    update benchmark.
+
+commit d85fa7ded08434e5300e434996eb63686a5753bf
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Tue Sep 16 08:07:34 2008 +0900
+
+    trigger option support.
+
+commit 355ede71dc0b98f78ebb40b616945f2e192abdc8
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Mon Sep 15 15:54:03 2008 +0900
+
+    refactering
+
+commit 723cffd4439723f9533c8e681a9202ca5836d3c5
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sat Sep 13 00:38:06 2008 +0900
+
+    released 0.0.4
+
 commit c27d76a9e41d7f1d6f02160c6c0b555c6cd68206
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Sat Sep 13 00:28:06 2008 +0900
