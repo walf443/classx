@@ -131,15 +131,19 @@ module ClassX
           case attr_class.config[:handles]
           when Hash
             attr_class.config[:handles].each do |before, after|
-              define_method before do |*args|
-                __send__("#{name}").__send__ after, *args
-              end
+              class_eval <<-CLASS_EVAL
+                def #{before} *args, &block
+                  __send__("#{name}").__send__ "#{after}", *args, &block
+                end
+              CLASS_EVAL
             end
           when Array
             attr_class.config[:handles].each do |meth|
-              define_method meth do |*args|
-                __send__("#{name}").__send__ meth, *args
-              end
+              class_eval <<-CLASS_EVAL
+                def #{meth} *args, &block
+                  __send__("#{name}").__send__ "#{meth}", *args, &block
+                end
+              CLASS_EVAL
             end
           end
         end

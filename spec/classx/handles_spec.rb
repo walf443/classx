@@ -10,7 +10,8 @@ describe ClassX do
           include ClassX
           has :x, :handles => { 
             :x_inspect => :inspect,
-            :x_slice => :slice
+            :x_slice => :slice,
+            :x_map   => :map
           }
         end
       end
@@ -30,6 +31,11 @@ describe ClassX do
         obj.push 1
         @class1.new(:x => obj).x_slice(0).should == obj.slice(0)
       end
+
+      it 'should delegate method with args to value' do
+        obj = [1, 2, 3]
+        @class1.new(:x => obj).x_map {|i| i * 2 }.should == [2, 4, 6]
+      end
     end
 
     describe 'with handles option as Array' do
@@ -38,7 +44,7 @@ describe ClassX do
         @class1.class_eval do
           include ClassX
 
-          has :x, :handles => [ :length, :slice ]
+          has :x, :handles => [ :length, :slice, :map ]
         end
       end
 
@@ -56,6 +62,11 @@ describe ClassX do
         obj = [1, 2, 3]
         obj.push 1
         @class1.new(:x => obj).slice(0).should == obj.slice(0)
+      end
+
+      it 'should delegate method with args to value' do
+        obj = [1, 2, 3]
+        @class1.new(:x => obj).map {|i| i * 2 }.should == [2, 4, 6]
       end
     end
   end
