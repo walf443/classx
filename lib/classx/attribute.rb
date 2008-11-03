@@ -181,7 +181,7 @@ module ClassX
       #   It's because caching as instance_variable in @parent instance for performance.
       def set val
         val = self.class.coerce(val)
-        raise ClassX::InvalidAttrArgument unless self.class.validate? val
+        raise ClassX::InvalidAttrArgument, "#{val.inspect} is not valid for #{self.inspect}" unless self.class.validate? val
         @data = val
 
         self.class.trigger(@parent, val)
