@@ -20,20 +20,33 @@
 #
 module ClassX::Validate
   private 
-  def validate hash, &block #:doc:
+  def validate hash, options={}, &block #:doc:
     # FIXME: it's experimental feature for caching validate class.
     # it can use class variable because it use caller[0] as key.
-    @@__validate_cached ||= {}
-    uniq_key = caller[0]
-    unless @@__validate_cached[uniq_key]
-      @@__validate_cached[uniq_key] = Class.new
-      @@__validate_cached[uniq_key].class_eval do
+    if options[:cache_key] != false
+      options[:cache_key] = caller[0]
+    end
+
+    if ( options[:cache_key] )
+      @@__validate_cached ||= {}
+      klass = @@__validate_cached[options[:cache_key]]
+    else
+      klass = nil
+    end
+
+    unless klass
+      klass = Class.new
+      klass.class_eval do
         include ::ClassX
         include ::ClassX::Bracketable
       end
-      @@__validate_cached[uniq_key].class_eval(&block)
+      klass.class_eval(&block)
+
+      if options[:cache_key]
+        @@__validate_cached[options[:cache_key]] = klass
+      end
     end
-    @@__validate_cached[uniq_key].new hash
+    klass.new hash
   end
 
   module_function :validate
