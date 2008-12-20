@@ -1,0 +1,1466 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><title>File: ChangeLog</title><link type="text/css" href=".././rdoc-style.css" media="screen" rel="stylesheet"/><script type="text/javascript">
+// Allison template
+// Copyright 2007, 2008 Cloudburst, LLC. Licensed under the AFL 3. See the included LICENSE file.
+
+var href_base = '.././rdoc-style.css'.replace(/(.*\/).*/, '$1'); // inline js is good for something  
+
+function $(id) {
+    if (document.getElementById)
+      elem = document.getElementById(id);
+    else if ( document.all )
+      elem = eval("document.all." + id);
+    else
+      return false;
+    return elem;
+}
+
+  function toggle(id) {
+    elem = $(id);
+    elemStyle = elem.style;   
+    if (elemStyle.display == "block") {
+      elemStyle.display = "none"
+    } else {
+      elemStyle.display = "block"
+    }
+    return true;
+  }
+
+  function toggleText(id) {
+    elem = $(id)
+    if (m = elem.innerHTML.match(/(Hide)(.*)/)) {
+      elem.innerHTML = "Show" + m[2];
+    } else if (m = elem.innerHTML.match(/(Show)(.*)/)) {
+      elem.innerHTML = "Hide" + m[2];
+    }
+    return true;
+  }
+
+function span(s, klass) {
+  return '<span class="' + klass + '">' + s + '</span>';
+}
+  
+function highlightSymbols() {
+  pres = document.getElementsByTagName('pre');
+  for(var i = 0; i < pres.length; i++) {
+    pre = pres[i];
+    spans = pre.getElementsByTagName('span');
+    for(var k = 0; k < spans.length; k++) {
+      span = spans[k];
+      if (span.className.match(/ruby-identifier/)) {
+        if (span.innerHTML.match(/^:/)) {
+          span.className += " ruby-symbol";
+        }
+      }
+    }
+  }
+}
+
+ function hasClass(obj) {
+     var result = false;
+     if (obj.getAttributeNode("class") != null) {
+         result = obj.getAttributeNode("class").value;
+     }
+     return result;
+  }   
+
+ function stripe() {
+    var even = true;
+    var color = "#e4ebed";
+    var tables = document.getElementsByTagName('table');
+    if (tables.length == 0) { return; }
+    for (var h = 0; h < tables.length; h++) {
+        var trs = tables[h].getElementsByTagName("tr");
+        for (var i = 0; i < trs.length; i++) {
+          var tds = trs[i].getElementsByTagName("td");
+            for (var j = 0; j < tds.length; j++) {       
+              if (hasClass(tds[j]) != "first") {                
+              var mytd = tds[j];
+              if (even) {
+                mytd.style.backgroundColor = color;
+              }         
+            }
+          }
+          even =  ! even;
+      }
+    }
+  }
+  
+function ajaxGet(url) {
+  url = (href_base + url).replace('/./', '/')
+  var req = false;
+
+  if (window.ActiveXObject) {
+    try {
+      // stupid hack because IE7 disables local Ajax with the native xmlhttprequest object
+      // for security purposes. Yet ActiveX still works. Thanks, Microsoft. I hate you. Die.
+      req = new ActiveXObject("MSXML2.XMLHTTP.3.0");
+    } catch (e) {
+      try {
+        /* IE 6 and maybe 5, don't know, don't care */
+        req = new ActiveXObject("Msxml2.XMLHTTP");
+      } catch (e) {
+        try {
+          req = new ActiveXObject("Microsoft.XMLHTTP");
+        } catch (e) {
+          req = false;
+        }
+      }
+    }
+  }
+    
+  /* real browsers */
+  if (!req && window.XMLHttpRequest) {
+    try {
+      req = new XMLHttpRequest();
+    } catch (e) {
+      req = false;
+    }
+  } 
+  
+  if (req) {
+    req.open('GET', url, false);
+    req.send(null);
+    return req.responseText;
+  } else {
+    return "Ajax error";  
+  }
+}
+
+
+function addEvent(elm, evType, fn, useCapture) {
+	if (elm.addEventListener) {
+	  elm.addEventListener(evType, fn, useCapture);  
+  	return true;
+	} else if (elm.attachEvent) {
+  	var r = elm.attachEvent('on' + evType, fn);  
+	  return r;  
+	} else {
+  	elm['on' + evType] = fn;
+	}
+}
+
+function insertIndices() {
+  pages = ["class", "file", "method"]
+  for (x in pages) { 
+    $(pages[x]).innerHTML += ajaxGet('fr_' + pages[x] + '_index.html').replace(/(href=")/g, '$1' + href_base);
+  }
+  /* mouseoverify method links */
+  links = $('method').getElementsByTagName('a');
+  for (var x = 0; x < links.length; x++) {
+    if (m = links[x].innerHTML.match(/(.*)\s\((.*)\)/)) {
+      links[x].innerHTML = m[1] + '<br>';
+      links[x].title = m[2];
+    }
+  }
+  /* this is stupid */
+  $('class').style.display = "block";
+  $('file').style.display = "block";
+  
+  /* has to be here because IE7 does not guarantee the onLoad callback order */
+  abbreviateIndicesInner(["class", "file"], 25, "a");
+  /* same, linkTitle() depends on the class link list */
+  linkTitle();
+}
+
+function abbreviateIndices() {
+  var ids = ["defined_in", "child_of", "includes", "requires", "method", "methods"];
+  abbreviateIndicesInner(ids, 25, 'a');
+  abbreviateIndicesInner(ids, 25, 'span');
+}
+
+function abbreviateIndicesInner(indices, amount, tag) {
+  for (var x = 0; x < indices.length; x++) { 
+    var the_index = $(indices[x]);
+    if (the_index) {
+      links = the_index.getElementsByTagName(tag);
+      for (var y = 0; y < links.length; y++) {
+        var link = links[y];
+        if (link.getElementsByTagName('span').length == 0 && link.getElementsByTagName('a').length == 0) {
+          // avoid nesting
+          link.innerHTML = link.innerHTML.replace(/<br>|\n/gi, '');
+          link.title = link.innerHTML;
+          link.innerHTML = abbreviate(link.innerHTML, amount) + '<br>';
+        }
+      }
+    }
+  }
+}
+
+function linkTitle() {
+  
+  /* grab the correct title element from the index */
+  var index_page = ajaxGet('index.html');
+  title_text = index_page.match(/<title>(.*)<\/title>/m)[1];
+  document.title = title_text + " - " + document.title;
+  var p = $('header').getElementsByTagName('p')[0]
+  if (p.innerHTML.match(/^\s*$/)) {
+    p.innerHTML = title_text;
+  } else {
+    p.innerHTML = title_text + ": " + p.innerHTML;
+  }
+  
+  /* set the link properly */
+  title_link = index_page.match(/<a\s+href="(.*?)"/)[1];
+  var element = $('title');
+  var item_type = "";
+  var item_name = "";
+  if (m = element.innerHTML.match(/(Class:|Module:|File:)\s*(.*)/)) {
+    item_type = m[1];
+    item_name = m[2];
+  } else {
+    item_name = element.innerHTML;
+  }
+  element.innerHTML = '<a href="' + href_base + title_link + '">' + item_type + " " + abbreviate(item_name, 45) + '</a>';
+  element.getElementsByTagName('a')[0].title = item_name
+  
+  /* breadcrumb navigation */
+  items = item_name.split("::");
+  items_new = item_name.split("::");
+  file_links = $('class').getElementsByTagName('a');
+  for (var x = 0; x < items.length - 1; x++ ){
+    var item = items[x];
+    link = ("/classes/" + items.slice(0,x).join("/") + "/" + item + ".html").replace('//', '/');
+    regex = new RegExp(RegExp.escape(link) + '$');
+    for (var y = 0; y < file_links.length; y++) {
+      if (file_links[y].href.match(regex)) {
+         items_new[x] = '<a href="' + href_base + link + '">' + item + '</a>';
+         break;
+      }
+    }  
+  }
+  $('item_name').innerHTML = item_type + ' ' + items_new.join(" :: ");
+}
+
+function abbreviate(s, size) {
+  while (s.length > size) {
+    var old_s = s;
+    s = s.replace(/\s|\n/mg, '');
+    s = s.replace(/([A-Z])[a-z]+/m, '$1');
+    if (!s || old_s == s) {
+      return "..." + s.substring(s.length - size, s.length);
+    }
+  }
+  return s;
+}
+
+function disableSubmit(event) {
+  var keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
+  if (keyCode == 13) {
+    return false;
+  } else {
+    return true;
+  }
+}
+  
+function filterList(id, s, event) {
+  
+  /* some weak escaping */
+  s = s.replace(/[^\w\d\.\_\-\/\:\=\[\]\?\!]/g, '');
+  s = RegExp.escape(s);
+  
+  var show_all = false;
+  if (s.match(/^\s*$/)) {
+    show_all = true;
+  }
+  
+  links = $(id).getElementsByTagName('a')
+  regex = new RegExp(s, 'i');
+  
+  for (var x = 0; x < links.length; x++) {
+    var link = links[x];
+    if (show_all) {
+      link.style.display = 'inline';
+    } else {
+       if (link.innerHTML.match(regex)) {        
+         link.style.display = 'inline';
+       } else {
+         link.style.display = 'none';
+       }
+    }
+  }
+  return true;
+}
+
+RegExp.escape = function(text) {
+  if (!arguments.callee.sRE) {
+    var specials = ['/', '.', '*', '+', '?', '|', '(', ')', '[', ']', '{', '}', '\\'];
+    arguments.callee.sRE = new RegExp(
+      '(\\' + specials.join('|\\') + ')', 'g'
+    );
+  }
+  return text.replace(arguments.callee.sRE, '\\$1');
+}
+
+function hacks() {
+  // show the spacer if necessary, 
+  divs = document.getElementsByTagName('div');
+  for(var x = 0; x < divs.length; x++) {
+    if (divs[x].className && divs[x].className.match(/top/)) {
+      document.getElementById('spacer').style.display = 'block';
+    }
+  }
+  // remove extra colons from tables
+  tds = document.getElementsByTagName('td');
+  for(var x = 0; x < tds.length; x++) {
+    str = tds[x].innerHTML
+    if (str.charAt(str.length - 1) == ":") {
+      tds[x].innerHTML = str.slice(0, str.length - 1)
+    }
+  }
+}
+
+addEvent(window, 'load', insertIndices, false);
+addEvent(window, 'load', abbreviateIndices, false);
+addEvent(window, 'load', stripe, false);
+addEvent(window, 'load', highlightSymbols, false);
+addEvent(window, 'load', hacks, false);
+</script></head><body><div id="container"><div class="curve" id="preheader_curve_0"></div><div class="curve" id="preheader_curve_1"></div><div class="curve" id="preheader_curve_2"></div><div class="curve" id="preheader_curve_3"></div><div class="curve" id="preheader_curve_4"></div><div class="curve" id="preheader_curve_5"></div><div id="header"><p>
+ChangeLog
+</p><span><h1 id="title">
+File: ChangeLog
+</h1></span>
+</div><div class="clear"></div><div id="left">
+
+
+
+
+<div id="spacer"></div><div class="navigation darker index" id="class_wrapper"><div class="list_header"><h3>All classes</h3></div><div class="list_header_link"><a onclick="toggle('class'); toggleText('class_link'); return false;" href="#" id="class_link">Hide...</a></div><div class="clear"></div><div id="class"><form><label for="filter_class">Filter:&nbsp;&nbsp;</label><input type="text" onKeyUp="return filterList('class', this.value, event);" onKeyPress="return disableSubmit(event);" id="filter_class"></input></form></div></div><div class="navigation darker index" id="file_wrapper"><div class="list_header"><h3>All files</h3></div><div class="list_header_link"><a onclick="toggle('file'); toggleText('file_link'); return false;" href="#" id="file_link">Hide...</a></div><div class="clear"></div><div id="file"><form><label for="filter_file">Filter:&nbsp;&nbsp;</label><input type="text" onKeyUp="return filterList('file', this.value, event);" onKeyPress="return disableSubmit(event);" id="filter_file"></input></form></div></div><div class="navigation darker index" id="method_wrapper"><div class="list_header"><h3>All methods</h3></div><div class="list_header_link"><a onclick="toggle('method'); toggleText('method_link'); return false;" href="#" id="method_link">Show...</a></div><div class="clear"></div><div id="method"><form><label for="filter_method">Filter:&nbsp;&nbsp;</label><input type="text" onKeyUp="return filterList('method', this.value, event);" onKeyPress="return disableSubmit(event);" id="filter_method"></input></form></div></div></div><div id="content">
+<h1 id="item_name">File: ChangeLog</h1>
+
+<div id="description"><p>
+commit de3b716466a8c30e31f75483977bfcd9f19f871a Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Mon Oct 27 00:00:14 2008 +0900
+</p>
+<pre>
+    oops. spec message fixed.
+</pre>
+<p>
+commit 8c892fc051bba7175cbaa02dd9d29cdd3bab7d51 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sun Oct 26 23:00:20 2008 +0900
+</p>
+<pre>
+    update benchmark result.
+</pre>
+<p>
+commit ad6a1e8be27e44d38b2a357f060086053572ecb2 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sun Oct 26 18:53:28 2008 +0900
+</p>
+<pre>
+    fixed bug. when you handle some methods that use with block, it not worked.
+</pre>
+<p>
+commit ad34cf6a7f3d119379a2bc78b4060504b404db9e Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Fri Sep 19 08:59:34 2008 +0900
+</p>
+<pre>
+    added coerce to log_rotate.
+</pre>
+<p>
+commit 8b4cc50e9395bb801beafd60afc579e279e7604d Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Fri Sep 19 08:52:38 2008 +0900
+</p>
+<pre>
+    added CoerceWithProc.
+</pre>
+<p>
+commit cc2917b5b7f1088428936f9065932c7d630ae356 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Fri Sep 19 08:37:39 2008 +0900
+</p>
+<pre>
+    added validate to log_rotate.
+</pre>
+<p>
+commit ef422314b28c741950a04e4a9d75a532c4f4a0ab Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Fri Sep 19 08:29:22 2008 +0900
+</p>
+<pre>
+    fixed bug:  ClassX::Commandable with none kind_of specified attribute does not output :desc to help.
+</pre>
+<p>
+commit 62217b9347f6470db829ef66de116a9bdab04c7c Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Fri Sep 19 08:20:01 2008 +0900
+</p>
+<pre>
+    added more shortcut.
+</pre>
+<p>
+commit 497ac5c854faa719a90eabcabeb5fbecdd25997f Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Fri Sep 19 08:11:18 2008 +0900
+</p>
+<pre>
+    added log_rotate attribute.
+</pre>
+<p>
+commit b06e8dac0d7084623426f37568369ca251cf6550 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Fri Sep 19 08:01:23 2008 +0900
+</p>
+<pre>
+    trigger is not neeed.
+</pre>
+<p>
+commit 343c1efcb9c8fe4c6ccb7674edefeeacf64740e9 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Fri Sep 19 07:55:14 2008 +0900
+</p>
+<pre>
+    tweak for rdoc.
+</pre>
+<p>
+commit 51dcdd598cfac6d432494dede4427589dcefb665 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Wed Sep 17 08:59:48 2008 +0900
+</p>
+<pre>
+    change #before_init to class method and change name process_init_args.
+</pre>
+<p>
+commit 6437f8ca6ef3cb443d3e1ced0a7a7d2b61062edb Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Wed Sep 17 08:42:13 2008 +0900
+</p>
+<pre>
+    adding document.
+</pre>
+<p>
+commit b9bdffc8f2146ef793a0c03e63182d5a4388ad07 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Tue Sep 16 09:00:40 2008 +0900
+</p>
+<pre>
+    added document.
+</pre>
+<p>
+commit 4a2807b839fe7c9e4d2989e025cf94d415c92e69 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Tue Sep 16 08:52:28 2008 +0900
+</p>
+<pre>
+    trigger should take array as default.
+</pre>
+<p>
+commit 0171feab3293523d26f70220d8501de1ac6f518d Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Tue Sep 16 08:14:18 2008 +0900
+</p>
+<pre>
+    update benchmark.
+</pre>
+<p>
+commit d85fa7ded08434e5300e434996eb63686a5753bf Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Tue Sep 16 08:07:34 2008 +0900
+</p>
+<pre>
+    trigger option support.
+</pre>
+<p>
+commit 355ede71dc0b98f78ebb40b616945f2e192abdc8 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Mon Sep 15 15:54:03 2008 +0900
+</p>
+<pre>
+    refactering
+</pre>
+<p>
+commit 723cffd4439723f9533c8e681a9202ca5836d3c5 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sat Sep 13 00:38:06 2008 +0900
+</p>
+<pre>
+    released 0.0.4
+</pre>
+<p>
+commit c27d76a9e41d7f1d6f02160c6c0b555c6cd68206 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sat Sep 13 00:28:06 2008 +0900
+</p>
+<pre>
+    adding doc for methods.
+</pre>
+<p>
+commit 55c86d08d2a6a6acfd19a0d986a38e7b90e268b3 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Fri Sep 12 23:46:38 2008 +0900
+</p>
+<pre>
+    update benchmark script.
+</pre>
+<p>
+commit 92ed088b66fdbf04c3c9bff6439b6f98dbf66a03 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Fri Sep 12 23:36:17 2008 +0900
+</p>
+<pre>
+    fixed warnings.
+</pre>
+<p>
+commit 212fd510001ffac66d8c318bc8aee645566cc81f Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Fri Sep 12 09:23:48 2008 +0900
+</p>
+<pre>
+    added rdoc.
+</pre>
+<p>
+commit 29129de8ad1f740df7a812547b734c530e4bd26e Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Fri Sep 12 08:36:48 2008 +0900
+</p>
+<pre>
+    fixed fail test in Ruby 1.9.0
+</pre>
+<p>
+commit 058d0588e6626403bcaef9464ef40c50d52b516d Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Fri Sep 12 08:28:43 2008 +0900
+</p>
+<pre>
+    added test for #dup
+</pre>
+<p>
+commit 1d591c1b8f78e3892b7fb010b62063da142dae16 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Fri Sep 12 08:25:32 2008 +0900
+</p>
+<pre>
+    change to use ClassX::Bracketable in ClassX::Validate class
+</pre>
+<p>
+commit 57e61cf163f351e05bf6cdedcc519e2aa32cdc67 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Fri Sep 12 08:24:21 2008 +0900
+</p>
+<pre>
+    added spec to ClassX::Declare and fixed bug about autoload ClassX::Bracketable
+</pre>
+<p>
+commit 0e3b72eb7d63a4bf84f121ce3a08b8d535b16d91 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Fri Sep 12 02:47:11 2008 +0900
+</p>
+<pre>
+    fixed bug of test in Ruby 1.9.0
+</pre>
+<p>
+commit 72d4a1e60a6bbcf53d976508724c4d4948d1c744 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Fri Sep 12 02:36:06 2008 +0900
+</p>
+<pre>
+    added test.
+</pre>
+<p>
+commit d8285a1c6f86ecb1de78f0ba61557591aca38e34 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Fri Sep 12 02:33:22 2008 +0900
+</p>
+<pre>
+    file name is wrong in convention.
+</pre>
+<p>
+commit 0c97f016b63fb7853fcc058709ff631be13e2e5e Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Fri Sep 12 02:27:43 2008 +0900
+</p>
+<pre>
+    It may be caching is wrong.
+</pre>
+<p>
+commit 6306fc00771d955deede79c20e68b5d2706738e8 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Fri Sep 12 02:19:25 2008 +0900
+</p>
+<pre>
+    not commited.
+</pre>
+<p>
+commit 1883e78a6b032740350c87a5d083b959b61d04c1 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Fri Sep 12 01:52:15 2008 +0900
+</p>
+<pre>
+    added test for ClassX::Brancketable
+</pre>
+<p>
+commit 72d8a64cc065b191a8399db1fa05abbed7b8e955 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Fri Sep 12 01:51:45 2008 +0900
+</p>
+<pre>
+    no need to include ClassX::Validate
+</pre>
+<p>
+commit 9b437319d3a681d413dc511876e6d4146daf964f Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Wed Sep 10 09:11:18 2008 +0900
+</p>
+<pre>
+    added ClassX::Blanketable
+</pre>
+<p>
+commit b899ce53177852463ad184f166ad8e6ce6359f8d Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Wed Sep 10 07:55:07 2008 +0900
+</p>
+<pre>
+    added doc. make alias CAttrs as ClassX::ClassAttributes, Attrs as ClassX::Attributes
+</pre>
+<p>
+commit e08c704466dd4af37e8ab2b92ba984d03af42db6 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Wed Sep 10 01:20:08 2008 +0900
+</p>
+<pre>
+    remove garbage.
+</pre>
+<p>
+commit cbcd811ff3fb88212f4dad175064bb1d05692275 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Wed Sep 10 00:20:57 2008 +0900
+</p>
+<pre>
+    added comment.
+</pre>
+<p>
+commit 55775bed9ee0e686da52b2c649f7c40a6b5758f5 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Wed Sep 10 00:08:35 2008 +0900
+</p>
+<pre>
+    added dsl_accessor compatible tests.
+</pre>
+<p>
+commit 691562a088b1a7b7ab2ff659a214aa9656212df6 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Tue Sep 9 08:09:30 2008 +0900
+</p>
+<pre>
+    ruby1.9 return each items in instance_variables with Symbol.
+</pre>
+<p>
+commit 72a128ae5b80636799c3466a303c3caba3e2f919 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Tue Sep 9 02:03:07 2008 +0900
+</p>
+<pre>
+    fixed spec docs.
+</pre>
+<p>
+commit e6f03314479f1692e9a04739c2395006ad9cf871 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Tue Sep 9 01:50:15 2008 +0900
+</p>
+<pre>
+    added test about inheritance.
+</pre>
+<p>
+commit 6cfd2852d3dd4d461ab06ae983585558d576b360 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Tue Sep 9 01:06:14 2008 +0900
+</p>
+<pre>
+    ClassX::ClassAttributes should be extend. So self.include is not need.
+</pre>
+<p>
+commit 580936730fffd5ded27ae0b47a9937ada48174e1 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Tue Sep 9 01:03:01 2008 +0900
+</p>
+<pre>
+    added class attribute feature. you can define class attributes with a same interface of attribute.
+</pre>
+<p>
+commit 413edbea25cbc3991dd546fb0af21e82008853b7 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Mon Sep 8 22:35:37 2008 +0900
+</p>
+<pre>
+    Serialization should support restoring instance_variables except for classx's attribute_class caching.
+</pre>
+<p>
+commit 967bb8ef27de37ea951ff2199a1d1df8d7ba3cae Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Mon Sep 8 08:34:58 2008 +0900
+</p>
+<pre>
+    oops.
+</pre>
+<p>
+commit 3713b743286bc3076f6ef5a190dba31aebfef3a4 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Mon Sep 8 08:33:02 2008 +0900
+</p>
+<pre>
+    added serialization support using Marshl, YAML.
+</pre>
+<p>
+commit 07a290cd3f9befefbd2987c78f889a67b81f89c8 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sun Sep 7 19:24:20 2008 +0900
+</p>
+<pre>
+    Become caching value when you use getter method.
+</pre>
+<p>
+commit 3e97a758c8f421b5089d44abe399ab328174afbb Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sun Sep 7 18:35:08 2008 +0900
+</p>
+<pre>
+    fixed revision.
+</pre>
+<p>
+commit dd1bb608dd23ebf8e569c62784778aca56917044 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sun Sep 7 18:34:03 2008 +0900
+</p>
+<pre>
+    refactoring code. not using attribute_of as possible.
+</pre>
+<p>
+commit 8e6541a01a49a032f59c9f6b238e0f5ccb37ddbc Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sun Sep 7 18:12:54 2008 +0900
+</p>
+<pre>
+    attr_get became slower a little than before.
+</pre>
+<p>
+commit 83519953e9f7140ccd10324670d37cfec3cceb16 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sun Sep 7 18:06:23 2008 +0900
+</p>
+<pre>
+    Allow another setter style. you can use #attr_name(val) alternate #attr_name= val
+</pre>
+<p>
+commit dd1555988fe38e3fc53e780e7b0922e8802feca1 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Fri Aug 29 09:09:33 2008 +0900
+</p>
+<pre>
+    ruby19 can use =~ between Symbol and Regexp.
+</pre>
+<p>
+commit a48eb7c03bcee64d285eda4bd24a537f5cede81f Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Fri Aug 29 09:05:11 2008 +0900
+</p>
+<pre>
+    support mspec because it's easy to run test as ruby 1.9.  (rspec is not worked in ruby 1.9 !! )
+</pre>
+<p>
+commit 2340039002a3ff315fad5028bf2c7931ac1d1c91 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Thu Aug 28 00:40:51 2008 +0900
+</p>
+<pre>
+    no define_method if it doesn't need.
+</pre>
+<p>
+commit 29a8e3293d07ca8dd0b4a3305d615b2968b13c55 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Wed Aug 27 08:28:56 2008 +0900
+</p>
+<pre>
+    added :validate_each option. It's useful to validate complex structure ( for example nested Array ).
+</pre>
+<p>
+commit 36fd5a4e2320b0a68c38640ab86a1bc5cda0da2d Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Tue Aug 26 08:24:26 2008 +0900
+</p>
+<pre>
+    don't measure GC time.
+</pre>
+<p>
+commit 1f4c448bcbc74d744be2a6e3805b461b798a7f91 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Mon Aug 25 09:34:28 2008 +0900
+</p>
+<pre>
+    added benchmark for taking time of defining attributes.
+</pre>
+<p>
+commit 066787b4d379bdf1a83700b5fe5e629e6a423d74 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sun Aug 24 23:20:09 2008 +0900
+</p>
+<pre>
+    :handle option should be able to delegate method with arguments.
+</pre>
+<p>
+commit d08d8f5cc87e1a7979dc11cc0abc914a2a4c61a3 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sun Aug 24 22:39:43 2008 +0900
+</p>
+<pre>
+    insert line break to too long line to read.
+</pre>
+<p>
+commit 2120fafb35ee33048130b6c23c9c009e3c47f629 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sun Aug 24 21:01:59 2008 +0900
+</p>
+<pre>
+    fixed.BUG: when it specify invalid attribute as option, commandable would not show help message.
+</pre>
+<p>
+commit f23eb5c82c644dc45cd83568a9270153b422f8a3 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sun Aug 24 17:59:26 2008 +0900
+</p>
+<pre>
+    It should use Class.const_defined?
+</pre>
+<p>
+commit dd0d8b4ab4610d39b2f81361ad0b85e87bdb6847 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sun Aug 24 17:52:23 2008 +0900
+</p>
+<pre>
+    When attribute's config freezed. ClassX::Commandable is not worked.
+</pre>
+<p>
+commit ada4424c9d8bd443eebc0c661040ccfdebca12e4 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sun Aug 24 17:43:41 2008 +0900
+</p>
+<pre>
+    change not using args[key] in define_method but using via config method.
+</pre>
+<p>
+commit d0c318b1e45cdd134ca47bf48a4aae06cfcd215c Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sun Aug 24 16:53:23 2008 +0900
+</p>
+<pre>
+    added tests.
+</pre>
+<p>
+commit 588d9b3643ad12cfcc7b8c85a0a71834f83de24f Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sun Aug 24 16:34:38 2008 +0900
+</p>
+<pre>
+    test file name should be /_spec.rb$/.
+</pre>
+<p>
+commit 9a5c6802a1de610c6f93b614cbca56e10721965d Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sun Aug 24 15:57:33 2008 +0900
+</p>
+<pre>
+    /Libraray should not use as rcov coverage.
+</pre>
+<p>
+commit d37368e32770e14a6242bf7eb5e8390a8577e4e0 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sun Aug 24 12:20:07 2008 +0900
+</p>
+<pre>
+    supported defining nested name space.
+</pre>
+<p>
+commit 32ed48c6ae8a470acb3a12151102174fedccfc58 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sat Aug 23 23:25:31 2008 +0900
+</p>
+<pre>
+    classx/util is not merged.
+</pre>
+<p>
+commit 8e81180a717458b53fa09ec6ac4f9852f7175e8b Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sat Aug 23 22:35:59 2008 +0900
+</p>
+<pre>
+    added benchmark for attribute_get.
+</pre>
+<p>
+commit 115d1bcfb9cb3964c14da851259dc5bb2a6f2784 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sat Aug 23 22:29:07 2008 +0900
+</p>
+<pre>
+    change to cache ClassX#attribute_of. And fixed warnings.
+</pre>
+<p>
+commit a23be1ac7760fea83e4b80fdc6f06fb2839b8883 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sat Aug 23 21:35:05 2008 +0900
+</p>
+<pre>
+    It may be better to show attibute's parent at inspect for debugging.
+</pre>
+<p>
+commit 3593145aeb05ebba55719405232b40af903e0882 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sat Aug 23 21:26:04 2008 +0900
+</p>
+<pre>
+    tweaked define order.
+</pre>
+<p>
+commit daf1861b1507ea6ad87fc2be109461fd070a6b6b Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sat Aug 23 20:52:11 2008 +0900
+</p>
+<pre>
+    added ClassX::Validate.validate. It's good to write explicity code.
+</pre>
+<p>
+commit 508f568535cdac3319cd80b812de1fb4175c17cf Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sat Aug 23 19:00:48 2008 +0900
+</p>
+<pre>
+    fixed doc.
+</pre>
+<p>
+commit 6fc2c5dbbc4ed8cbd6ef62f9aaad0e3ffc7be498 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sat Aug 23 15:19:20 2008 +0900
+</p>
+<pre>
+    it's faster than calling from attribute_of
+</pre>
+<p>
+commit 458848fded3eeb55a7fc9048bada7c825dfb73ad Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sat Aug 23 14:53:37 2008 +0900
+</p>
+<pre>
+    added bench dir to gem.
+</pre>
+<p>
+commit 52afdcbfbc105d93defbf6513bc89a6827f0f386 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sat Aug 23 14:27:39 2008 +0900
+</p>
+<pre>
+    release 0.0.3
+</pre>
+<p>
+commit 106a6048c9dd61009a54bd35081e849461785560 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sat Aug 23 14:22:09 2008 +0900
+</p>
+<pre>
+    update pdf new version.
+</pre>
+<p>
+commit b12c2f6af136152941acff3e24cc7bb2e0d7bec2 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sat Aug 23 14:05:15 2008 +0900
+</p>
+<pre>
+    fixed.
+</pre>
+<p>
+commit 7655a1b8a2e719ab6aef5e4239333c2271974fec Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sat Aug 23 13:57:31 2008 +0900
+</p>
+<pre>
+    CAVEAT: change ClassX class to module!!!
+</pre>
+<p>
+commit a92bcb221eb44b7e699c23dcbd85ca6b8124f74b Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sat Aug 23 13:04:51 2008 +0900
+</p>
+<pre>
+    tweaked inspect for easy debugging.
+</pre>
+<p>
+commit 75b464c029eb075381eac6c3901766838f8ae935 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sat Aug 23 12:41:29 2008 +0900
+</p>
+<pre>
+    added ClassX::Role::Logger. and ignore as commandline option if :no_cmd_option specified to define attribute.
+</pre>
+<p>
+commit c0b5ab6ff524a3a085cd85ef9300fd4900cfcb1c Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sat Aug 23 12:09:15 2008 +0900
+</p>
+<pre>
+    FATAL: fixed BUG: when mixin module that has attribute to ClassX based class, attribute_something wrong.
+</pre>
+<p>
+commit 367d3faf52f20adacd73a63616600bcd254ae9fe Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sat Aug 23 09:15:57 2008 +0900
+</p>
+<pre>
+    fix document.
+</pre>
+<p>
+commit 6a13669476240c944c34ead40e5785f523992a16 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sat Aug 23 09:13:49 2008 +0900
+</p>
+<pre>
+    change to autoload optional class.
+</pre>
+<p>
+commit 57afc39197a4ebb149fde046bc4a5feca85b10ac Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sat Aug 23 08:12:57 2008 +0900
+</p>
+<pre>
+    help should show type specify from command line.
+</pre>
+<p>
+commit 3af7753e0a64434ce8e02f820da7d096355873f9 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Fri Aug 22 07:03:09 2008 +0900
+</p>
+<pre>
+    change to dup as possible when you take :default option.as not Proc object.
+</pre>
+<p>
+commit b8770a895f674f7eb2eb100c016385377d01bf22 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Fri Aug 22 06:47:44 2008 +0900
+</p>
+<pre>
+    tweak help message.
+</pre>
+<p>
+commit d204b63f683aad7bf25cdba19ac941113f5f395f Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Fri Aug 22 03:19:55 2008 +0900
+</p>
+<pre>
+    support short option. thanks advice for Shintaro, Kakutani.
+</pre>
+<p>
+commit 28f1694a54968cb56c674fe62a6f2b6ad35a46b9 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Thu Aug 21 20:30:33 2008 +0900
+</p>
+<pre>
+    added ClassX::Declare. thanks Naoto, Takai !!
+</pre>
+<p>
+commit c3fb1968643ff195258d027012a2a3dab1c4c7f2 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Thu Aug 21 17:21:48 2008 +0900
+</p>
+<pre>
+    release 0.0.2
+</pre>
+<p>
+commit 08727ad7905c9f16a95d2b788b9c5e51288d1580 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Thu Aug 21 17:20:16 2008 +0900
+</p>
+<pre>
+    tweak rake tasks.
+</pre>
+<p>
+commit 6540c8afadedf7f72cfacea7d67efadba38f8e5a Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Thu Aug 21 16:42:15 2008 +0900
+</p>
+<pre>
+    added presentation slide for TokyoRubyKaigi01.
+</pre>
+<p>
+commit 84f215407ea6bcb76022ef41ecf4e55088d73b9b Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Thu Aug 21 13:23:48 2008 +0900
+</p>
+<pre>
+    included should private
+</pre>
+<p>
+commit 7bf3db95eff3205a8c7dd05a7d0e34dd658d2ac2 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Thu Aug 21 13:04:56 2008 +0900
+</p>
+<pre>
+    fixed bug when extending classX based class.
+</pre>
+<p>
+commit 633f7e88b16f94fc4fb64dd84cd68cf8a4b5d3a2 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Thu Aug 21 11:46:31 2008 +0900
+</p>
+<pre>
+    typo fixed.
+</pre>
+<p>
+commit 93347e055db4f132356f990be82efc332dba3962 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Wed Aug 20 23:23:13 2008 +0900
+</p>
+<pre>
+    added benchmark for attribute_set.
+</pre>
+<p>
+commit 283903a6b88fe5a6bdb453b13e10d6427e4a7113 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Wed Aug 20 22:52:02 2008 +0900
+</p>
+<pre>
+    It seems that it is facter [ select =&gt; convert ] than [ convert =&gt; select ].
+</pre>
+<p>
+commit 7d345a994d585e7ef9fdae97b84169e0fec71ddf Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Wed Aug 20 22:32:37 2008 +0900
+</p>
+<pre>
+     #attribute_of is too slow. So, change caching the result in the same method.
+</pre>
+<p>
+commit 28f399333add1d80b76dd3c91a44cb2938d55772 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Wed Aug 20 21:58:10 2008 +0900
+</p>
+<pre>
+    added initialize benchmark. classX is TOOOOOOOOOOOOOOOOOOOOOOOOOOO SLOOOOOW now!!!
+</pre>
+<p>
+commit d5619b6533955eb46367103119bc7cff5d3d35e7 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Wed Aug 20 21:13:44 2008 +0900
+</p>
+<pre>
+    fixed typo.
+</pre>
+<p>
+commit ea6fd14775f58b800b64468af9c08a0c4a4acc28 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Wed Aug 20 21:03:56 2008 +0900
+</p>
+<pre>
+    tweak line break.
+</pre>
+<p>
+commit a3323a233f031cdbc774c88b786241f260a22a24 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Wed Aug 20 21:02:23 2008 +0900
+</p>
+<pre>
+    allow user changing argument with overriding #before_init .
+</pre>
+<p>
+commit dfa9fe29791bae22fd91d0b7edcf9b4ec9d8d9e2 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Wed Aug 20 20:55:59 2008 +0900
+</p>
+<pre>
+    tweak.
+</pre>
+<p>
+commit aff7bea9fa71a98c6e7fc23ae6a8f78b93554599 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Wed Aug 20 20:40:12 2008 +0900
+</p>
+<pre>
+    added ClassX::Commandable.
+</pre>
+<p>
+commit e3a2f7ea88f980c1dd701bb17c934347bc52841b Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Wed Aug 20 08:47:53 2008 +0900
+</p>
+<pre>
+    change many method to class method.
+</pre>
+<p>
+commit f34fd672c66e9ba91157e594032933d0170d7264 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Wed Aug 20 08:20:53 2008 +0900
+</p>
+<pre>
+    variable name is worse.
+</pre>
+<p>
+commit 0b58fc18a0ea81803c284df6243d0086f15809ba Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Wed Aug 20 08:03:11 2008 +0900
+</p>
+<pre>
+    change to private many method and tweak method define order.
+</pre>
+<p>
+commit 9f43a491609034a94d4df7954f5526225e3a7ce5 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Wed Aug 20 07:51:20 2008 +0900
+</p>
+<pre>
+    output warn when attribute was overridden.
+</pre>
+<p>
+commit ff20fbc16efff13b367d473c0c033373a2c2f51c Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Wed Aug 20 02:57:57 2008 +0900
+</p>
+<pre>
+    added coerce option.
+</pre>
+<p>
+commit b4a5afc74037bd14d1d9204de76723c4c7b876ff Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Wed Aug 20 02:11:02 2008 +0900
+</p>
+<pre>
+    added :desc option to attribute and added doc.
+</pre>
+<p>
+commit bd06dccff2f367a0ea4d1d107f45620a61574314 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Wed Aug 20 01:54:10 2008 +0900
+</p>
+<pre>
+    It may be something wrong.
+</pre>
+<p>
+commit 5122329bf074239b6c7ea872d3740c79056bd083 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Wed Aug 20 01:50:24 2008 +0900
+</p>
+<pre>
+    support :include and :extend option for extending attrubte.
+</pre>
+<p>
+commit 0c22d5655c4a8e76b9eb0ef58ac179b2325138be Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Wed Aug 20 01:24:02 2008 +0900
+</p>
+<pre>
+    added classx/attrubte. lazy support.
+</pre>
+<p>
+commit 73a36575cf7c219da716d0a59decf99d0b9b3c40 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Wed Aug 20 01:16:20 2008 +0900
+</p>
+<pre>
+    Merge branches 'master' and 'with_classx_attribute'
+</pre>
+<p>
+commit bc9924c17b1cb45a73b033172979a4a288c12b1d Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Wed Aug 20 01:15:46 2008 +0900
+</p>
+<pre>
+    change to use ClassX::AttributeFactory class that generate Attribute class.
+</pre>
+<p>
+commit 221548d16464e00180e38045976b93da05d63bdc Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Tue Jul 15 07:14:39 2008 +0900
+</p>
+<pre>
+    added code for Ruby1.8.5
+</pre>
+<p>
+commit 1b53e64aa57af2b14031cdc4780ce036032d411b Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Mon Jul 14 08:55:33 2008 +0900
+</p>
+<pre>
+    fied bug: when second access using lazy option was return nil.
+</pre>
+<p>
+commit a7093b487c699ee18e91c2f86c83ca94e5687bb6 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sun Jun 22 03:19:10 2008 +0900
+</p>
+<pre>
+    added test.
+</pre>
+<p>
+commit 9c43ef589df6ae5b3e41b646e03f51c011004123 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sun Jun 22 03:04:06 2008 +0900
+</p>
+<pre>
+    you can use attribute defenition in module
+</pre>
+<p>
+commit fc3c7329036576c0c44428d014b0de7dc9f20763 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sun Jun 22 02:44:22 2008 +0900
+</p>
+<pre>
+    added :handles option.
+</pre>
+<p>
+commit 1b6cc210418a4f1b3e772bdd6979f043924637cc Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sun Jun 22 02:20:21 2008 +0900
+</p>
+<pre>
+    split test code for maintenancibirity.
+</pre>
+<p>
+commit 801f39272c57f19a40449a455b3eacaf0b535e7d Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sun Jun 22 00:03:36 2008 +0900
+</p>
+<pre>
+    bug fixed.
+</pre>
+<p>
+commit c309461c56487d9f722720b36385128bbd50df03 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sat Jun 21 23:49:33 2008 +0900
+</p>
+<pre>
+    support :lazy option
+</pre>
+<p>
+commit 6ebdfce9cde0c596997348be4c4804fee7f4e6c2 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Thu Jun 5 07:55:06 2008 +0900
+</p>
+<pre>
+    make InstanceException to rescue multiple exception of classx.
+</pre>
+<p>
+commit cf1b0742dbded5a43cfec4b500ec0378bdc4b23c Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Thu Jun 5 00:33:34 2008 +0900
+</p>
+<pre>
+    Fixed doc.
+</pre>
+<p>
+commit 8f4ba237852a5166004e9fbd2530ee548c4394c5 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sat May 31 16:32:22 2008 +0900
+</p>
+<pre>
+    change to caching set_attr_default_value_of[] methods regex.
+</pre>
+<p>
+commit 87726f13ba5c1910c7c4c7537d01ec94f08d3586 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sat May 31 16:31:27 2008 +0900
+</p>
+<pre>
+    for warning.
+</pre>
+<p>
+commit 95b2f4497af4cd5b0fc393d3276ec9f033fc0e00 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Sat May 31 15:59:04 2008 +0900
+</p>
+<pre>
+    It may be conflict class method 'has'. So set 'add_attribute' as default name.
+</pre>
+<p>
+commit 0f2d6aee6d8c21cf6e37721d6f25af9c3311a153 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Wed May 28 01:09:16 2008 +0900
+</p>
+<pre>
+    Fixed doc. :required param was deprecated.
+</pre>
+<p>
+commit 13a8d62c43bb2697e76ceb3f3913696efd17aef4 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Wed May 28 01:07:02 2008 +0900
+</p>
+<pre>
+    When not attribute param exist in #initialize params, it should be ignored.
+</pre>
+<p>
+commit c1837234062d8570c776f7371424790dcd3cd656 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Tue May 27 23:44:30 2008 +0900
+</p>
+<pre>
+    tweak spec.
+</pre>
+<p>
+commit 158a33e5dff79dd03b7298b01ffec1cf9d12c74a Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Tue May 27 09:21:23 2008 +0900
+</p>
+<pre>
+    Tweak error message for easy debuging with ClassX::Validate
+</pre>
+<p>
+commit 2194a9f8ba7bb1a6141c2c28efd5c7257f38b7d3 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Tue May 27 09:13:25 2008 +0900
+</p>
+<pre>
+    rename ClassX::InvalidSetterArgument to ClassX::InvalidAttrArgument
+</pre>
+<p>
+commit ca42b54f0300a709a3a950422e430b92523d1736 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Tue May 27 03:06:32 2008 +0900
+</p>
+<pre>
+    Change to raise Exception when you specify :optional is true and :writable is false.
+</pre>
+<p>
+commit d6652e91881ee21d1abd635230f19054bd388116 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Tue May 27 02:51:05 2008 +0900
+</p>
+<pre>
+    XXX: compatible change. Rename option :required to :optional.
+    As :optional does not specify false, attribute should be required.
+    If you specify :option and does not specify :optional, :optional is true.
+</pre>
+<p>
+commit 8f19213bbab485d5f95af9527e4ebe1d3c335e29 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Tue May 27 02:08:13 2008 +0900
+</p>
+<pre>
+    XXX: compatible change. when you want to define setter as public, you should specify more expricitly.
+</pre>
+<p>
+commit 39c5e6a2ba8bc550ab8168d88c9d46d6cf1876d9 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Tue May 27 01:57:26 2008 +0900
+</p>
+<pre>
+    Moved hook point of before_init and change to take argument for tweaking constructor arguments
+</pre>
+<p>
+commit 2fb2bfe2fdf2e1c3e66fa0180341b5a7a2cd5010 Author: Keiji, Yoshimi
+&lt;walf443@gmail.com&gt; Date: Tue May 27 01:43:21 2008 +0900
+</p>
+<pre>
+    If attribute is optional, it should declare expricitly.
+</pre>
+<p>
+commit 2b6d048a469850308050e9d7188f834a76858657 Author: Keiji, Yoshimi
+&lt;walf443@gmail dot com&gt; Date: Tue May 27 01:26:48 2008 +0900
+</p>
+<pre>
+    Added spec.
+</pre>
+<p>
+commit 566f79d80c562b3c99b8744cc60411fbc3b525ff Author: Keiji, Yoshimi
+&lt;walf443@gmail dot com&gt; Date: Tue May 27 01:17:46 2008 +0900
+</p>
+<pre>
+    Oh my got! It's not worth caching without redifine.
+</pre>
+<p>
+commit 53129fae5970eee849271e323ed8bd95ac560197 Author: Keiji, Yoshimi
+&lt;walf443@gmail dot com&gt; Date: Tue May 27 01:10:18 2008 +0900
+</p>
+<pre>
+    required attribute should not have :default option.
+</pre>
+<p>
+commit f382e00c615ada6fdb77d81fa5c311800bae70f1 Author: Keiji, Yoshimi
+&lt;walf443@gmail dot com&gt; Date: Tue May 27 00:22:11 2008 +0900
+</p>
+<pre>
+    Added experimental feature for caching autogenerated class to validate.Hash
+</pre>
+<p>
+commit dd0790a8f03b465e506ec6cc6a7e4004e0dbb6f0 Author: Keiji, Yoshimi
+&lt;walf443@gmail dot com&gt; Date: Mon May 26 23:59:51 2008 +0900
+</p>
+<pre>
+    Tweaked docs.
+</pre>
+<p>
+commit e697f6e45c64827dfaebf5de839ccb34f2688fc5 Author: Keiji, Yoshimi
+&lt;walf443@gmail dot com&gt; Date: Mon May 26 23:53:18 2008 +0900
+</p>
+<pre>
+    Added ClassX::Validate.
+</pre>
+<p>
+commit 88e75d9b7ceb18e654df108827eb3aebac14039b Author: Keiji, Yoshimi
+&lt;walf443@gmail dot com&gt; Date: Mon May 26 08:47:55 2008 +0900
+</p>
+<pre>
+    Added attributes class method.
+</pre>
+<p>
+commit 50981b2a813c215e987953e8ad6f4e5915a11be1 Author: Keiji, Yoshimi
+&lt;walf443@gmail dot com&gt; Date: Sun May 25 16:24:20 2008 +0900
+</p>
+<pre>
+    \# required attributes should be public class methods
+</pre>
+<p>
+commit 65b3ab3a00e96dff9407acb62bdd29551734598d Author: Keiji, Yoshimi
+&lt;walf443@gmail dot com&gt; Date: Sun May 25 03:10:14 2008 +0900
+</p>
+<pre>
+    Change process order for warings
+</pre>
+<p>
+commit b27bce22642bfe6e83322aab5cc333add00f270d Author: Keiji, Yoshimi
+&lt;walf443@gmail dot com&gt; Date: Sun May 25 01:11:44 2008 +0900
+</p>
+<pre>
+    tweek RequeredAttributeError's error message
+</pre>
+<p>
+commit b33f3d0246ecc191564bb74b3ab3849e529c9a9f Author: Keiji, Yoshimi
+&lt;walf443@gmail dot com&gt; Date: Sun May 25 00:51:22 2008 +0900
+</p>
+<pre>
+    fixed bug that all classes that extend ClassX are affected when you change class variable
+</pre>
+<p>
+commit 868c6e981067a243c70937026feae6e77ac734ec Author: Keiji, Yoshimi
+&lt;walf443@gmail dot com&gt; Date: Sun May 25 00:34:24 2008 +0900
+</p>
+<pre>
+    delete garbage.
+</pre>
+<p>
+commit 8178791b39199222df912cee95532bd501acf923 Author: Keiji, Yoshimi
+&lt;walf443@gmail dot com&gt; Date: Sun May 25 00:26:07 2008 +0900
+</p>
+<pre>
+    delete debug print
+</pre>
+<p>
+commit 853bd274400e0a56f20b8ee2907952c9219a7519 Author: Keiji, Yoshimi
+&lt;walf443@gmail dot com&gt; Date: Sun May 25 00:24:00 2008 +0900
+</p>
+<pre>
+    change to be able to use String as #initialize arguments
+</pre>
+<p>
+commit 89b0a251c270e804ee92e7be87417f1fcf0cafb5 Author: Keiji, Yoshimi
+&lt;walf443@gmail dot com&gt; Date: Sat May 24 23:59:49 2008 +0900
+</p>
+<pre>
+    fixed bug that abort when you specify none kind_of Hash value to initialize argument.
+</pre>
+<p>
+commit d53494a4694ac7d5f3bc191d3deff011f03aad90 Author: Keiji, Yoshimi
+&lt;walf443@gmail dot com&gt; Date: Sat May 24 19:37:46 2008 +0900
+</p>
+<pre>
+    tweak error message
+</pre>
+<p>
+commit dbf90e3c3261ffc4b6b77260d9e9906b5bed01d1 Author: Keiji, Yoshimi
+&lt;walf443 at gmail dot com&gt; Date: Wed May 21 01:16:37 2008 +0900
+</p>
+<pre>
+    add test
+</pre>
+<p>
+commit cfc3043d481a9736df85ffc5118207c3ac4d0e76 Author: Keiji, Yoshimi
+&lt;walf443 at gmail dot com&gt; Date: Tue May 20 23:58:20 2008 +0900
+</p>
+<pre>
+    add simple document
+</pre>
+<p>
+commit 5571feb0934a05ca1789d4570f70ac67a9df4285 Author: Keiji, Yoshimi
+&lt;walf443 at gmail dot com&gt; Date: Tue May 20 23:50:13 2008 +0900
+</p>
+<pre>
+    - fixed bug that can't specify any object except for literal object as :default values
+    - set_attr_default_value shold private method
+</pre>
+<p>
+commit 0856eadc3ff3e3bf0e26691a25c0267a4fab1ead Author: Keiji, Yoshimi
+&lt;walf443 at gmail dot com&gt; Date: Tue May 20 23:33:54 2008 +0900
+</p>
+<pre>
+    start new project.
+</pre>
+</div>
+
+
+
+
+<p></p>
+
+
+
+
+
+
+
+</div><div class="clear" id="footer">Generated on Jan 21, 2008 / Allison 2 &copy; 2007 <a href="http://cloudbur.st">Cloudburst, LLC</a></div></div></body></html>
