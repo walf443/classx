@@ -2,7 +2,7 @@ AUTHOR            = "Keiji, Yoshimi"
 EMAIL             = "walf443 at gmail.com"
 RUBYFORGE_PROJECT = "akasakarb"
 RUBYFORGE_PROJECT_ID = 4314
-HOMEPATH          = "http://#{RUBYFORGE_PROJECT}.rubyforge.org"
+HOMEPATH          = "http://walf443.github.com/classx/"
 RDOC_OPTS = [
 	"--charset", "utf-8",
 	"--opname", "index.html",
