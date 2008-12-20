@@ -92,19 +92,24 @@ task :uninstall => [:clean] do
 	sh %{sudo gem uninstall #{NAME}}
 end
 
-
-Rake::RDocTask.new do |rdoc|
-	rdoc.rdoc_dir = 'html'
-	rdoc.options += RDOC_OPTS
-	rdoc.template = "resh"
-	#rdoc.template = "#{ENV['template']}.rb" if ENV['template']
-	if ENV['DOC_FILES']
-		rdoc.rdoc_files.include(ENV['DOC_FILES'].split(/,\s*/))
-	else
-		rdoc.rdoc_files.include('README', 'ChangeLog')
-		rdoc.rdoc_files.include('lib/**/*.rb')
-		rdoc.rdoc_files.include('ext/**/*.c')
-	end
+begin
+  allison_path = `allison --path`.chomp
+  Rake::RDocTask.new do |rdoc|
+    rdoc.rdoc_dir = 'html'
+    rdoc.options += RDOC_OPTS
+    rdoc.template = allison_path
+    if ENV['DOC_FILES']
+      rdoc.rdoc_files.include(ENV['DOC_FILES'].split(/,\s*/))
+    else
+      rdoc.rdoc_files.include('README', 'ChangeLog')
+      rdoc.rdoc_files.include('lib/**/*.rb')
+      rdoc.rdoc_files.include('ext/**/*.c')
+    end
+  end
+rescue Exception => e
+  warn e
+  warn "skipping rdoc task"
+ensure
 end
 
 desc "Publish to RubyForge"
