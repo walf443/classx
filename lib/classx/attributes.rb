@@ -118,9 +118,8 @@ module ClassX
 
         define_method "#{name}=" do |val|
           attr_instance = __send__ "attribute_of:#{name}"
-          attr_instance.set val
           @__attribute_data_of ||= {}
-          @__attribute_data_of[name] = val
+          @__attribute_data_of[name] = attr_instance.set val
         end
 
         unless attr_class.config[:writable]

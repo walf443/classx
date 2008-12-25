@@ -90,7 +90,7 @@ describe ClassX do
           @class.class_eval do
             include ClassX
 
-            has :x, :isa => Integer, :coerce => { String => proc {|val| val.to_i } }
+            has :x, :isa => Integer, :coerce => { String => proc {|val| val.to_i } }, :writable => true
           end
         end
 
@@ -100,6 +100,12 @@ describe ClassX do
 
         it 'attrubute :x should not convert  Object to Integer' do
           lambda { @class.new(:x => Object.new ) }.should raise_error(ClassX::InvalidAttrArgument)
+        end
+
+        it 'should convert Str to Integer when you rewrite attribute :x' do
+          instance = @class.new(:x => "10")
+          lambda { instance.x = "20" }.should_not raise_error(Exception)
+          instance.x.should == 20
         end
       end
     end
