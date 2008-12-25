@@ -17,8 +17,10 @@ describe ClassX do
           lambda { @class.new }.should raise_error(ClassX::AttrRequiredError)
         end
 
-        it 'should define #x= private method to class' do
-          @class.private_instance_methods.map {|meth| meth.to_s }.should include("x=")
+        it 'should be able to rewrite :x attribute' do
+          instance =@class.new(:x => 10)
+          instance.x = 20
+          instance.x.should == 20
         end
     end
   end

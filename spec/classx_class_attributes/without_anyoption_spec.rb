@@ -13,8 +13,9 @@ describe ClassX::ClassAttributes do
           end
         end
 
-        it 'should define class.x= private method to class' do
-          @class.private_methods.map {|meth| meth.to_s }.should include("x=")
+        it 'should be able to rewrite :x attribute' do
+          @class.x = 10
+          @class.x.should == 10
         end
     end
   end

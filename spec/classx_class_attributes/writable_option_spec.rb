@@ -33,7 +33,7 @@ describe ClassX::ClassAttributes do
         # => This exception was caused by mistake of program. So, in general I think, you should not
         # rascue this error.
         it 'should raise RuntimeError using attr_name(val)' do
-          pending "I don't know how to know call this method from class context or reciever context." do
+          pending do
             lambda { @class.x(20) }.should raise_error(RuntimeError)
           end
         end

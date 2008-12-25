@@ -133,7 +133,7 @@ module ClassX
             @__class_attribute_data_of[name] = val
           end
 
-          unless attr_class.config[:writable]
+          if attr_class.config[:writable] == false
             private "#{name}="
           end
 
