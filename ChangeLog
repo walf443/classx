@@ -1,8 +1,86 @@
+commit 1bc6ca2722a0bfe96ae3f7f9af76a5e30f1872ac
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Fri Dec 26 09:15:08 2008 +0900
+
+    add some doc.
+
+:100644 100644 4a8c5ee... 6d9329a... M	README
+:100644 100644 5b0f41b... c5e2e23... M	lib/classx.rb
+:100644 100644 5e23b0a... d29aaf3... M	lib/classx/attributes.rb
+
+commit 2a1f45c859f24ab2757fdb2746d7e7a0cb8b6a5c
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Fri Dec 26 08:53:42 2008 +0900
+
+    CAVEAT: change default option to :writable is true.
+    
+    If you want to non-rewritable attribute, you should declare :writable option
+    explicitly.
+
+:100644 100644 6561a05... 5e23b0a... M	lib/classx/attributes.rb
+:100644 100644 14d21c6... 8cf2c87... M	lib/classx/class_attributes.rb
+:100644 100644 2527e8c... 80a23aa... M	spec/classx/without_anyoption_spec.rb
+:100644 100644 8fadef1... e1fc1b1... M	spec/classx_class_attributes/without_anyoption_spec.rb
+:100644 100644 2d79c1f... 6e4863d... M	spec/classx_class_attributes/writable_option_spec.rb
+
+commit be536d9561443f9fdb2cfa360f244d6ff0746b89
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Fri Dec 26 00:52:37 2008 +0900
+
+    FIXED: :coerce feature not work when you rewrite attribute data. thanks niku!!
+
+:100644 100644 86d0692... 6561a05... M	lib/classx/attributes.rb
+:100644 100644 89dc884... cc0a65e... M	spec/classx/with_coerce_spec.rb
+
+commit 73745a8ef87eed4be130602c78c8407688c8076b
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sat Dec 20 12:04:32 2008 +0900
+
+    change web site url to github rdoc page.
+
+:100644 100644 eaff159... cd4b0b5... M	tasks/basic_config.rake
+
+commit 44c6ff607e67c6ff52670f0d15eb84fa200b1a90
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Sat Dec 20 11:52:42 2008 +0900
+
+    using rdoc template allison.
+
+:100644 100644 38d91e1... dc4cabc... M	tasks/basic_tasks.rake
+
+commit 21d52770eefaf66d7599dde2389bb12b6108357d
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Tue Nov 4 00:47:37 2008 +0900
+
+    tweaked error message.
+
+:100644 100644 47b0fdc... ff23c61... M	lib/classx/attribute.rb
+
+commit e01d94a5070de17b012b26d10b08f3b24ad23c59
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Tue Nov 4 00:02:46 2008 +0900
+
+    added :options :cache_key to ClassX::Validate. So you can turn off caching anonymous validate class feature.
+
+:100644 100644 3169742... 982fb1e... M	lib/classx/validate.rb
+:100644 100644 a980025... 10d3045... M	spec/classx_validate_spec.rb
+
+commit 17a7717af41d9c55ff3b43a21bab445c3f78d2eb
+Author: Keiji, Yoshimi <walf443@gmail.com>
+Date:   Mon Oct 27 00:03:47 2008 +0900
+
+    release 0.0.5
+
+:100644 100644 1fb8859... c354860... M	ChangeLog
+:100644 100644 c885e09... 800b90d... M	Rakefile
+
 commit de3b716466a8c30e31f75483977bfcd9f19f871a
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Mon Oct 27 00:00:14 2008 +0900
 
     oops. spec message fixed.
+
+:100644 100644 791ebec... 5de79cf... M	spec/classx/handles_spec.rb
 
 commit 8c892fc051bba7175cbaa02dd9d29cdd3bab7d51
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -10,11 +88,16 @@ Date:   Sun Oct 26 23:00:20 2008 +0900
 
     update benchmark result.
 
+:100644 100644 f9ed509... 0368af8... M	bench/define_attribute.rb
+
 commit ad6a1e8be27e44d38b2a357f060086053572ecb2
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Sun Oct 26 18:53:28 2008 +0900
 
     fixed bug. when you handle some methods that use with block, it not worked.
+
+:100644 100644 3a3408d... 86d0692... M	lib/classx/attributes.rb
+:100644 100644 82d5340... 791ebec... M	spec/classx/handles_spec.rb
 
 commit ad34cf6a7f3d119379a2bc78b4060504b404db9e
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -22,11 +105,17 @@ Date:   Fri Sep 19 08:59:34 2008 +0900
 
     added coerce to log_rotate.
 
+:100644 100644 8920081... c946b7c... M	lib/classx/role/logger.rb
+
 commit 8b4cc50e9395bb801beafd60afc579e279e7604d
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Fri Sep 19 08:52:38 2008 +0900
 
     added CoerceWithProc.
+
+:100644 100644 30c927c... 47b0fdc... M	lib/classx/attribute.rb
+:100644 100644 73dbf6f... 89dc884... M	spec/classx/with_coerce_spec.rb
+:100644 100644 a9068e9... ec597fe... M	spec/classx_class_attributes/with_coerce_spec.rb
 
 commit cc2917b5b7f1088428936f9065932c7d630ae356
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -34,11 +123,16 @@ Date:   Fri Sep 19 08:37:39 2008 +0900
 
     added validate to log_rotate.
 
+:100644 100644 15b6f5f... 8920081... M	lib/classx/role/logger.rb
+
 commit ef422314b28c741950a04e4a9d75a532c4f4a0ab
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Fri Sep 19 08:29:22 2008 +0900
 
     fixed bug:  ClassX::Commandable with none kind_of specified attribute does not output :desc to help.
+
+:100644 100644 886b8f0... 6a4a889... M	lib/classx/commandable.rb
+:100644 100644 3f5ed25... 15b6f5f... M	lib/classx/role/logger.rb
 
 commit 62217b9347f6470db829ef66de116a9bdab04c7c
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -46,11 +140,16 @@ Date:   Fri Sep 19 08:20:01 2008 +0900
 
     added more shortcut.
 
+:100644 100644 cb4699e... d68afcd... M	example/commandable.rb
+:100644 100644 39bfda7... 3f5ed25... M	lib/classx/role/logger.rb
+
 commit 497ac5c854faa719a90eabcabeb5fbecdd25997f
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Fri Sep 19 08:11:18 2008 +0900
 
     added log_rotate attribute.
+
+:100644 100644 0efd94a... 39bfda7... M	lib/classx/role/logger.rb
 
 commit b06e8dac0d7084623426f37568369ca251cf6550
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -58,11 +157,17 @@ Date:   Fri Sep 19 08:01:23 2008 +0900
 
     trigger is not neeed.
 
+:100644 100644 1f87165... 0efd94a... M	lib/classx/role/logger.rb
+
 commit 343c1efcb9c8fe4c6ccb7674edefeeacf64740e9
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Fri Sep 19 07:55:14 2008 +0900
 
     tweak for rdoc.
+
+:100644 100644 01a4985... c885e09... M	Rakefile
+:100644 100644 55fc731... 1f87165... M	lib/classx/role/logger.rb
+:100644 100644 de24fbc... eaff159... M	tasks/basic_config.rake
 
 commit 51dcdd598cfac6d432494dede4427589dcefb665
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -70,11 +175,15 @@ Date:   Wed Sep 17 08:59:48 2008 +0900
 
     change #before_init to class method and change name process_init_args.
 
+:100644 100644 018b411... 5b0f41b... M	lib/classx.rb
+
 commit 6437f8ca6ef3cb443d3e1ced0a7a7d2b61062edb
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Wed Sep 17 08:42:13 2008 +0900
 
     adding document.
+
+:000000 100644 0000000... 4834caa... A	doc/OverViewFeatureOfClassX.pdf
 
 commit b9bdffc8f2146ef793a0c03e63182d5a4388ad07
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -82,11 +191,19 @@ Date:   Tue Sep 16 09:00:40 2008 +0900
 
     added document.
 
+:100644 100644 cdb1b32... 30c927c... M	lib/classx/attribute.rb
+
 commit 4a2807b839fe7c9e4d2989e025cf94d415c92e69
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Tue Sep 16 08:52:28 2008 +0900
 
     trigger should take array as default.
+
+:100644 100644 c08bd27... 8e38471... M	bench/attribute_set.rb
+:100644 100644 9babe24... d76b8db... M	bench/initialize.rb
+:100644 100644 d18c182... cdb1b32... M	lib/classx/attribute.rb
+:100644 100644 c01ab79... 5356d46... M	spec/classx/with_trigger_spec.rb
+:100644 100644 6f810ea... e646b85... M	spec/classx_class_attributes/with_trigger_spec.rb
 
 commit 0171feab3293523d26f70220d8501de1ac6f518d
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -94,11 +211,18 @@ Date:   Tue Sep 16 08:14:18 2008 +0900
 
     update benchmark.
 
+:100644 100644 dffa0b0... c08bd27... M	bench/attribute_set.rb
+:100644 100644 5bfbf66... 9babe24... M	bench/initialize.rb
+
 commit d85fa7ded08434e5300e434996eb63686a5753bf
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Tue Sep 16 08:07:34 2008 +0900
 
     trigger option support.
+
+:100644 100644 7adab38... d18c182... M	lib/classx/attribute.rb
+:000000 100644 0000000... c01ab79... A	spec/classx/with_trigger_spec.rb
+:000000 100644 0000000... 6f810ea... A	spec/classx_class_attributes/with_trigger_spec.rb
 
 commit 355ede71dc0b98f78ebb40b616945f2e192abdc8
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -106,11 +230,16 @@ Date:   Mon Sep 15 15:54:03 2008 +0900
 
     refactering
 
+:100644 100644 ee56c98... 7adab38... M	lib/classx/attribute.rb
+
 commit 723cffd4439723f9533c8e681a9202ca5836d3c5
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Sat Sep 13 00:38:06 2008 +0900
 
     released 0.0.4
+
+:100644 100644 b1395f7... 1fb8859... M	ChangeLog
+:100644 100644 67cce91... 01a4985... M	Rakefile
 
 commit c27d76a9e41d7f1d6f02160c6c0b555c6cd68206
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -118,11 +247,22 @@ Date:   Sat Sep 13 00:28:06 2008 +0900
 
     adding doc for methods.
 
+:100644 100644 35acdcc... 4a8c5ee... M	README
+:100644 100644 bf82579... 67cce91... M	Rakefile
+:100644 100644 0183f72... 018b411... M	lib/classx.rb
+:100644 100644 a961717... ee56c98... M	lib/classx/attribute.rb
+:100644 100644 611a28a... 3a3408d... M	lib/classx/attributes.rb
+
 commit 55c86d08d2a6a6acfd19a0d986a38e7b90e268b3
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Fri Sep 12 23:46:38 2008 +0900
 
     update benchmark script.
+
+:100644 100644 14e3f83... 126ac78... M	bench/attribute_get.rb
+:100644 100644 ff10ee8... dffa0b0... M	bench/attribute_set.rb
+:100644 100644 a6292ca... f9ed509... M	bench/define_attribute.rb
+:100644 100644 6b88314... 5bfbf66... M	bench/initialize.rb
 
 commit 92ed088b66fdbf04c3c9bff6439b6f98dbf66a03
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -130,11 +270,21 @@ Date:   Fri Sep 12 23:36:17 2008 +0900
 
     fixed warnings.
 
+:100644 100644 d5b0f43... 28731fc... M	lib/classx/declare.rb
+
 commit 212fd510001ffac66d8c318bc8aee645566cc81f
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Fri Sep 12 09:23:48 2008 +0900
 
     added rdoc.
+
+:100644 100644 ac7a4b1... 0183f72... M	lib/classx.rb
+:100644 100644 a85412b... a961717... M	lib/classx/attribute.rb
+:100644 100644 d566506... 611a28a... M	lib/classx/attributes.rb
+:100644 100644 1020e59... 886b8f0... M	lib/classx/commandable.rb
+:100644 100644 ff49db0... d5b0f43... M	lib/classx/declare.rb
+:100644 100644 24fd469... 55fc731... M	lib/classx/role/logger.rb
+:100644 100644 1aec0e8... 3169742... M	lib/classx/validate.rb
 
 commit 29129de8ad1f740df7a812547b734c530e4bd26e
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -142,11 +292,15 @@ Date:   Fri Sep 12 08:36:48 2008 +0900
 
     fixed fail test in Ruby 1.9.0
 
+:100644 100644 f6e3fea... dc7fec3... M	spec/classx_declare_spec.rb
+
 commit 058d0588e6626403bcaef9464ef40c50d52b516d
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Fri Sep 12 08:28:43 2008 +0900
 
     added test for #dup
+
+:100644 100644 3d8455b... b277112... M	spec/classx/serialize_spec.rb
 
 commit 1d591c1b8f78e3892b7fb010b62063da142dae16
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -154,11 +308,17 @@ Date:   Fri Sep 12 08:25:32 2008 +0900
 
     change to use ClassX::Bracketable in ClassX::Validate class
 
+:100644 100644 4b20844... 1aec0e8... M	lib/classx/validate.rb
+
 commit 57e61cf163f351e05bf6cdedcc519e2aa32cdc67
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Fri Sep 12 08:24:21 2008 +0900
 
     added spec to ClassX::Declare and fixed bug about autoload ClassX::Bracketable
+
+:100644 100644 217a483... ac7a4b1... M	lib/classx.rb
+:100644 100644 7e2f47a... ff49db0... M	lib/classx/declare.rb
+:000000 100644 0000000... f6e3fea... A	spec/classx_declare_spec.rb
 
 commit 0e3b72eb7d63a4bf84f121ce3a08b8d535b16d91
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -166,11 +326,15 @@ Date:   Fri Sep 12 02:47:11 2008 +0900
 
     fixed bug of test in Ruby 1.9.0
 
+:100644 100644 fa459df... bd2b0bb... M	spec/classx_class_attributes/dsl_accessor_spec.rb
+
 commit 72d4a1e60a6bbcf53d976508724c4d4948d1c744
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Fri Sep 12 02:36:06 2008 +0900
 
     added test.
+
+:100644 100644 136313f... b843206... M	spec/classx_bracketable_spec.rb
 
 commit d8285a1c6f86ecb1de78f0ba61557591aca38e34
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -178,11 +342,16 @@ Date:   Fri Sep 12 02:33:22 2008 +0900
 
     file name is wrong in convention.
 
+:100644 000000 136313f... 0000000... D	spec/classx_bracketable.rb
+:000000 100644 0000000... 136313f... A	spec/classx_bracketable_spec.rb
+
 commit 0c97f016b63fb7853fcc058709ff631be13e2e5e
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Fri Sep 12 02:27:43 2008 +0900
 
     It may be caching is wrong.
+
+:100644 100644 ec975ee... 14d21c6... M	lib/classx/class_attributes.rb
 
 commit 6306fc00771d955deede79c20e68b5d2706738e8
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -190,11 +359,17 @@ Date:   Fri Sep 12 02:19:25 2008 +0900
 
     not commited.
 
+:100644 100644 bc3c004... 01282b7... M	lib/classx/bracketable.rb
+
 commit 1883e78a6b032740350c87a5d083b959b61d04c1
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Fri Sep 12 01:52:15 2008 +0900
 
     added test for ClassX::Brancketable
+
+:100644 000000 8a16a3c... 0000000... D	lib/classx/blanketable.rb
+:000000 100644 0000000... bc3c004... A	lib/classx/bracketable.rb
+:000000 100644 0000000... 136313f... A	spec/classx_bracketable.rb
 
 commit 72d8a64cc065b191a8399db1fa05abbed7b8e955
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -202,11 +377,16 @@ Date:   Fri Sep 12 01:51:45 2008 +0900
 
     no need to include ClassX::Validate
 
+:100644 100644 2453d59... a980025... M	spec/classx_validate_spec.rb
+
 commit 9b437319d3a681d413dc511876e6d4146daf964f
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Wed Sep 10 09:11:18 2008 +0900
 
     added ClassX::Blanketable
+
+:100644 100644 a3a7946... 217a483... M	lib/classx.rb
+:000000 100644 0000000... 8a16a3c... A	lib/classx/blanketable.rb
 
 commit b899ce53177852463ad184f166ad8e6ce6359f8d
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -214,11 +394,17 @@ Date:   Wed Sep 10 07:55:07 2008 +0900
 
     added doc. make alias CAttrs as ClassX::ClassAttributes, Attrs as ClassX::Attributes
 
+:100644 100644 757f99a... a3a7946... M	lib/classx.rb
+:100644 100644 40b520c... d566506... M	lib/classx/attributes.rb
+:100644 100644 f39550f... ec975ee... M	lib/classx/class_attributes.rb
+
 commit e08c704466dd4af37e8ab2b92ba984d03af42db6
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Wed Sep 10 01:20:08 2008 +0900
 
     remove garbage.
+
+:100644 100644 eaf17cf... fa459df... M	spec/classx_class_attributes/dsl_accessor_spec.rb
 
 commit cbcd811ff3fb88212f4dad175064bb1d05692275
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -226,11 +412,17 @@ Date:   Wed Sep 10 00:20:57 2008 +0900
 
     added comment.
 
+:100644 100644 a0fb25d... f39550f... M	lib/classx/class_attributes.rb
+
 commit 55775bed9ee0e686da52b2c649f7c40a6b5758f5
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Wed Sep 10 00:08:35 2008 +0900
 
     added dsl_accessor compatible tests.
+
+:100644 100644 a0e8a6d... a0fb25d... M	lib/classx/class_attributes.rb
+:000000 100644 0000000... eaf17cf... A	spec/classx_class_attributes/dsl_accessor_spec.rb
+:100644 100644 f9b2404... 2d79c1f... M	spec/classx_class_attributes/writable_option_spec.rb
 
 commit 691562a088b1a7b7ab2ff659a214aa9656212df6
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -238,11 +430,17 @@ Date:   Tue Sep 9 08:09:30 2008 +0900
 
     ruby1.9 return each items in instance_variables with Symbol.
 
+:100644 100644 bdd72b0... 757f99a... M	lib/classx.rb
+:100644 100644 86e2cb8... 3d8455b... M	spec/classx/serialize_spec.rb
+
 commit 72a128ae5b80636799c3466a303c3caba3e2f919
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Tue Sep 9 02:03:07 2008 +0900
 
     fixed spec docs.
+
+:100644 100644 533721e... 8fadef1... M	spec/classx_class_attributes/without_anyoption_spec.rb
+:100644 100644 62bcc6f... f9b2404... M	spec/classx_class_attributes/writable_option_spec.rb
 
 commit e6f03314479f1692e9a04739c2395006ad9cf871
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -250,11 +448,15 @@ Date:   Tue Sep 9 01:50:15 2008 +0900
 
     added test about inheritance.
 
+:100644 100644 f7823f7... 264c29d... M	spec/classx_class_attributes/with_multiple_class_spec.rb
+
 commit 6cfd2852d3dd4d461ab06ae983585558d576b360
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Tue Sep 9 01:06:14 2008 +0900
 
     ClassX::ClassAttributes should be extend. So self.include is not need.
+
+:100644 100644 b817b23... a0e8a6d... M	lib/classx/class_attributes.rb
 
 commit 580936730fffd5ded27ae0b47a9937ada48174e1
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -262,11 +464,27 @@ Date:   Tue Sep 9 01:03:01 2008 +0900
 
     added class attribute feature. you can define class attributes with a same interface of attribute.
 
+:100644 100644 5e61158... bdd72b0... M	lib/classx.rb
+:000000 100644 0000000... b817b23... A	lib/classx/class_attributes.rb
+:000000 100644 0000000... a13436c... A	spec/classx_class_attributes/default_option_spec.rb
+:000000 100644 0000000... 96df6f4... A	spec/classx_class_attributes/handles_spec.rb
+:000000 100644 0000000... a9068e9... A	spec/classx_class_attributes/with_coerce_spec.rb
+:000000 100644 0000000... 17f6191... A	spec/classx_class_attributes/with_extend_spec.rb
+:000000 100644 0000000... fab52f3... A	spec/classx_class_attributes/with_include_spec.rb
+:000000 100644 0000000... f7823f7... A	spec/classx_class_attributes/with_multiple_class_spec.rb
+:000000 100644 0000000... 743932b... A	spec/classx_class_attributes/with_validate_spec.rb
+:000000 100644 0000000... 2b78e9d... A	spec/classx_class_attributes/without_accessor_spec.rb
+:000000 100644 0000000... 533721e... A	spec/classx_class_attributes/without_anyoption_spec.rb
+:000000 100644 0000000... 62bcc6f... A	spec/classx_class_attributes/writable_option_spec.rb
+
 commit 413edbea25cbc3991dd546fb0af21e82008853b7
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Mon Sep 8 22:35:37 2008 +0900
 
     Serialization should support restoring instance_variables except for classx's attribute_class caching.
+
+:100644 100644 1820af4... 5e61158... M	lib/classx.rb
+:100644 100644 355a61e... 86e2cb8... M	spec/classx/serialize_spec.rb
 
 commit 967bb8ef27de37ea951ff2199a1d1df8d7ba3cae
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -274,11 +492,15 @@ Date:   Mon Sep 8 08:34:58 2008 +0900
 
     oops.
 
+:100644 100644 c78c9fd... 1820af4... M	lib/classx.rb
+
 commit 3713b743286bc3076f6ef5a190dba31aebfef3a4
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Mon Sep 8 08:33:02 2008 +0900
 
     added serialization support using Marshl, YAML.
+
+:000000 100644 0000000... 355a61e... A	spec/classx/serialize_spec.rb
 
 commit 07a290cd3f9befefbd2987c78f889a67b81f89c8
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -286,11 +508,18 @@ Date:   Sun Sep 7 19:24:20 2008 +0900
 
     Become caching value when you use getter method.
 
+:100644 100644 9b82f8d... 14e3f83... M	bench/attribute_get.rb
+:100644 100644 48f796c... ff10ee8... M	bench/attribute_set.rb
+:100644 100644 fba0d09... a85412b... M	lib/classx/attribute.rb
+:100644 100644 67305a7... 40b520c... M	lib/classx/attributes.rb
+
 commit 3e97a758c8f421b5089d44abe399ab328174afbb
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Sun Sep 7 18:35:08 2008 +0900
 
     fixed revision.
+
+:100644 100644 250fa7b... a6292ca... M	bench/define_attribute.rb
 
 commit dd1bb608dd23ebf8e569c62784778aca56917044
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -298,11 +527,16 @@ Date:   Sun Sep 7 18:34:03 2008 +0900
 
     refactoring code. not using attribute_of as possible.
 
+:100644 100644 9bff68b... 250fa7b... M	bench/define_attribute.rb
+:100644 100644 6efa6a6... 67305a7... M	lib/classx/attributes.rb
+
 commit 8e6541a01a49a032f59c9f6b238e0f5ccb37ddbc
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Sun Sep 7 18:12:54 2008 +0900
 
     attr_get became slower a little than before.
+
+:100644 100644 62b4a60... 9b82f8d... M	bench/attribute_get.rb
 
 commit 83519953e9f7140ccd10324670d37cfec3cceb16
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -310,11 +544,17 @@ Date:   Sun Sep 7 18:06:23 2008 +0900
 
     Allow another setter style. you can use #attr_name(val) alternate #attr_name= val
 
+:100644 100644 83938d5... 48f796c... M	bench/attribute_set.rb
+:100644 100644 33a909b... 6efa6a6... M	lib/classx/attributes.rb
+:100644 100644 5917e66... aa822d8... M	spec/classx/writable_option_spec.rb
+
 commit dd1555988fe38e3fc53e780e7b0922e8802feca1
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Fri Aug 29 09:09:33 2008 +0900
 
     ruby19 can use =~ between Symbol and Regexp.
+
+:100644 100644 46f6a99... d70377d... M	spec/classx/with_validate_spec.rb
 
 commit a48eb7c03bcee64d285eda4bd24a537f5cede81f
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -322,11 +562,18 @@ Date:   Fri Aug 29 09:05:11 2008 +0900
 
     support mspec because it's easy to run test as ruby 1.9.  (rspec is not worked in ruby 1.9 !! )
 
+:100644 100644 79e3f62... 82d5340... M	spec/classx/handles_spec.rb
+:100644 100644 b74ffb2... 2527e8c... M	spec/classx/without_anyoption_spec.rb
+:100644 100644 f9d78c2... 5917e66... M	spec/classx/writable_option_spec.rb
+
 commit 2340039002a3ff315fad5028bf2c7931ac1d1c91
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Thu Aug 28 00:40:51 2008 +0900
 
     no define_method if it doesn't need.
+
+:100644 100644 b28016b... 9bff68b... M	bench/define_attribute.rb
+:100644 100644 bddab81... fba0d09... M	lib/classx/attribute.rb
 
 commit 29a8e3293d07ca8dd0b4a3305d615b2968b13c55
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -334,11 +581,19 @@ Date:   Wed Aug 27 08:28:56 2008 +0900
 
     added :validate_each option. It's useful to validate complex structure ( for example nested Array ).
 
+:100644 100644 dc1f35b... bddab81... M	lib/classx/attribute.rb
+:100644 100644 7bd06a8... 46f6a99... M	spec/classx/with_validate_spec.rb
+
 commit 36fd5a4e2320b0a68c38640ab86a1bc5cda0da2d
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Tue Aug 26 08:24:26 2008 +0900
 
     don't measure GC time.
+
+:100644 100644 7bbff44... 62b4a60... M	bench/attribute_get.rb
+:100644 100644 f0e88b6... 83938d5... M	bench/attribute_set.rb
+:100644 100644 a104f0f... b28016b... M	bench/define_attribute.rb
+:100644 100644 e900cfa... 6b88314... M	bench/initialize.rb
 
 commit 1f4c448bcbc74d744be2a6e3805b461b798a7f91
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -346,11 +601,16 @@ Date:   Mon Aug 25 09:34:28 2008 +0900
 
     added benchmark for taking time of defining attributes.
 
+:000000 100644 0000000... a104f0f... A	bench/define_attribute.rb
+
 commit 066787b4d379bdf1a83700b5fe5e629e6a423d74
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Sun Aug 24 23:20:09 2008 +0900
 
     :handle option should be able to delegate method with arguments.
+
+:100644 100644 623b559... 33a909b... M	lib/classx/attributes.rb
+:100644 100644 70fe5a6... 79e3f62... M	spec/classx/handles_spec.rb
 
 commit d08d8f5cc87e1a7979dc11cc0abc914a2a4c61a3
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -358,11 +618,16 @@ Date:   Sun Aug 24 22:39:43 2008 +0900
 
     insert line break to too long line to read.
 
+:100644 100644 3cd4185... 1020e59... M	lib/classx/commandable.rb
+
 commit 2120fafb35ee33048130b6c23c9c009e3c47f629
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Sun Aug 24 21:01:59 2008 +0900
 
     fixed.BUG: when it specify invalid attribute as option, commandable would not show help message.
+
+:100644 100644 402e07e... 3cd4185... M	lib/classx/commandable.rb
+:100644 100644 119ff6a... 24fd469... M	lib/classx/role/logger.rb
 
 commit f23eb5c82c644dc45cd83568a9270153b422f8a3
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -370,11 +635,15 @@ Date:   Sun Aug 24 17:59:26 2008 +0900
 
     It should use Class.const_defined?
 
+:100644 100644 f01b23d... 623b559... M	lib/classx/attributes.rb
+
 commit dd0d8b4ab4610d39b2f81361ad0b85e87bdb6847
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Sun Aug 24 17:52:23 2008 +0900
 
     When attribute's config freezed. ClassX::Commandable is not worked.
+
+:100644 100644 b61e947... dc1f35b... M	lib/classx/attribute.rb
 
 commit ada4424c9d8bd443eebc0c661040ccfdebca12e4
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -382,11 +651,19 @@ Date:   Sun Aug 24 17:43:41 2008 +0900
 
     change not using args[key] in define_method but using via config method.
 
+:100644 100644 df87301... b61e947... M	lib/classx/attribute.rb
+
 commit d0c318b1e45cdd134ca47bf48a4aae06cfcd215c
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Sun Aug 24 16:53:23 2008 +0900
 
     added tests.
+
+:100644 100644 8a088df... df87301... M	lib/classx/attribute.rb
+:100644 100644 8228968... 1b7103c... M	spec/classx/with_extend_spec.rb
+:100644 100644 f65b11d... 0fac31d... M	spec/classx/with_include_spec.rb
+:000000 100644 0000000... 7bd06a8... A	spec/classx/with_validate_spec.rb
+:100644 100644 285557e... f9d78c2... M	spec/classx/writable_option_spec.rb
 
 commit 588d9b3643ad12cfcc7b8c85a0a71834f83de24f
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -394,11 +671,20 @@ Date:   Sun Aug 24 16:34:38 2008 +0900
 
     test file name should be /_spec.rb$/.
 
+:100644 000000 73dbf6f... 0000000... D	spec/classx/with_coerce.rb
+:000000 100644 0000000... 73dbf6f... A	spec/classx/with_coerce_spec.rb
+:100644 000000 8228968... 0000000... D	spec/classx/with_extend.rb
+:000000 100644 0000000... 8228968... A	spec/classx/with_extend_spec.rb
+:100644 000000 f65b11d... 0000000... D	spec/classx/with_include.rb
+:000000 100644 0000000... f65b11d... A	spec/classx/with_include_spec.rb
+
 commit 9a5c6802a1de610c6f93b614cbca56e10721965d
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Sun Aug 24 15:57:33 2008 +0900
 
     /Libraray should not use as rcov coverage.
+
+:100644 100644 903762e... 38d91e1... M	tasks/basic_tasks.rake
 
 commit d37368e32770e14a6242bf7eb5e8390a8577e4e0
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -406,11 +692,15 @@ Date:   Sun Aug 24 12:20:07 2008 +0900
 
     supported defining nested name space.
 
+:100644 100644 7d54ceb... 7e2f47a... M	lib/classx/declare.rb
+
 commit 32ed48c6ae8a470acb3a12151102174fedccfc58
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Sat Aug 23 23:25:31 2008 +0900
 
     classx/util is not merged.
+
+:100644 100644 7ecc8e2... c78c9fd... M	lib/classx.rb
 
 commit 8e81180a717458b53fa09ec6ac4f9852f7175e8b
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -418,11 +708,18 @@ Date:   Sat Aug 23 22:35:59 2008 +0900
 
     added benchmark for attribute_get.
 
+:000000 100644 0000000... 7bbff44... A	bench/attribute_get.rb
+
 commit 115d1bcfb9cb3964c14da851259dc5bb2a6f2784
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Sat Aug 23 22:29:07 2008 +0900
 
     change to cache ClassX#attribute_of. And fixed warnings.
+
+:100644 100644 9660667... f0e88b6... M	bench/attribute_set.rb
+:100644 100644 a96afb3... e900cfa... M	bench/initialize.rb
+:100644 100644 21b0f2d... 7ecc8e2... M	lib/classx.rb
+:100644 100644 0c7ffeb... f01b23d... M	lib/classx/attributes.rb
 
 commit a23be1ac7760fea83e4b80fdc6f06fb2839b8883
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -430,11 +727,16 @@ Date:   Sat Aug 23 21:35:05 2008 +0900
 
     It may be better to show attibute's parent at inspect for debugging.
 
+:100644 100644 fc52185... cb4699e... M	example/commandable.rb
+:100644 100644 2adb601... 8a088df... M	lib/classx/attribute.rb
+
 commit 3593145aeb05ebba55719405232b40af903e0882
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Sat Aug 23 21:26:04 2008 +0900
 
     tweaked define order.
+
+:100644 100644 4cd0b8d... 119ff6a... M	lib/classx/role/logger.rb
 
 commit daf1861b1507ea6ad87fc2be109461fd070a6b6b
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -442,11 +744,16 @@ Date:   Sat Aug 23 20:52:11 2008 +0900
 
     added ClassX::Validate.validate. It's good to write explicity code.
 
+:100644 100644 4f0cda6... 4b20844... M	lib/classx/validate.rb
+:100644 100644 ee2d22b... 2453d59... M	spec/classx_validate_spec.rb
+
 commit 508f568535cdac3319cd80b812de1fb4175c17cf
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Sat Aug 23 19:00:48 2008 +0900
 
     fixed doc.
+
+:100644 100644 eac30e2... 4cd0b8d... M	lib/classx/role/logger.rb
 
 commit 6fc2c5dbbc4ed8cbd6ef62f9aaad0e3ffc7be498
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -454,11 +761,16 @@ Date:   Sat Aug 23 15:19:20 2008 +0900
 
     it's faster than calling from attribute_of
 
+:100644 100644 a032cb4... 9660667... M	bench/attribute_set.rb
+:100644 100644 c92fea1... 0c7ffeb... M	lib/classx/attributes.rb
+
 commit 458848fded3eeb55a7fc9048bada7c825dfb73ad
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Sat Aug 23 14:53:37 2008 +0900
 
     added bench dir to gem.
+
+:100644 100644 bb268de... de24fbc... M	tasks/basic_config.rake
 
 commit 52afdcbfbc105d93defbf6513bc89a6827f0f386
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -466,11 +778,17 @@ Date:   Sat Aug 23 14:27:39 2008 +0900
 
     release 0.0.3
 
+:100644 100644 ae95471... b1395f7... M	ChangeLog
+:100644 100644 be871c8... bf82579... M	Rakefile
+:100644 100644 16b16c9... 21b0f2d... M	lib/classx.rb
+
 commit 106a6048c9dd61009a54bd35081e849461785560
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Sat Aug 23 14:22:09 2008 +0900
 
     update pdf new version.
+
+:100644 100644 4a6c349... 64535da... M	doc/TokyoRubyKaigi01_classX.pdf
 
 commit b12c2f6af136152941acff3e24cc7bb2e0d7bec2
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -478,11 +796,34 @@ Date:   Sat Aug 23 14:05:15 2008 +0900
 
     fixed.
 
+:100644 100644 4945ebd... a032cb4... M	bench/attribute_set.rb
+:100644 100644 53c9474... a96afb3... M	bench/initialize.rb
+:100644 100644 c8ded5d... fc52185... M	example/commandable.rb
+
 commit 7655a1b8a2e719ab6aef5e4239333c2271974fec
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Sat Aug 23 13:57:31 2008 +0900
 
     CAVEAT: change ClassX class to module!!!
+
+:100644 100644 2fb190e... 35acdcc... M	README
+:100644 100644 d7453dc... 16b16c9... M	lib/classx.rb
+:100644 100644 9f23156... 2adb601... M	lib/classx/attribute.rb
+:100644 100644 0100fb9... c92fea1... M	lib/classx/attributes.rb
+:100644 100644 fa988b2... 402e07e... M	lib/classx/commandable.rb
+:100644 100644 fd12281... 7d54ceb... M	lib/classx/declare.rb
+:100644 100644 f9f3d05... eac30e2... M	lib/classx/role/logger.rb
+:100644 100644 04a407c... 4f0cda6... M	lib/classx/validate.rb
+:100644 100644 14e6b9f... 57fad87... M	spec/classx/default_option_spec.rb
+:100644 100644 68527f1... 70fe5a6... M	spec/classx/handles_spec.rb
+:100644 100644 3c91656... 73dbf6f... M	spec/classx/with_coerce.rb
+:100644 100644 90ee919... 8228968... M	spec/classx/with_extend.rb
+:100644 100644 8ed554a... f65b11d... M	spec/classx/with_include.rb
+:100644 100644 54c182a... 1ce9c86... M	spec/classx/with_multiple_class_spec.rb
+:100644 100644 04e80b7... 61e1211... M	spec/classx/without_accessor_spec.rb
+:100644 100644 a4b1fae... b74ffb2... M	spec/classx/without_anyoption_spec.rb
+:100644 100644 3ffc3ca... 285557e... M	spec/classx/writable_option_spec.rb
+:100644 100644 8ce47ee... 7d9b45a... M	spec/classx_attributes_spec.rb
 
 commit a92bcb221eb44b7e699c23dcbd85ca6b8124f74b
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -490,11 +831,17 @@ Date:   Sat Aug 23 13:04:51 2008 +0900
 
     tweaked inspect for easy debugging.
 
+:100644 100644 807c172... 9f23156... M	lib/classx/attribute.rb
+
 commit 75b464c029eb075381eac6c3901766838f8ae935
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Sat Aug 23 12:41:29 2008 +0900
 
     added ClassX::Role::Logger. and ignore as commandline option if :no_cmd_option specified to define attribute.
+
+:100644 100644 38ec63c... c8ded5d... M	example/commandable.rb
+:100644 100644 46fdf9b... fa988b2... M	lib/classx/commandable.rb
+:000000 100644 0000000... f9f3d05... A	lib/classx/role/logger.rb
 
 commit c0b5ab6ff524a3a085cd85ef9300fd4900cfcb1c
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -502,11 +849,16 @@ Date:   Sat Aug 23 12:09:15 2008 +0900
 
     FATAL: fixed BUG: when mixin module that has attribute to ClassX based class, attribute_something wrong.
 
+:100644 100644 19f41fa... 0100fb9... M	lib/classx/attributes.rb
+:100644 100644 1fde37e... 8ce47ee... M	spec/classx_attributes_spec.rb
+
 commit 367d3faf52f20adacd73a63616600bcd254ae9fe
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Sat Aug 23 09:15:57 2008 +0900
 
     fix document.
+
+:100644 100644 7dc5ac7... 2fb190e... M	README
 
 commit 6a13669476240c944c34ead40e5785f523992a16
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -514,11 +866,15 @@ Date:   Sat Aug 23 09:13:49 2008 +0900
 
     change to autoload optional class.
 
+:100644 100644 df75d15... d7453dc... M	lib/classx.rb
+
 commit 57afc39197a4ebb149fde046bc4a5feca85b10ac
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Sat Aug 23 08:12:57 2008 +0900
 
     help should show type specify from command line.
+
+:100644 100644 31cb656... 46fdf9b... M	lib/classx/commandable.rb
 
 commit 3af7753e0a64434ce8e02f820da7d096355873f9
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -526,11 +882,16 @@ Date:   Fri Aug 22 07:03:09 2008 +0900
 
     change to dup as possible when you take :default option.as not Proc object.
 
+:100644 100644 bbaf43f... 807c172... M	lib/classx/attribute.rb
+:100644 100644 3a0dd41... 14e6b9f... M	spec/classx/default_option_spec.rb
+
 commit b8770a895f674f7eb2eb100c016385377d01bf22
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Fri Aug 22 06:47:44 2008 +0900
 
     tweak help message.
+
+:100644 100644 be49ff3... 31cb656... M	lib/classx/commandable.rb
 
 commit d204b63f683aad7bf25cdba19ac941113f5f395f
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -538,11 +899,15 @@ Date:   Fri Aug 22 03:19:55 2008 +0900
 
     support short option. thanks advice for Shintaro, Kakutani.
 
+:100644 100644 e7c65fc... be49ff3... M	lib/classx/commandable.rb
+
 commit 28f1694a54968cb56c674fe62a6f2b6ad35a46b9
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Thu Aug 21 20:30:33 2008 +0900
 
     added ClassX::Declare. thanks Naoto, Takai !!
+
+:000000 100644 0000000... fd12281... A	lib/classx/declare.rb
 
 commit c3fb1968643ff195258d027012a2a3dab1c4c7f2
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -550,11 +915,16 @@ Date:   Thu Aug 21 17:21:48 2008 +0900
 
     release 0.0.2
 
+:100644 100644 a2f3c84... ae95471... M	ChangeLog
+
 commit 08727ad7905c9f16a95d2b788b9c5e51288d1580
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Thu Aug 21 17:20:16 2008 +0900
 
     tweak rake tasks.
+
+:100644 100644 5c0849f... be871c8... M	Rakefile
+:100644 100644 7a64797... bb268de... M	tasks/basic_config.rake
 
 commit 6540c8afadedf7f72cfacea7d67efadba38f8e5a
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -562,11 +932,15 @@ Date:   Thu Aug 21 16:42:15 2008 +0900
 
     added presentation slide for TokyoRubyKaigi01.
 
+:000000 100644 0000000... 4a6c349... A	doc/TokyoRubyKaigi01_classX.pdf
+
 commit 84f215407ea6bcb76022ef41ecf4e55088d73b9b
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Thu Aug 21 13:23:48 2008 +0900
 
     included should private
+
+:100644 100644 8e8cfd4... 19f41fa... M	lib/classx/attributes.rb
 
 commit 7bf3db95eff3205a8c7dd05a7d0e34dd658d2ac2
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -574,11 +948,18 @@ Date:   Thu Aug 21 13:04:56 2008 +0900
 
     fixed bug when extending classX based class.
 
+:100644 100644 d870b63... 4945ebd... M	bench/attribute_set.rb
+:100644 100644 8c171c5... 53c9474... M	bench/initialize.rb
+:100644 100644 3edc3a7... df75d15... M	lib/classx.rb
+:100644 100644 e052d71... 8e8cfd4... M	lib/classx/attributes.rb
+
 commit 633f7e88b16f94fc4fb64dd84cd68cf8a4b5d3a2
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Thu Aug 21 11:46:31 2008 +0900
 
     typo fixed.
+
+:100644 100644 e8f661d... 3ffc3ca... M	spec/classx/writable_option_spec.rb
 
 commit 93347e055db4f132356f990be82efc332dba3962
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -586,11 +967,16 @@ Date:   Wed Aug 20 23:23:13 2008 +0900
 
     added benchmark for attribute_set.
 
+:000000 100644 0000000... d870b63... A	bench/attribute_set.rb
+
 commit 283903a6b88fe5a6bdb453b13e10d6427e4a7113
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Wed Aug 20 22:52:02 2008 +0900
 
     It seems that it is facter [ select => convert ] than [ convert => select ].
+
+:100644 100644 d775f86... 8c171c5... M	bench/initialize.rb
+:100644 100644 4717817... 3edc3a7... M	lib/classx.rb
 
 commit 7d345a994d585e7ef9fdae97b84169e0fec71ddf
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -598,11 +984,17 @@ Date:   Wed Aug 20 22:32:37 2008 +0900
 
      #attribute_of is too slow. So, change caching the result in the same method.
 
+:100644 100644 78be849... d775f86... M	bench/initialize.rb
+:100644 100644 d0e5d9b... 4717817... M	lib/classx.rb
+:100644 100644 05003bc... e052d71... M	lib/classx/attributes.rb
+
 commit 28f399333add1d80b76dd3c91a44cb2938d55772
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Wed Aug 20 21:58:10 2008 +0900
 
     added initialize benchmark. classX is TOOOOOOOOOOOOOOOOOOOOOOOOOOO SLOOOOOW now!!!
+
+:000000 100644 0000000... 78be849... A	bench/initialize.rb
 
 commit d5619b6533955eb46367103119bc7cff5d3d35e7
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -610,11 +1002,15 @@ Date:   Wed Aug 20 21:13:44 2008 +0900
 
     fixed typo.
 
+:100644 100644 84fd142... 3a0dd41... M	spec/classx/default_option_spec.rb
+
 commit ea6fd14775f58b800b64468af9c08a0c4a4acc28
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Wed Aug 20 21:03:56 2008 +0900
 
     tweak line break.
+
+:100644 100644 57cee05... d0e5d9b... M	lib/classx.rb
 
 commit a3323a233f031cdbc774c88b786241f260a22a24
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -622,11 +1018,16 @@ Date:   Wed Aug 20 21:02:23 2008 +0900
 
     allow user changing argument with overriding #before_init .
 
+:100644 100644 f085489... 57cee05... M	lib/classx.rb
+:100644 100644 ff23ae3... 04e80b7... M	spec/classx/without_accessor_spec.rb
+
 commit dfa9fe29791bae22fd91d0b7edcf9b4ec9d8d9e2
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Wed Aug 20 20:55:59 2008 +0900
 
     tweak.
+
+:100644 100644 026308b... 38ec63c... M	example/commandable.rb
 
 commit aff7bea9fa71a98c6e7fc23ae6a8f78b93554599
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -634,11 +1035,17 @@ Date:   Wed Aug 20 20:40:12 2008 +0900
 
     added ClassX::Commandable.
 
+:000000 100644 0000000... 026308b... A	example/commandable.rb
+:000000 100644 0000000... e7c65fc... A	lib/classx/commandable.rb
+
 commit e3a2f7ea88f980c1dd701bb17c934347bc52841b
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Wed Aug 20 08:47:53 2008 +0900
 
     change many method to class method.
+
+:100644 100644 739bd3f... f085489... M	lib/classx.rb
+:100644 100644 fb299ab... bbaf43f... M	lib/classx/attribute.rb
 
 commit f34fd672c66e9ba91157e594032933d0170d7264
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -646,11 +1053,16 @@ Date:   Wed Aug 20 08:20:53 2008 +0900
 
     variable name is worse.
 
+:100644 100644 61c0ab8... fb299ab... M	lib/classx/attribute.rb
+
 commit 0b58fc18a0ea81803c284df6243d0086f15809ba
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Wed Aug 20 08:03:11 2008 +0900
 
     change to private many method and tweak method define order.
+
+:100644 100644 ed20e97... 61c0ab8... M	lib/classx/attribute.rb
+:100644 100644 f4dff62... 05003bc... M	lib/classx/attributes.rb
 
 commit 9f43a491609034a94d4df7954f5526225e3a7ce5
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -658,11 +1070,16 @@ Date:   Wed Aug 20 07:51:20 2008 +0900
 
     output warn when attribute was overridden.
 
+:100644 100644 43ccfe7... f4dff62... M	lib/classx/attributes.rb
+
 commit ff20fbc16efff13b367d473c0c033373a2c2f51c
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Wed Aug 20 02:57:57 2008 +0900
 
     added coerce option.
+
+:100644 100644 6f58c2e... ed20e97... M	lib/classx/attribute.rb
+:000000 100644 0000000... 3c91656... A	spec/classx/with_coerce.rb
 
 commit b4a5afc74037bd14d1d9204de76723c4c7b876ff
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -670,11 +1087,16 @@ Date:   Wed Aug 20 02:11:02 2008 +0900
 
     added :desc option to attribute and added doc.
 
+:100644 100644 b61b3aa... 6f58c2e... M	lib/classx/attribute.rb
+
 commit bd06dccff2f367a0ea4d1d107f45620a61574314
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Wed Aug 20 01:54:10 2008 +0900
 
     It may be something wrong.
+
+:100644 100644 6ca3169... 739bd3f... M	lib/classx.rb
+:100644 100644 32e19e7... 43ccfe7... M	lib/classx/attributes.rb
 
 commit 5122329bf074239b6c7ea872d3740c79056bd083
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -682,17 +1104,18 @@ Date:   Wed Aug 20 01:50:24 2008 +0900
 
     support :include and :extend option for extending attrubte.
 
+:100644 100644 0e9f391... b61b3aa... M	lib/classx/attribute.rb
+:000000 100644 0000000... 90ee919... A	spec/classx/with_extend.rb
+:000000 100644 0000000... 8ed554a... A	spec/classx/with_include.rb
+
 commit 0c22d5655c4a8e76b9eb0ef58ac179b2325138be
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Wed Aug 20 01:24:02 2008 +0900
 
     added classx/attrubte. lazy support.
 
-commit 73a36575cf7c219da716d0a59decf99d0b9b3c40
-Author: Keiji, Yoshimi <walf443@gmail.com>
-Date:   Wed Aug 20 01:16:20 2008 +0900
-
-    Merge branches 'master' and 'with_classx_attribute'
+:100644 100644 f2283ac... 6ca3169... M	lib/classx.rb
+:000000 100644 0000000... 0e9f391... A	lib/classx/attribute.rb
 
 commit bc9924c17b1cb45a73b033172979a4a288c12b1d
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -700,11 +1123,19 @@ Date:   Wed Aug 20 01:15:46 2008 +0900
 
     change to use ClassX::AttributeFactory class that generate Attribute class.
 
+:100644 100644 d597ea2... f2283ac... M	lib/classx.rb
+:100644 100644 cb9eb2e... 32e19e7... M	lib/classx/attributes.rb
+:100644 100644 13d4e63... 84fd142... M	spec/classx/default_option_spec.rb
+:100644 100644 84d38c8... ff23ae3... M	spec/classx/without_accessor_spec.rb
+:100644 100644 e69724a... e8f661d... M	spec/classx/writable_option_spec.rb
+
 commit 221548d16464e00180e38045976b93da05d63bdc
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Tue Jul 15 07:14:39 2008 +0900
 
     added code for Ruby1.8.5
+
+:100644 100644 672fcdd... cb9eb2e... M	lib/classx/attributes.rb
 
 commit 1b53e64aa57af2b14031cdc4780ce036032d411b
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -712,11 +1143,15 @@ Date:   Mon Jul 14 08:55:33 2008 +0900
 
     fied bug: when second access using lazy option was return nil.
 
+:100644 100644 49bf35e... 672fcdd... M	lib/classx/attributes.rb
+
 commit a7093b487c699ee18e91c2f86c83ca94e5687bb6
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Sun Jun 22 03:19:10 2008 +0900
 
     added test.
+
+:000000 100644 0000000... 1fde37e... A	spec/classx_attributes_spec.rb
 
 commit 9c43ef589df6ae5b3e41b646e03f51c011004123
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -724,11 +1159,17 @@ Date:   Sun Jun 22 03:04:06 2008 +0900
 
     you can use attribute defenition in module
 
+:100644 100644 8541dc9... d597ea2... M	lib/classx.rb
+:000000 100644 0000000... 49bf35e... A	lib/classx/attributes.rb
+
 commit fc3c7329036576c0c44428d014b0de7dc9f20763
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Sun Jun 22 02:44:22 2008 +0900
 
     added :handles option.
+
+:100644 100644 befa92e... 8541dc9... M	lib/classx.rb
+:000000 100644 0000000... 68527f1... A	spec/classx/handles_spec.rb
 
 commit 1b6cc210418a4f1b3e772bdd6979f043924637cc
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -736,11 +1177,20 @@ Date:   Sun Jun 22 02:20:21 2008 +0900
 
     split test code for maintenancibirity.
 
+:000000 100644 0000000... 13d4e63... A	spec/classx/default_option_spec.rb
+:000000 100644 0000000... 54c182a... A	spec/classx/with_multiple_class_spec.rb
+:000000 100644 0000000... 84d38c8... A	spec/classx/without_accessor_spec.rb
+:000000 100644 0000000... a4b1fae... A	spec/classx/without_anyoption_spec.rb
+:000000 100644 0000000... e69724a... A	spec/classx/writable_option_spec.rb
+:100644 000000 3804f25... 0000000... D	spec/classx_spec.rb
+
 commit 801f39272c57f19a40449a455b3eacaf0b535e7d
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Sun Jun 22 00:03:36 2008 +0900
 
     bug fixed.
+
+:100644 100644 3f7480d... befa92e... M	lib/classx.rb
 
 commit c309461c56487d9f722720b36385128bbd50df03
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -748,11 +1198,16 @@ Date:   Sat Jun 21 23:49:33 2008 +0900
 
     support :lazy option
 
+:100644 100644 7e264b6... 3f7480d... M	lib/classx.rb
+:100644 100644 5197090... 3804f25... M	spec/classx_spec.rb
+
 commit 6ebdfce9cde0c596997348be4c4804fee7f4e6c2
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Thu Jun 5 07:55:06 2008 +0900
 
     make InstanceException to rescue multiple exception of classx.
+
+:100644 100644 b13797b... 7e264b6... M	lib/classx.rb
 
 commit cf1b0742dbded5a43cfec4b500ec0378bdc4b23c
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -760,11 +1215,15 @@ Date:   Thu Jun 5 00:33:34 2008 +0900
 
     Fixed doc.
 
+:100644 100644 b8c8628... 7dc5ac7... M	README
+
 commit 8f4ba237852a5166004e9fbd2530ee548c4394c5
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Sat May 31 16:32:22 2008 +0900
 
     change to caching set_attr_default_value_of[] methods regex.
+
+:100644 100644 62a21ec... b13797b... M	lib/classx.rb
 
 commit 87726f13ba5c1910c7c4c7537d01ec94f08d3586
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -772,11 +1231,16 @@ Date:   Sat May 31 16:31:27 2008 +0900
 
     for warning.
 
+:100644 100644 86fda77... 04a407c... M	lib/classx/validate.rb
+
 commit 95b2f4497af4cd5b0fc393d3276ec9f033fc0e00
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Sat May 31 15:59:04 2008 +0900
 
     It may be conflict class method 'has'. So set 'add_attribute' as default name.
+
+:100644 100644 cc395e9... 5c0849f... M	Rakefile
+:100644 100644 adb0cbc... 62a21ec... M	lib/classx.rb
 
 commit 0f2d6aee6d8c21cf6e37721d6f25af9c3311a153
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -784,11 +1248,16 @@ Date:   Wed May 28 01:09:16 2008 +0900
 
     Fixed doc. :required param was deprecated.
 
+:100644 100644 07f7365... b8c8628... M	README
+
 commit 13a8d62c43bb2697e76ceb3f3913696efd17aef4
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Wed May 28 01:07:02 2008 +0900
 
     When not attribute param exist in #initialize params, it should be ignored.
+
+:100644 100644 18ea29d... adb0cbc... M	lib/classx.rb
+:100644 100644 1baeba9... 5197090... M	spec/classx_spec.rb
 
 commit c1837234062d8570c776f7371424790dcd3cd656
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -796,11 +1265,15 @@ Date:   Tue May 27 23:44:30 2008 +0900
 
     tweak spec.
 
+:100644 100644 2be80cc... 1baeba9... M	spec/classx_spec.rb
+
 commit 158a33e5dff79dd03b7298b01ffec1cf9d12c74a
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Tue May 27 09:21:23 2008 +0900
 
     Tweak error message for easy debuging with ClassX::Validate
+
+:100644 100644 f14e959... 18ea29d... M	lib/classx.rb
 
 commit 2194a9f8ba7bb1a6141c2c28efd5c7257f38b7d3
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -808,11 +1281,18 @@ Date:   Tue May 27 09:13:25 2008 +0900
 
     rename ClassX::InvalidSetterArgument to ClassX::InvalidAttrArgument
 
+:100644 100644 bbf9c57... f14e959... M	lib/classx.rb
+:100644 100644 b9244ef... ee2d22b... M	spec/classx_validate_spec.rb
+
 commit ca42b54f0300a709a3a950422e430b92523d1736
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Tue May 27 03:06:32 2008 +0900
 
     Change to raise Exception when you specify :optional is true and :writable is false.
+
+:100644 100644 dbb633c... 07f7365... M	README
+:100644 100644 81fb0d9... bbf9c57... M	lib/classx.rb
+:100644 100644 82e8024... 2be80cc... M	spec/classx_spec.rb
 
 commit d6652e91881ee21d1abd635230f19054bd388116
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -822,11 +1302,20 @@ Date:   Tue May 27 02:51:05 2008 +0900
     As :optional does not specify false, attribute should be required.
     If you specify :option and does not specify :optional, :optional is true.
 
+:100644 100644 43130df... 81fb0d9... M	lib/classx.rb
+:100644 100644 9c515bd... 86fda77... M	lib/classx/validate.rb
+:100644 100644 852944a... 82e8024... M	spec/classx_spec.rb
+:100644 100644 835b32d... b9244ef... M	spec/classx_validate_spec.rb
+
 commit 8f19213bbab485d5f95af9527e4ebe1d3c335e29
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Tue May 27 02:08:13 2008 +0900
 
     XXX: compatible change. when you want to define setter as public, you should specify more expricitly.
+
+:100644 100644 8bab5c1... dbb633c... M	README
+:100644 100644 da9c8b5... 43130df... M	lib/classx.rb
+:100644 100644 0790761... 852944a... M	spec/classx_spec.rb
 
 commit 39c5e6a2ba8bc550ab8168d88c9d46d6cf1876d9
 Author: Keiji, Yoshimi <walf443@gmail.com>
@@ -834,11 +1323,16 @@ Date:   Tue May 27 01:57:26 2008 +0900
 
     Moved hook point of before_init and change to take argument for tweaking constructor arguments
 
+:100644 100644 f283a19... da9c8b5... M	lib/classx.rb
+
 commit 2fb2bfe2fdf2e1c3e66fa0180341b5a7a2cd5010
 Author: Keiji, Yoshimi <walf443@gmail.com>
 Date:   Tue May 27 01:43:21 2008 +0900
 
     If attribute is optional, it should declare expricitly.
+
+:100644 100644 5b7fecb... f283a19... M	lib/classx.rb
+:100644 100644 2311ec1... 0790761... M	spec/classx_spec.rb
 
 commit 2b6d048a469850308050e9d7188f834a76858657
 Author: Keiji, Yoshimi <walf443@gmail dot com>
@@ -846,11 +1340,15 @@ Date:   Tue May 27 01:26:48 2008 +0900
 
     Added spec.
 
+:100644 100644 a6fb5a3... 2311ec1... M	spec/classx_spec.rb
+
 commit 566f79d80c562b3c99b8744cc60411fbc3b525ff
 Author: Keiji, Yoshimi <walf443@gmail dot com>
 Date:   Tue May 27 01:17:46 2008 +0900
 
     Oh my got! It's not worth caching without redifine.
+
+:100644 100644 0541ce1... 9c515bd... M	lib/classx/validate.rb
 
 commit 53129fae5970eee849271e323ed8bd95ac560197
 Author: Keiji, Yoshimi <walf443@gmail dot com>
@@ -858,11 +1356,17 @@ Date:   Tue May 27 01:10:18 2008 +0900
 
     required attribute should not have :default option.
 
+:100644 100644 867d4ba... 5b7fecb... M	lib/classx.rb
+:100644 100644 fcf8703... a6fb5a3... M	spec/classx_spec.rb
+
 commit f382e00c615ada6fdb77d81fa5c311800bae70f1
 Author: Keiji, Yoshimi <walf443@gmail dot com>
 Date:   Tue May 27 00:22:11 2008 +0900
 
     Added experimental feature for caching autogenerated class to validate.Hash
+
+:100644 100644 60ed41c... 0541ce1... M	lib/classx/validate.rb
+:100644 100644 b498e5f... 835b32d... M	spec/classx_validate_spec.rb
 
 commit dd0790a8f03b465e506ec6cc6a7e4004e0dbb6f0
 Author: Keiji, Yoshimi <walf443@gmail dot com>
@@ -870,11 +1374,16 @@ Date:   Mon May 26 23:59:51 2008 +0900
 
     Tweaked docs.
 
+:100644 100644 990107b... 60ed41c... M	lib/classx/validate.rb
+
 commit e697f6e45c64827dfaebf5de839ccb34f2688fc5
 Author: Keiji, Yoshimi <walf443@gmail dot com>
 Date:   Mon May 26 23:53:18 2008 +0900
 
     Added ClassX::Validate.
+
+:000000 100644 0000000... 990107b... A	lib/classx/validate.rb
+:000000 100644 0000000... b498e5f... A	spec/classx_validate_spec.rb
 
 commit 88e75d9b7ceb18e654df108827eb3aebac14039b
 Author: Keiji, Yoshimi <walf443@gmail dot com>
@@ -882,11 +1391,16 @@ Date:   Mon May 26 08:47:55 2008 +0900
 
     Added attributes class method.
 
+:100644 100644 1e3dc46... 867d4ba... M	lib/classx.rb
+:100644 100644 88107e1... fcf8703... M	spec/classx_spec.rb
+
 commit 50981b2a813c215e987953e8ad6f4e5915a11be1
 Author: Keiji, Yoshimi <walf443@gmail dot com>
 Date:   Sun May 25 16:24:20 2008 +0900
 
     \# required attributes should be public class methods
+
+:100644 100644 98e394c... 1e3dc46... M	lib/classx.rb
 
 commit 65b3ab3a00e96dff9407acb62bdd29551734598d
 Author: Keiji, Yoshimi <walf443@gmail dot com>
@@ -894,11 +1408,15 @@ Date:   Sun May 25 03:10:14 2008 +0900
 
     Change process order for warings
 
+:100644 100644 deee30d... 98e394c... M	lib/classx.rb
+
 commit b27bce22642bfe6e83322aab5cc333add00f270d
 Author: Keiji, Yoshimi <walf443@gmail dot com>
 Date:   Sun May 25 01:11:44 2008 +0900
 
     tweek RequeredAttributeError's error message
+
+:100644 100644 2424284... deee30d... M	lib/classx.rb
 
 commit b33f3d0246ecc191564bb74b3ab3849e529c9a9f
 Author: Keiji, Yoshimi <walf443@gmail dot com>
@@ -906,11 +1424,16 @@ Date:   Sun May 25 00:51:22 2008 +0900
 
     fixed bug that all classes that extend ClassX are affected when you change class variable
 
+:100644 100644 2ad2638... 2424284... M	lib/classx.rb
+:100644 100644 d960b19... 88107e1... M	spec/classx_spec.rb
+
 commit 868c6e981067a243c70937026feae6e77ac734ec
 Author: Keiji, Yoshimi <walf443@gmail dot com>
 Date:   Sun May 25 00:34:24 2008 +0900
 
     delete garbage.
+
+:100644 100644 c18e480... 2ad2638... M	lib/classx.rb
 
 commit 8178791b39199222df912cee95532bd501acf923
 Author: Keiji, Yoshimi <walf443@gmail dot com>
@@ -918,11 +1441,16 @@ Date:   Sun May 25 00:26:07 2008 +0900
 
     delete debug print
 
+:100644 100644 9540220... c18e480... M	lib/classx.rb
+
 commit 853bd274400e0a56f20b8ee2907952c9219a7519
 Author: Keiji, Yoshimi <walf443@gmail dot com>
 Date:   Sun May 25 00:24:00 2008 +0900
 
     change to be able to use String as #initialize arguments
+
+:100644 100644 be80575... 9540220... M	lib/classx.rb
+:100644 100644 b0a6729... d960b19... M	spec/classx_spec.rb
 
 commit 89b0a251c270e804ee92e7be87417f1fcf0cafb5
 Author: Keiji, Yoshimi <walf443@gmail dot com>
@@ -930,11 +1458,16 @@ Date:   Sat May 24 23:59:49 2008 +0900
 
     fixed bug that abort when you specify none kind_of Hash value to initialize argument.
 
+:100644 100644 7c14bc6... be80575... M	lib/classx.rb
+:100644 100644 1fa9e72... b0a6729... M	spec/classx_spec.rb
+
 commit d53494a4694ac7d5f3bc191d3deff011f03aad90
 Author: Keiji, Yoshimi <walf443@gmail dot com>
 Date:   Sat May 24 19:37:46 2008 +0900
 
     tweak error message
+
+:100644 100644 36f8690... 7c14bc6... M	lib/classx.rb
 
 commit dbf90e3c3261ffc4b6b77260d9e9906b5bed01d1
 Author: Keiji, Yoshimi <walf443 at gmail dot com>
@@ -942,11 +1475,16 @@ Date:   Wed May 21 01:16:37 2008 +0900
 
     add test
 
+:100644 100644 281d610... 36f8690... M	lib/classx.rb
+:100644 100644 320822d... 1fa9e72... M	spec/classx_spec.rb
+
 commit cfc3043d481a9736df85ffc5118207c3ac4d0e76
 Author: Keiji, Yoshimi <walf443 at gmail dot com>
 Date:   Tue May 20 23:58:20 2008 +0900
 
     add simple document
+
+:100644 100644 2573091... 8bab5c1... M	README
 
 commit 5571feb0934a05ca1789d4570f70ac67a9df4285
 Author: Keiji, Yoshimi <walf443 at gmail dot com>
@@ -955,8 +1493,20 @@ Date:   Tue May 20 23:50:13 2008 +0900
     - fixed bug that can't specify any object except for literal object as :default values
     - set_attr_default_value shold private method
 
+:100644 100644 447ff47... 281d610... M	lib/classx.rb
+
 commit 0856eadc3ff3e3bf0e26691a25c0267a4fab1ead
 Author: Keiji, Yoshimi <walf443 at gmail dot com>
 Date:   Tue May 20 23:33:54 2008 +0900
 
     start new project.
+
+:000000 100644 0000000... a2f3c84... A	ChangeLog
+:000000 100644 0000000... 2573091... A	README
+:000000 100644 0000000... cc395e9... A	Rakefile
+:000000 100644 0000000... 447ff47... A	lib/classx.rb
+:000000 100644 0000000... 320822d... A	spec/classx_spec.rb
+:000000 100644 0000000... 11175f8... A	spec/spec.opts
+:000000 100644 0000000... 6158c15... A	spec/spec_helper.rb
+:000000 100644 0000000... 7a64797... A	tasks/basic_config.rake
+:000000 100644 0000000... 903762e... A	tasks/basic_tasks.rake
