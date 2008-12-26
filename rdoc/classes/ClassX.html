@@ -437,7 +437,7 @@ usage
   end
 
   class Point3D &lt; Point
-    has :z, :writable =&gt; true, :kind_of =&gt; Fixnum, :optional =&gt; true
+    has :z, :kind_of =&gt; Fixnum, :optional =&gt; true
   end
 
   Point.new(:x =&gt; 30, :y =&gt; 40)  #=&gt; &lt;# Point @x=30, @y=40 &gt;

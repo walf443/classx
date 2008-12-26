@@ -468,66 +468,68 @@ attribute. You can also use <tt>has</tt> more declaretivly.
   class YourClass
     include ClassX
     add_attribute :x,
-      :writable =&gt; true,  # defining accessor scope.
+      :writable =&gt; false  # defining accessor scope.
       :optional =&gt; ture,  # defining attribute is required in initialize.
       :validate =&gt; proc {|val| val.respond_to? :to_s }  # this attribute's value should adopted to this rule.
       :default  =&gt; proc {|mine| mine.class.to_s.split(/::/).last.downcase } # default value for this attribute.
+      :handle   =&gt; [ :foo, :bar, :baz ]  # define method :foo, :bar, :baz to delegate x's method.
+      :coerce   =&gt; { String =&gt; proc {|val| val.to_i } } # when it set String value, force convert to Integer.
+      :trigger  =&gt; proc {|mine,val| mine.y = val } # when this attribute set value, also update y attribute.
 
   end
 </pre>
 
-<p class="source_link" id="M000020-show-link"><a onclick="toggle('M000020-source'); toggleText('M000020-link'); return false;" href="#" id="M000020-link">Show source...</a></p><div class="source" id="M000020-source"><pre>     <span class="ruby-comment cmt"># File lib/classx/attributes.rb, line 92</span>
- 92:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_attribute</span> <span class="ruby-identifier">name</span>, <span class="ruby-identifier">attrs</span>={} <span class="ruby-comment cmt">#:doc:</span>
- 93:         <span class="ruby-identifier">name</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span>
- 94: 
- 95:         <span class="ruby-identifier">attr_class</span> = <span class="ruby-identifier">define_attribute</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">attrs</span>)
- 96: 
- 97:         <span class="ruby-comment cmt"># XXX: Why this can take *args?</span>
- 98:         <span class="ruby-comment cmt"># =&gt;  It's for avoid warnings when you call it without values.</span>
- 99:         <span class="ruby-identifier">define_method</span> <span class="ruby-identifier">name</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-operator">*</span><span class="ruby-identifier">vals</span><span class="ruby-operator">|</span>
-100:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">vals</span> <span class="ruby-operator">==</span> []
-101:             <span class="ruby-ivar">@__attribute_data_of</span> <span class="ruby-operator">||=</span> {}
-102:             <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@__attribute_data_of</span>[<span class="ruby-identifier">name</span>]
-103:               <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@__attribute_data_of</span>[<span class="ruby-identifier">name</span>]
-104:             <span class="ruby-keyword kw">else</span>
-105:               <span class="ruby-identifier">attr_instance</span> = <span class="ruby-identifier">__send__</span> <span class="ruby-node">&quot;attribute_of:#{name}&quot;</span>
-106:               <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@__attribute_data_of</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">attr_instance</span>.<span class="ruby-identifier">get</span>
-107:             <span class="ruby-keyword kw">end</span>
-108:           <span class="ruby-keyword kw">else</span>
-109:             <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">vals</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>
-110:             <span class="ruby-identifier">val</span> = <span class="ruby-identifier">vals</span>.<span class="ruby-identifier">first</span>
-111:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">respond_to?</span> <span class="ruby-node">&quot;#{name}=&quot;</span>
-112:               <span class="ruby-identifier">__send__</span> <span class="ruby-node">&quot;#{name}=&quot;</span>, <span class="ruby-identifier">val</span>
-113:             <span class="ruby-keyword kw">else</span>
-114:               <span class="ruby-identifier">raise</span> <span class="ruby-constant">RuntimeError</span>, <span class="ruby-node">&quot;:#{name} is not writable&quot;</span>
-115:             <span class="ruby-keyword kw">end</span>
-116:           <span class="ruby-keyword kw">end</span>
-117:         <span class="ruby-keyword kw">end</span>
-118: 
-119:         <span class="ruby-identifier">define_method</span> <span class="ruby-node">&quot;#{name}=&quot;</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">val</span><span class="ruby-operator">|</span>
-120:           <span class="ruby-identifier">attr_instance</span> = <span class="ruby-identifier">__send__</span> <span class="ruby-node">&quot;attribute_of:#{name}&quot;</span>
-121:           <span class="ruby-identifier">attr_instance</span>.<span class="ruby-identifier">set</span> <span class="ruby-identifier">val</span>
-122:           <span class="ruby-ivar">@__attribute_data_of</span> <span class="ruby-operator">||=</span> {}
-123:           <span class="ruby-ivar">@__attribute_data_of</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">val</span>
-124:         <span class="ruby-keyword kw">end</span>
-125: 
-126:         <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">attr_class</span>.<span class="ruby-identifier">config</span>[<span class="ruby-identifier">:writable</span>]
-127:           <span class="ruby-identifier">private</span> <span class="ruby-node">&quot;#{name}=&quot;</span>
-128:         <span class="ruby-keyword kw">end</span>
-129: 
-130:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">attr_class</span>.<span class="ruby-identifier">config</span>[<span class="ruby-identifier">:handles</span>]
-131:           <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">attr_class</span>.<span class="ruby-identifier">config</span>[<span class="ruby-identifier">:handles</span>]
-132:           <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Hash</span>
-133:             <span class="ruby-identifier">attr_class</span>.<span class="ruby-identifier">config</span>[<span class="ruby-identifier">:handles</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">before</span>, <span class="ruby-identifier">after</span><span class="ruby-operator">|</span>
-134:               <span class="ruby-identifier">class_eval</span> <span class="ruby-value str">&quot;def \#{before} *args, &amp;block\n__send__(\&quot;\#{name}\&quot;).__send__ \&quot;\#{after}\&quot;, *args, &amp;block\nend\n&quot;</span>
-135:             <span class="ruby-keyword kw">end</span>
-136:           <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Array</span>
-137:             <span class="ruby-identifier">attr_class</span>.<span class="ruby-identifier">config</span>[<span class="ruby-identifier">:handles</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">meth</span><span class="ruby-operator">|</span>
-138:               <span class="ruby-identifier">class_eval</span> <span class="ruby-value str">&quot;def \#{meth} *args, &amp;block\n__send__(\&quot;\#{name}\&quot;).__send__ \&quot;\#{meth}\&quot;, *args, &amp;block\nend\n&quot;</span>
-139:             <span class="ruby-keyword kw">end</span>
-140:           <span class="ruby-keyword kw">end</span>
-141:         <span class="ruby-keyword kw">end</span>
-142:       <span class="ruby-keyword kw">end</span></pre></div>
+<p class="source_link" id="M000020-show-link"><a onclick="toggle('M000020-source'); toggleText('M000020-link'); return false;" href="#" id="M000020-link">Show source...</a></p><div class="source" id="M000020-source"><pre>     <span class="ruby-comment cmt"># File lib/classx/attributes.rb, line 95</span>
+ 95:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_attribute</span> <span class="ruby-identifier">name</span>, <span class="ruby-identifier">attrs</span>={} <span class="ruby-comment cmt">#:doc:</span>
+ 96:         <span class="ruby-identifier">name</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span>
+ 97: 
+ 98:         <span class="ruby-identifier">attr_class</span> = <span class="ruby-identifier">define_attribute</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">attrs</span>)
+ 99: 
+100:         <span class="ruby-comment cmt"># XXX: Why this can take *args?</span>
+101:         <span class="ruby-comment cmt"># =&gt;  It's for avoid warnings when you call it without values.</span>
+102:         <span class="ruby-identifier">define_method</span> <span class="ruby-identifier">name</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-operator">*</span><span class="ruby-identifier">vals</span><span class="ruby-operator">|</span>
+103:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">vals</span> <span class="ruby-operator">==</span> []
+104:             <span class="ruby-ivar">@__attribute_data_of</span> <span class="ruby-operator">||=</span> {}
+105:             <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@__attribute_data_of</span>[<span class="ruby-identifier">name</span>]
+106:               <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@__attribute_data_of</span>[<span class="ruby-identifier">name</span>]
+107:             <span class="ruby-keyword kw">else</span>
+108:               <span class="ruby-identifier">attr_instance</span> = <span class="ruby-identifier">__send__</span> <span class="ruby-node">&quot;attribute_of:#{name}&quot;</span>
+109:               <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@__attribute_data_of</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">attr_instance</span>.<span class="ruby-identifier">get</span>
+110:             <span class="ruby-keyword kw">end</span>
+111:           <span class="ruby-keyword kw">else</span>
+112:             <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">vals</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>
+113:             <span class="ruby-identifier">val</span> = <span class="ruby-identifier">vals</span>.<span class="ruby-identifier">first</span>
+114:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">respond_to?</span> <span class="ruby-node">&quot;#{name}=&quot;</span>
+115:               <span class="ruby-identifier">__send__</span> <span class="ruby-node">&quot;#{name}=&quot;</span>, <span class="ruby-identifier">val</span>
+116:             <span class="ruby-keyword kw">else</span>
+117:               <span class="ruby-identifier">raise</span> <span class="ruby-constant">RuntimeError</span>, <span class="ruby-node">&quot;:#{name} is not writable&quot;</span>
+118:             <span class="ruby-keyword kw">end</span>
+119:           <span class="ruby-keyword kw">end</span>
+120:         <span class="ruby-keyword kw">end</span>
+121: 
+122:         <span class="ruby-identifier">define_method</span> <span class="ruby-node">&quot;#{name}=&quot;</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">val</span><span class="ruby-operator">|</span>
+123:           <span class="ruby-identifier">attr_instance</span> = <span class="ruby-identifier">__send__</span> <span class="ruby-node">&quot;attribute_of:#{name}&quot;</span>
+124:           <span class="ruby-ivar">@__attribute_data_of</span> <span class="ruby-operator">||=</span> {}
+125:           <span class="ruby-ivar">@__attribute_data_of</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">attr_instance</span>.<span class="ruby-identifier">set</span> <span class="ruby-identifier">val</span>
+126:         <span class="ruby-keyword kw">end</span>
+127: 
+128:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">attr_class</span>.<span class="ruby-identifier">config</span>[<span class="ruby-identifier">:writable</span>] <span class="ruby-operator">==</span> <span class="ruby-keyword kw">false</span>
+129:           <span class="ruby-identifier">private</span> <span class="ruby-node">&quot;#{name}=&quot;</span>
+130:         <span class="ruby-keyword kw">end</span>
+131: 
+132:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">attr_class</span>.<span class="ruby-identifier">config</span>[<span class="ruby-identifier">:handles</span>]
+133:           <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">attr_class</span>.<span class="ruby-identifier">config</span>[<span class="ruby-identifier">:handles</span>]
+134:           <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Hash</span>
+135:             <span class="ruby-identifier">attr_class</span>.<span class="ruby-identifier">config</span>[<span class="ruby-identifier">:handles</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">before</span>, <span class="ruby-identifier">after</span><span class="ruby-operator">|</span>
+136:               <span class="ruby-identifier">class_eval</span> <span class="ruby-value str">&quot;def \#{before} *args, &amp;block\n__send__(\&quot;\#{name}\&quot;).__send__ \&quot;\#{after}\&quot;, *args, &amp;block\nend\n&quot;</span>
+137:             <span class="ruby-keyword kw">end</span>
+138:           <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Array</span>
+139:             <span class="ruby-identifier">attr_class</span>.<span class="ruby-identifier">config</span>[<span class="ruby-identifier">:handles</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">meth</span><span class="ruby-operator">|</span>
+140:               <span class="ruby-identifier">class_eval</span> <span class="ruby-value str">&quot;def \#{meth} *args, &amp;block\n__send__(\&quot;\#{name}\&quot;).__send__ \&quot;\#{meth}\&quot;, *args, &amp;block\nend\n&quot;</span>
+141:             <span class="ruby-keyword kw">end</span>
+142:           <span class="ruby-keyword kw">end</span>
+143:         <span class="ruby-keyword kw">end</span>
+144:       <span class="ruby-keyword kw">end</span></pre></div>
 </div>
 
 <a class="small" name="M000019"><br/></a>
