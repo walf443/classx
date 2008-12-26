@@ -82,10 +82,13 @@ module ClassX
       #   class YourClass
       #     include ClassX
       #     add_attribute :x,
-      #       :writable => true,  # defining accessor scope.
+      #       :writable => false  # defining accessor scope.
       #       :optional => ture,  # defining attribute is required in initialize.
       #       :validate => proc {|val| val.respond_to? :to_s }  # this attribute's value should adopted to this rule.
       #       :default  => proc {|mine| mine.class.to_s.split(/::/).last.downcase } # default value for this attribute.
+      #       :handle   => [ :foo, :bar, :baz ]  # define method :foo, :bar, :baz to delegate x's method.
+      #       :coerce   => { String => proc {|val| val.to_i } } # when it set String value, force convert to Integer.
+      #       :trigger  => proc {|mine,val| mine.y = val } # when this attribute set value, also update y attribute.
       #
       #   end
       #

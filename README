@@ -13,7 +13,7 @@ Meta Framework extending and flexible attribute like Moose ( perl )
   end
 
   class Point3D < Point
-    has :z, :writable => true, :kind_of => Fixnum, :optional => true
+    has :z, :kind_of => Fixnum, :optional => true
   end
 
   Point.new(:x => 30, :y => 40)  #=> <# Point @x=30, @y=40 >
