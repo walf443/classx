@@ -33,6 +33,20 @@ describe ClassX do
         end
       end
 
+      describe 'when value is false' do
+        before do
+          @class = Class.new
+          @class.class_eval do
+            include ClassX
+            has :x, :default => lambda { false }
+          end
+        end
+
+        it "should return false" do
+          @class.new.x.should == false
+        end
+      end
+
       describe 'when value is not Proc' do
         before do
           @class = Class.new
@@ -123,6 +137,24 @@ describe ClassX do
           lambda { @class.new }.should_not raise_error(ClassX::AttrRequiredError)
         end
       end
+
+      describe 'when value is false' do
+        before do
+          @class = Class.new
+          @class.class_eval do
+            include ClassX
+            has :x, :optional => true
+          end
+        end
+
+        it "shoult return false " do
+          obj = @class.new
+          obj.x = false
+          p obj
+          obj.x.should == false
+        end
+      end
+
     end
 
     describe 'not attribute param exist in #initialize argument' do

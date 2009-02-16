@@ -75,7 +75,7 @@ module ClassX
 
     attribute_of.each do |key, val|
       next if val.class.lazy?
-      raise AttrRequiredError, "param: :#{key} is required to #{hash.inspect}" if !val.class.optional? && !val.get
+      raise AttrRequiredError, "param: :#{key} is required to #{hash.inspect}" if !val.class.optional? && val.get.nil?
     end
 
     after_init

@@ -102,11 +102,11 @@ module ClassX
         define_method name do |*vals|
           if vals == []
             @__attribute_data_of ||= {}
-            if @__attribute_data_of[name]
-              return @__attribute_data_of[name]
-            else
+            if @__attribute_data_of[name].nil?
               attr_instance = __send__ "attribute_of:#{name}"
-              return @__attribute_data_of[name] = attr_instance.get
+              return ( @__attribute_data_of[name] = attr_instance.get )
+            else
+              return @__attribute_data_of[name]
             end
           else
             raise ArgumentError if vals.size > 1
