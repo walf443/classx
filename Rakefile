@@ -100,6 +100,15 @@ task :benchmark_all do
       tmp_script = "#{base_dir}/.backup.rb"
       begin
         cp script, tmp_script
+        system("echo '--------------' >> #{outfile}")
+        system("echo 'system infomation' >> #{outfile}")
+        system("echo '--------------' >> #{outfile}")
+        system("uname -a >> #{outfile}")
+        system("echo '--------------' >> #{outfile}")
+        system("vm_stat >> #{outfile}")
+        system("echo '--------------' >> #{outfile}")
+        system("ruby -v >> #{outfile}")
+        system("echo '--------------' >> #{outfile}")
         revisions.each do |rev|
           system("git checkout #{rev['sha1']}")
           system("echo '--------------' >> #{outfile}")
