@@ -65,4 +65,54 @@ task :benchmark do
   end
 end
 
+desc 'run generate benchmark history'
+task :benchmark_all do
+  require 'pathname'
+  require 'yaml'
+
+  base_dir = Pathname(File.expand_path(File.join(File.dirname(__FILE__), 'bench')))
+
+  base_dir.children.each do |script|
+    next unless script.to_s =~ /\.rb$/
+
+    # extract DATA section from script
+    yaml = ""
+    File.open(script) do |f|
+      rev_fg = false
+      f.each do |line|
+        if  /^__END__$/ =~ line
+          rev_fg = true
+          next
+        end
+
+        next unless rev_fg
+        yaml << line
+      end
+    end
+
+    unless yaml == ""
+      outfile = "#{script}.result.txt"
+
+      rm outfile if File.exist? outfile
+
+      revisions = YAML.load(yaml)
+
+      tmp_script = "#{base_dir}/.backup.rb"
+      begin
+        cp script, tmp_script
+        revisions.each do |rev|
+          system("git checkout #{rev['sha1']}")
+          system("echo '--------------' >> #{outfile}")
+          system("git show HEAD --pretty=oneline --stat | head -n 1 >> #{outfile}")
+          system("echo '--------------' >> #{outfile}")
+          system("ruby #{tmp_script} >> #{outfile}")
+        end
+      ensure
+        rm tmp_script
+        system("git checkout master")
+      end
+    end
+  end
+end
+
 import File.join(File.dirname(__FILE__), 'tasks', 'basic_tasks.rake')
