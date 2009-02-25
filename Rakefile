@@ -115,4 +115,6 @@ task :benchmark_all do
   end
 end
 
+task :package => [:benchmark_all]
+
 import File.join(File.dirname(__FILE__), 'tasks', 'basic_tasks.rake')
