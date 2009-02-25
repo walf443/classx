@@ -108,6 +108,21 @@ describe ClassX do
           instance.x.should == 20
         end
       end
+
+      describe "when it was raised ArgumentError in coerce" do
+        before do
+          @class = Class.new
+          @class.class_eval do
+            include ClassX
+
+            has :x, :isa => Integer, :coerce => { String => proc {|val| raise ArgumentError } }, :writable => true
+          end
+        end
+
+        it 'should raise ClassX::InvalidAttrArgument' do
+          lambda { @class.new(:x => "hoge") }.should raise_error(ClassX::InvalidAttrArgument)
+        end
+      end
     end
   end
 end

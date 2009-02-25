@@ -180,7 +180,11 @@ module ClassX
       #   you should not call this method except for @parent instance's setter method.
       #   It's because caching as instance_variable in @parent instance for performance.
       def set val
-        val = self.class.coerce(val)
+        begin
+          val = self.class.coerce(val)
+        rescue ArgumentError => e
+          raise ClassX::InvalidAttrArgument, "#{val.inspect} is not valid for #{self.inspect} ( #{e.inspect} )"
+        end
         raise ClassX::InvalidAttrArgument, "#{val.inspect} is not valid for #{self.inspect}" unless self.class.validate? val
         @data = val
 

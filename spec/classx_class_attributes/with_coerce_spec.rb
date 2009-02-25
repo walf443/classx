@@ -141,6 +141,25 @@ describe ClassX::ClassAttributes do
           }.should raise_error(ClassX::InvalidAttrArgument)
         end
       end
+
+      describe "when it was raised ArgumentError in coerce" do
+        before do
+          @class = Class.new
+          @class.class_eval do
+            extend ClassX::ClassAttributes
+
+            class_has :x, :isa => Integer, :coerce => { String => proc {|val| raise ArgumentError } }
+          end
+        end
+
+        it 'should raise ClassX::InvalidAttrArgument' do
+          lambda { 
+            @class.class_eval do
+              self.x = "hoge"
+            end
+          }.should raise_error(ClassX::InvalidAttrArgument)
+        end
+      end
     end
   end
 end
