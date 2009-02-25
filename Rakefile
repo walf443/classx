@@ -17,7 +17,7 @@ DESCRIPTION       = <<-"END_DESCRIPTION"
 Meta Framework extending and flexible attribute like Moose ( perl )
 END_DESCRIPTION
 BIN_FILES         = %w(  )
-VERS              = "0.0.6"
+VERS              = "0.0.7"
 
 EXTRA_RDOC_FILES = []
 HECKLE_ROOT_MODULES = ["Classx"]
