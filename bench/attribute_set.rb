@@ -40,7 +40,7 @@ def do_bench klass, style=:equal
   GC.enable
 end
 
-Benchmark.bm do |x|
+Benchmark.benchmark '', 28, "%10.6u\t%10.6y\t%10.6t\t%10.6r\n" do |x|
   x.report 'classx with attr_name = val' do
     do_bench point_with_classx
   end

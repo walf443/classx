@@ -50,4 +50,19 @@ SPEC = Gem::Specification.new do |s|
 	s.extensions = EXTENSIONS
 end
 
+desc 'run benchmark script'
+task :benchmark do
+  require 'pathname'
+
+  base_dir = Pathname(File.expand_path(File.join(File.dirname(__FILE__), 'bench')))
+  base_dir.children.each do |script|
+    next unless script.to_s =~ /\.rb$/
+    outfile = "#{script}.result.txt"
+    system("echo '--------------' >> #{outfile}")
+    system("git show HEAD --pretty=oneline --stat | head -n 1 >> #{outfile}")
+    system("echo '--------------' >> #{outfile}")
+    system("ruby #{script} >> #{outfile}")
+  end
+end
+
 import File.join(File.dirname(__FILE__), 'tasks', 'basic_tasks.rake')

@@ -16,7 +16,7 @@ def count_times_define &block
 end
 
 COUNT = 1000
-Benchmark.bm do |x|
+Benchmark.benchmark '', 24, "%10.6u\t%10.6y\t%10.6t\t%10.6r\n" do |x|
   x.report "attr_reader" do
     class SimpleDefine
       include ClassX

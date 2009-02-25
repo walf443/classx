@@ -29,7 +29,7 @@ def do_bench klass
   GC.enable
 end
 
-Benchmark.bm do |x|
+Benchmark.benchmark '', 16, "%10.6u\t%10.6y\t%10.6t\t%10.6r\n" do |x|
   x.report 'classx' do
     do_bench PointWithClassX
   end

@@ -34,40 +34,25 @@ def do_bench klass
   GC.enable
 end
 
-Benchmark.bm do |x|
-  x.report 'classx' do
+Benchmark.benchmark '', 16, "%10.6u\t%10.6y\t%10.6t\t%10.6r\n" do |x|
+  x.report 'classx', "\t%t" do
     do_bench point_with_classx
   end
-  x.report 'normal class' do
+  x.report 'normal class', "\t%t" do
     do_bench point_without_classx
   end
 end
 
-# On my environment( MacBook1.1 Intel Core Duo 1.83 GHz, 2GB), result is like that. TOOOOO SLOOOW classX!!!!.
-# 
-# ----------------------------------------------------------
-# result after 92ed088b6 ( before 0.0.4 )
-#                 user     system      total        real
-# classx        0.000000   0.000000   0.000000 (  0.007358)
-# normal class  0.010000   0.000000   0.010000 (  0.001116)
-# ----------------------------------------------------------
-# result after 3e97a758
-#                 user     system      total        real
-# classx        0.010000   0.000000   0.010000 (  0.007955)
-# normal class  0.000000   0.000000   0.000000 (  0.001105)
-# ----------------------------------------------------------
-# result after 83519953e
-#                 user     system      total        real
-# classx        0.010000   0.000000   0.010000 (  0.016879)
-# normal class  0.000000   0.000000   0.000000 (  0.001112)
-# ----------------------------------------------------------
-# result after 1f4c448b
-#                 user     system      total        real
-# classx        0.010000   0.000000   0.010000 (  0.013445)
-# normal class  0.000000   0.000000   0.000000 (  0.001004)
-# ----------------------------------------------------------
-# result after 283903a
-#                 user     system      total        real
-# classx        0.020000   0.000000   0.020000 (  0.016892)
-# normal class  0.000000   0.000000   0.000000 (  0.000729)
-# ----------------------------------------------------------
+__END__
+- 
+  sha1: 92ed088b6
+  desc: before 0.0.4
+- 
+  sha1: 3e97a758
+- 
+  sha1: 83519953e
+- 
+  sha1: 1f4c448b
+- 
+  sha1: 283903a
+
