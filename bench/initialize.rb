@@ -49,12 +49,3 @@ __END__
   sha1: 1f4c448b
 -
   sha1: a23be1ac
--
-  sha1: 633f7e88
--
-  sha1: 7d345a994
--
-  sha1: 28f399333
--
-  sha1: d5619b6533
-
