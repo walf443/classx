@@ -1,6 +1,5 @@
 require File.join(File.dirname(__FILE__), '..', 'spec_helper')
 require 'classx'
-require 'classx/attribute'
 require 'classx/class_attributes'
 
 describe ClassX::ClassAttributes do

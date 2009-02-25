@@ -1,4 +1,4 @@
-require 'classx/attribute'
+require 'classx/attribute_factory'
 require 'classx/attributes'
 
 # usage
