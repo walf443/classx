@@ -68,7 +68,7 @@ __END__
 -
   sha1: d85fa7ded
 -
-  sha1: 92ed088b ( before 0.0.4 )
+  sha1: 92ed088b
 -
   sha1: 3e97a758
 -
