@@ -40,6 +40,12 @@ end
 
 __END__
 -
+  sha1: 0.0.7
+-
+  sha1: 0.0.6
+-
+  sha1: 0.0.5
+-
   sha1: 0171feab
 -
   sha1: d85fa7de
