@@ -45,8 +45,9 @@ end
 
 __END__
 - 
-  sha1: 92ed088b6
-  desc: before 0.0.4
+  sha1: 0.0.7
+- 
+  sha1: 0.0.4
 - 
   sha1: 3e97a758
 - 
