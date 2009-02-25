@@ -52,49 +52,30 @@ Benchmark.benchmark '', 28, "%10.6u\t%10.6y\t%10.6t\t%10.6r\n" do |x|
   end
 end
 
-# On my environment( MacBook1.1 Intel Core Duo 1.83 GHz, 2GB), result is like that. TOOOOO SLOOOW classX!!!!.
-# 
-# ----------------------------------------------------------
-# result after 0171feab
-# classx with attr_name = val   0.030000   0.000000   0.030000 (  0.035114)
-# classx with attr_name(val)    0.040000   0.000000   0.040000 (  0.053949)
-# normal class                  0.010000   0.000000   0.010000 (  0.001969)
-# ----------------------------------------------------------
-# result after d85fa7ded
-# classx with attr_name = val   0.020000   0.010000   0.030000 (  0.031880)
-# classx with attr_name(val)    0.040000   0.000000   0.040000 (  0.049979)
-# normal class                  0.000000   0.000000   0.000000 (  0.002021)
-# ----------------------------------------------------------
-# result after 92ed088b ( before 0.0.4 )
-#                                 user     system      total        real
-# classx with attr_name = val   0.020000   0.010000   0.030000 (  0.029100)
-# classx with attr_name(val)    0.040000   0.000000   0.040000 (  0.050599)
-# normal class                  0.000000   0.000000   0.000000 (  0.002188)
-# ----------------------------------------------------------
-# result after 3e97a758
-#                                 user     system      total        real
-# classx with attr_name = val   0.020000   0.000000   0.020000 (  0.026784)
-# classx with attr_name(val)    0.030000   0.010000   0.040000 (  0.051044)
-# normal class                  0.010000   0.000000   0.010000 (  0.002661)
-# ----------------------------------------------------------
-# result after dd155598
-#                                 user     system      total        real
-# classx with attr_name = val   0.020000   0.000000   0.020000 (  0.020638)
-# classx with attr_name(val)    0.030000   0.000000   0.030000 (  0.038159)
-# normal class                  0.000000   0.000000   0.000000 (  0.002225)
-# ----------------------------------------------------------
-# result after 1f4c448b
-#                                 user     system      total        real
-# classx with attr_name = val   0.020000   0.010000   0.030000 (  0.024688)
-# normal class                  0.000000   0.000000   0.000000 (  0.001821)
-# ----------------------------------------------------------
-# result after a23be1ac
-#                                 user     system      total        real
-# classx with attr_name = val   0.040000   0.000000   0.040000 (  0.038855)
-# normal class                  0.000000   0.000000   0.000000 (  0.001833)
-# ----------------------------------------------------------
-# result after 458848f
-#                                 user     system      total        real
-# classx with attr_name = val   0.030000   0.010000   0.040000 (  0.051419)
-# normal class                  0.000000   0.000000   0.000000 (  0.007453)
-# ----------------------------------------------------------
+__END__
+- 
+  sha1: 0.0.7
+- 
+  sha1: 3e97a758
+- 
+  sha1: 83519953e
+- 
+  sha1: 1f4c448b
+- 
+  sha1: 458848f
+- 
+  sha1: 0171feab
+-
+  sha1: d85fa7ded
+-
+  sha1: 92ed088b ( before 0.0.4 )
+-
+  sha1: 3e97a758
+-
+  sha1: dd155598
+-
+  sha1: 1f4c448b
+-
+  sha1: a23be1ac
+-
+  sha1: 458848f
