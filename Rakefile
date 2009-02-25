@@ -110,7 +110,7 @@ task :benchmark_all do
         system("ruby -v >> #{outfile}")
         system("echo '--------------' >> #{outfile}")
         revisions.each do |rev|
-          system("git checkout #{rev['sha1']}")
+          system("git checkout #{rev['sha1']}") or raise "git checkout failed!!"
           system("echo '--------------' >> #{outfile}")
           system("git show HEAD --pretty=oneline --stat | head -n 1 >> #{outfile}")
           system("echo '--------------' >> #{outfile}")
@@ -122,6 +122,11 @@ task :benchmark_all do
       end
     end
   end
+end
+
+def system str
+  warn "executed: #{str}"
+  super
 end
 
 task :package => [:benchmark_all]
