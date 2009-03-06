@@ -38,7 +38,7 @@ describe ClassX do
           @class = Class.new
           @class.class_eval do
             include ClassX
-            has :x, :default => lambda { false }
+            has :x, :default => lambda {|val| false }
           end
         end
 
@@ -150,7 +150,6 @@ describe ClassX do
         it "shoult return false " do
           obj = @class.new
           obj.x = false
-          p obj
           obj.x.should == false
         end
       end
