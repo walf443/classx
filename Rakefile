@@ -61,7 +61,7 @@ task :benchmark do
     system("echo '--------------' >> #{outfile}")
     system("git show HEAD --pretty=oneline --stat | head -n 1 >> #{outfile}")
     system("echo '--------------' >> #{outfile}")
-    system("ruby #{script} >> #{outfile}")
+    system("#{FileUtils::RUBY} #{script} >> #{outfile}")
   end
 end
 
@@ -107,14 +107,14 @@ task :benchmark_all do
         system("echo '--------------' >> #{outfile}")
         system("vm_stat >> #{outfile}")
         system("echo '--------------' >> #{outfile}")
-        system("ruby -v >> #{outfile}")
+        system("#{FileUtils::RUBY} -v >> #{outfile}")
         system("echo '--------------' >> #{outfile}")
         revisions.each do |rev|
           system("git checkout #{rev['sha1']}") or raise "git checkout failed!!"
           system("echo '--------------' >> #{outfile}")
           system("git show HEAD --pretty=oneline --stat | head -n 1 >> #{outfile}")
           system("echo '--------------' >> #{outfile}")
-          system("ruby #{tmp_script} >> #{outfile}")
+          system("#{FileUtils::RUBY} #{tmp_script} >> #{outfile}")
         end
       ensure
         rm tmp_script
